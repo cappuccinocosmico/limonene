@@ -1,0 +1,71 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 50,
+  "margin-top": 8,
+  "margin-right": 8,
+  "margin-left": 8,
+  "modules-left": ["custom/nix", "tray", "hyprland/workspaces"],
+  "modules-center": ["clock"],
+  "modules-right": [
+    "mpd",
+    "backlight",
+    "pulseaudio",
+    "network",
+    "battery",
+    "custom/power-menu"
+  ],
+
+  "custom/nix": {
+    "format": " ",
+    "on-click": "fuzzel"
+  },
+
+  "custom/song": {
+    "format": "{}",
+    "exec": "playerctl metadata -f '{{markup_escape(title)}} - {{markup_escape(artist)}}' -F",
+    "on-click": "playerctl play-pause"
+  },
+
+  "tray": {},
+  "backlight": {
+    "format": "{percent}% {icon}",
+    "format-icons": ["", "", "", "", "", "", "", "", ""]
+  },
+  "pulseaudio": {
+    "format": "{volume}% {icon}",
+    "format-muted": "🔇",
+    "format-icons": {
+      "default": ["", "", ""]
+    }
+  },
+
+  "mpd": {
+    "format": "▶ : {album} - {title}",
+    "format-paused": "⏸ : {album} - {title}"
+  },
+  "network": {
+    "format-wifi": "{essid} ",
+    "format-ethernet": "",
+    "format-disconnected": ""
+  },
+
+  "battery": {
+    "format": "{capacity}% {icon}",
+    "format-charging": "{capacity}% ﮣ",
+    "format-plugged": "{capacity}% ﮣ",
+    "format-icons": ["", "", "", "", "", "", "", "", "", ""],
+    "states": {
+      "warning": 25,
+      "critical": 10
+    }
+  },
+  "clock": {
+    "interval": 1,
+    "format": "{: %H:%M:%S    %d/%m/%Y}"
+  },
+  "custom/power-menu": {
+    "format": "",
+    "on-click": "wlogout --protocol layer-shell"
+  }
+}
