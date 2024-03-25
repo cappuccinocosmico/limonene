@@ -28,7 +28,6 @@
     tailscale
     trayscale
     speedtest-cli
-    fish
     nushell
     mullvad-vpn
     mullvad

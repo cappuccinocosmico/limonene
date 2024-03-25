@@ -10,7 +10,6 @@
   };
   nixpkgs.config.allowUnfree = true;
   security.polkit.enable = true;
-  programs.fish.enable = true;
   programs.kdeconnect= {
     enable = true;
   };
