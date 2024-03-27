@@ -5,7 +5,7 @@
     gnome.gnome-sudoku
     # Steam
     steam
-    heroic-launcher
+    heroic
     
   ];
 }

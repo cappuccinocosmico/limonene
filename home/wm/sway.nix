@@ -27,7 +27,7 @@
   wayland.windowManager.sway = {
    enable = true;
    config = rec {
-    modifier = "Mod4";
+    modifier = "Mod1";
     terminal = "foot";
     menu = "fuzzel";
     gaps.inner = 4;

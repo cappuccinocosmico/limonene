@@ -5,7 +5,7 @@
   "margin-top": 8,
   "margin-right": 8,
   "margin-left": 8,
-  "modules-left": ["custom/nix", "tray", "sway/workspaces"],
+  "modules-left": ["tray", "sway/workspaces"],
   "modules-center": ["clock"],
   "modules-right": [
     "mpd",
@@ -15,6 +15,9 @@
     "battery",
     "custom/power-menu"
   ],
+  "sway/workspaces": {
+    "focused": ""
+  },
 
   "custom/nix": {
     "format": " ",

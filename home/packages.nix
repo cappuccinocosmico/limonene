@@ -7,6 +7,7 @@
     packages/music.nix
     packages/nushell.nix
     packages/nvim.nix
+    packages/foot.nix
   ];
 }
 
