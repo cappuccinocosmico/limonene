@@ -29,9 +29,7 @@
     trayscale
     speedtest-cli
     nushell
-    mullvad-vpn
-    mullvad
-    networkmanagerapplet
+    btop
 
     # archivebox
   ];

@@ -8,6 +8,8 @@
       vlc
       firefox 
       vscodium-fhs 
+      gnome.nautilus
+      
       
 
   ];

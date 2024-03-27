@@ -9,6 +9,7 @@
     wm/sway.nix
     ./packages.nix
   ];
+  home.packages = [ pkgs.dconf ];
   home = {
     username = "nicole";
     homeDirectory = "/home/nicole";

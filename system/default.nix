@@ -7,7 +7,7 @@
     ./services.nix
     ./cache.nix
     # System Pkgs
-    
+    ./server-pkgs.nix
   ];
   
   nixpkgs.config.allowUnfree= true;

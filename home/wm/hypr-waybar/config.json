@@ -5,7 +5,7 @@
   "margin-top": 8,
   "margin-right": 8,
   "margin-left": 8,
-  "modules-left": ["custom/nix", "tray", "hyprland/workspaces"],
+  "modules-left": ["custom/nix", "tray", "sway/workspaces"],
   "modules-center": ["clock"],
   "modules-right": [
     "mpd",

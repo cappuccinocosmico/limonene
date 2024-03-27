@@ -14,7 +14,7 @@
       # settings.main.dpi-aware = "no";
       home-manager.users.nicole.programs.nushell.loginFile.text = ''
         if (tty) == "/dev/tty1" {
-          Hyprland
+          sway
         }
       ''; 
     }
