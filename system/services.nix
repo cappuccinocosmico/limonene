@@ -1,24 +1,37 @@
 { inputs, lib, config, pkgs,sops-nix, ... }: {
-  services.openssh = {
-    enable = true;
-  }; 
-  services.tailscale.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true ;
-    alsa.support32Bit = true;
-    jack.enable = true;
-    pulse.enable = true ;
-    wireplumber.enable = true;
+  environment.systemPackages = with pkgs;[
+    podman-compose
+  ];
+  virtualisation = {
+    podman = {
+      enable = true;
+      dockerCompat = true;
+      defaultNetwork.settings.dns_enabled = true;
+    };
+    waydroid.enable = true;
+  };
+  services = {
+    flatpak.enable = true;
+    tailscale.enable = true;
+    openssh = {
+      enable = true;
+    }; 
+    services.pipewire = {
+      enable = true;
+      alsa.enable = true ;
+      alsa.support32Bit = true;
+      jack.enable = true;
+      pulse.enable = true ;
+      wireplumber.enable = true;
+    };
+    printing.enable = true;
+    avahi.enable = true;
+    avahi.nssmdns = true;
+    avahi.openFirewall = true;
   };
   sound ={
     enable = true;
     extraConfig = "options snd-hda-intel model=dell-headset-multi";
-  };
-  services.upower={
-    enable = true;
-    percentageAction = 7;
-    criticalPowerAction = "HybridSleep";
   };
   hardware.opengl ={
     enable = true;
@@ -34,10 +47,5 @@
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
   # Printing stuff
-  services.printing.enable = true;
-  services.avahi.enable = true;
-  services.avahi.nssmdns = true;
-  # for a WiFi printer
-  services.avahi.openFirewall = true;
 
 }

@@ -9,12 +9,6 @@
         };
       }
   ];
-  # Mobile Phone substitute:
-  virtualisation.waydroid.enable = true;
-  services.flatpak.enable = true;
-  # Power Saver Modes:
-  services.power-profiles-daemon.enable = true;
-
   users.users = {
     nicole = {
       initialPassword = "changedapassword";
@@ -24,4 +18,24 @@
       shell = pkgs.nushell;
     };
   };
+  boot = {
+    extraModulePackages = with config.boot.kernelPackages; [ ];
+    loader.efi = {
+      canTouchEfiVariables = true;
+    };
+    loader.systemd-boot = {
+      enable = true;
+    };
+    # Use the GRUB 2 boot loader.
+    loader.grub = {
+      device = "nodev";
+      efiSupport = true;
+      enableCryptodisk = true;
+      useOSProber = true;
+    };
+  };
+  systemd.extraConfig = ''
+  DefaultTimeoutStopSec=10s
+  DefaultTimeoutStartSec=10s
+'';
 }
