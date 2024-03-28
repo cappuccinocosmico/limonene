@@ -12,6 +12,8 @@
   # Mobile Phone substitute:
   virtualisation.waydroid.enable = true;
   services.flatpak.enable = true;
+  # Power Saver Modes:
+  services.power-profiles-daemon.enable = true;
 
   users.users = {
     nicole = {
