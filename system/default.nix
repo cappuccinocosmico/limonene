@@ -44,8 +44,6 @@
       # Deduplicate and optimize nix store
       auto-optimise-store = true;
       # Cache Hyprland so it dosent build all the time
-      substituters = ["https://hyprland.cachix.org"];
-      trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
     };
     gc = {
       automatic = true;
@@ -73,7 +71,6 @@
   networking.firewall = {
     allowedUDPPorts = [ 2234 ];
   };
-  nixpkgs.config.allowUnfree = true;
   security.polkit.enable = true;
   programs.kdeconnect= {
     enable = true;

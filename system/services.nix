@@ -1,12 +1,11 @@
 { inputs, lib, config, pkgs,sops-nix, ... }: {
   environment.systemPackages = with pkgs;[
-    podman-compose
+    docker-compose
   ];
+  users.extraGroups.docker.members = [ "nicole" ];
   virtualisation = {
-    podman = {
+    docker = {
       enable = true;
-      dockerCompat = true;
-      defaultNetwork.settings.dns_enabled = true;
     };
     waydroid.enable = true;
   };
@@ -16,7 +15,7 @@
     openssh = {
       enable = true;
     }; 
-    services.pipewire = {
+    pipewire = {
       enable = true;
       alsa.enable = true ;
       alsa.support32Bit = true;
