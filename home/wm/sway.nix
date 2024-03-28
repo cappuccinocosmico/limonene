@@ -21,8 +21,6 @@
   ];
   programs.foot = {
     enable = true;
-    settings.colors.alpha=0.7;
-    settings.colors.background="000000";
   };
   wayland.windowManager.sway = {
    enable = true;
