@@ -6,6 +6,5 @@
     # Steam
     steam
     heroic
-    
   ];
 }

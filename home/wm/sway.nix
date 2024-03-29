@@ -66,9 +66,9 @@ exec mako'';
     enable = true;   
   };
   xdg.configFile = {
-    "waybar/config".source = hypr-waybar/config.json;
-	  "waybar/style.css".source = hypr-waybar/style.css;
-	  "waybar/assets/nix.svg".source = hypr-waybar/nix.svg;
+    "waybar/config".source = waybar/config.json;
+	  "waybar/style.css".source = waybar/style.css;
+	  "waybar/assets/nix.svg".source = waybar/nix.svg;
   };
   /*
   services.swayidle = {
