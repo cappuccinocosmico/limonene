@@ -8,6 +8,7 @@
     packages/nushell.nix
     packages/nvim.nix
     packages/foot.nix
+    packages/languages.nix
   ];
 }
 
