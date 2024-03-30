@@ -30,7 +30,7 @@
     speedtest-cli
     nushell
     btop
-
+    keepassxc
     # archivebox
   ];
 }
