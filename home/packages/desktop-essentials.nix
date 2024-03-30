@@ -14,5 +14,7 @@
       audacity
       # Messaging
       signal-desktop
+      # Networking Stuff
+      syncthing
   ];
 }

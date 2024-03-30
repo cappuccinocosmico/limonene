@@ -46,7 +46,7 @@
     };
   in [
     mylatex
-    bieber
+    biber
     nodejs
     corepack
     uv
