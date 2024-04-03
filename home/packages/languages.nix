@@ -50,5 +50,12 @@
     nodejs
     corepack
     uv
+    pipx
+    python311Full
+    poetry
+    # Extra Git stuff
+    git-town
+    # Nixos Bs 
+    steam-run
   ];
 }
