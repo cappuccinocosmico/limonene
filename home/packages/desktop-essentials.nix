@@ -5,6 +5,7 @@
       vlc
       mpv
       firefox 
+      ungoogled-chromium
       vscodium-fhs 
       gnome.nautilus
       # Audio
