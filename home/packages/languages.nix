@@ -57,5 +57,7 @@
     git-town
     # Nixos Bs 
     steam-run
+    # Browser stuff
+    cypress
   ];
 }

@@ -31,6 +31,8 @@
     nushell
     btop
     keepassxc
-    # archivebox
+    # audio
+    pavucontrol
+    helvum
   ];
 }

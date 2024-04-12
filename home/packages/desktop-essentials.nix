@@ -17,5 +17,6 @@
       signal-desktop
       # Networking Stuff
       syncthing
+      warp
   ];
 }
