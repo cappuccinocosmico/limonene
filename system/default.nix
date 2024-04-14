@@ -62,6 +62,10 @@
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
   };
+  programs.nix-ld={
+    enable = true;
+    libraries = with pkgs; [];
+  };
   networking.networkmanager.enable = true;
   users.groups.entertain.gid = 4269;
   networking.nameservers = [
