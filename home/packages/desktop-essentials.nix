@@ -20,5 +20,7 @@
       # Networking Stuff
       syncthing
       warp
+      # Shell Stuff
+      fish
   ];
 }
