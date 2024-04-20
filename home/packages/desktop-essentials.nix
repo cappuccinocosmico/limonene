@@ -3,6 +3,7 @@
       graphite-gtk-theme
       # Experiments
       vlc
+      deadbeef
       mpv
       firefox 
       ungoogled-chromium
@@ -22,5 +23,7 @@
       warp
       # Shell Stuff
       fish
+      # textpieces # Text manipulation tool
+      baobab # disk usage analyzer
   ];
 }

@@ -5,23 +5,26 @@
 -- * disable/enabled LazyVim plugins
 -- * override the configuration of LazyVim plugins
 return {
-   {
-      'cameron-wags/rainbow_csv.nvim',
-      config = true,
-      ft = {
-          'csv',
-          'tsv',
-          'csv_semicolon',
-          'csv_whitespace',
-          'csv_pipe',
-          'rfc_csv',
-          'rfc_semicolon'
-      },
-      cmd = {
-          'RainbowDelim',
-          'RainbowDelimSimple',
-          'RainbowDelimQuoted',
-          'RainbowMultiDelim'
-      }
+  {
+    'cameron-wags/rainbow_csv.nvim',
+    config = true,
+    ft = {
+        'csv',
+        'tsv',
+        'csv_semicolon',
+        'csv_whitespace',
+        'csv_pipe',
+        'rfc_csv',
+        'rfc_semicolon'
+    },
+    cmd = {
+        'RainbowDelim',
+        'RainbowDelimSimple',
+        'RainbowDelimQuoted',
+        'RainbowMultiDelim'
+    }
+  }
+  {
+    'norcalli/nvim-colorizer.lua'
   }
 }
