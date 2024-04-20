@@ -59,5 +59,6 @@
     steam-run
     # Browser stuff
     cypress
+    julia
   ];
 }

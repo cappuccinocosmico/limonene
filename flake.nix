@@ -1,5 +1,5 @@
 {
-  description = "Computers are hard";
+  description = "Smells Strongly of Oranges";
  
   inputs = {
     # Nixpkgs

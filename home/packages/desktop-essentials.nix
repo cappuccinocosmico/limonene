@@ -25,5 +25,6 @@
       fish
       # textpieces # Text manipulation tool
       baobab # disk usage analyzer
+      foliate # ebook reader
   ];
 }
