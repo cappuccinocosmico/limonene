@@ -60,5 +60,7 @@
     # Browser stuff
     cypress
     julia
+    # SQL Viewer
+    dbeaver
   ];
 }
