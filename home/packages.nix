@@ -3,6 +3,7 @@
   # You can import other home-manager modules here
   imports = [
     packages/desktop-essentials.nix
+    packages/server-essentials.nix
     packages/gaming.nix
     packages/music.nix
     packages/nushell.nix

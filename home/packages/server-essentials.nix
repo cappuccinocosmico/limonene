@@ -33,5 +33,7 @@
     # audio
     pavucontrol
     helvum
+    # utils
+    pandoc
   ];
 }
