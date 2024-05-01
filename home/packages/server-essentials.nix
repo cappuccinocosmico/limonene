@@ -13,7 +13,7 @@
     wget
     lazygit
     # Neofetch Clones
-    neofetch
+    fastfetch
     # Crypto and Stuff
     gnupg
     git-crypt
@@ -21,7 +21,6 @@
     elinks
     git
     exfat
-    exfatprogs
     dig
     hugo
     tailscale
