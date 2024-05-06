@@ -2,7 +2,7 @@
   home.packages = with pkgs; [
     # Terminal Utils
     tmux
-    lshw
+    yt-dlp
     age
     pciutils
     parted
@@ -34,5 +34,11 @@
     helvum
     # utils
     pandoc
+    # SSH annoyingness
+    xterm
+    gnome.gnome-terminal
+    # mycor stuff
+    thttpd
+    
   ];
 }
