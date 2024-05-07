@@ -18,6 +18,7 @@
       audacity
       # Messaging
       signal-desktop
+      zoom-us
       # Networking Stuff
       syncthing
       warp
