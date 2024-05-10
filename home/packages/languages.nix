@@ -13,7 +13,6 @@
       cleveref
       titlesec
       fourier
-
       # Bibtex
       biblatex 
       biblatex-mla biblatex-apa
@@ -33,13 +32,6 @@
       mparhack
       trimspaces
       transparent
-      # CV
-      # curve
-      # silence
-      # anyfontsize
-      # ebgaramond
-      # ulem
-      # sectsty
       # Beamer
       beamerdarkthemes
     ;
@@ -62,5 +54,7 @@
     julia
     # SQL Viewer
     dbeaver
+    # Proofs
+    elan
   ];
 }
