@@ -24,9 +24,6 @@
       wireplumber.enable = true;
     };
     printing.enable = true;
-    avahi.enable = true;
-    avahi.nssmdns = true;
-    avahi.openFirewall = true;
   };
   sound ={
     enable = true;
