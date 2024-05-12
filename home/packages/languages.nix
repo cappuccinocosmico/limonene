@@ -52,6 +52,7 @@
     # Browser stuff
     cypress
     julia
+    zig # C alternative
     # SQL Viewer
     dbeaver
     # Proofs
