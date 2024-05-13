@@ -25,6 +25,14 @@
   wayland.windowManager.sway = {
    enable = true;
    config = rec {
+    output = {
+        eDP-1 = {
+          # bg = "~/.config/wallpaper/johannes-plenio-DKix6Un55mw-unsplash.jpg fill";
+        };
+      };
+    startup = [
+      { command = "light -N .1";}
+    ];
     modifier = "Mod1";
     terminal = "foot";
     menu = "fuzzel";
@@ -50,10 +58,7 @@
     };
 
    };
-   startup = [
-   { command = "light -N .1"},
-   ];
-# output "*" bg ${config.home.homeDirectory}/.config/wallpaper/johannes-plenio-DKix6Un55mw-unsplash.jpg fill
+# output "*" bg  fill
    extraConfig = ''
 input "2362:628:PIXA3854:00_093A:0274_Touchpad" {
     dwt enabled
