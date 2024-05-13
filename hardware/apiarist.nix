@@ -9,7 +9,6 @@
 
     # Home manager config for this specific machine.
     inputs.home-manager.nixosModules.home-manager{
-      home-manager.users.nicole.programs.foot.settings.main.font = "monocraft:size=15";
     
       # settings.main.dpi-aware = "no";
       home-manager.users.nicole.programs.nushell.loginFile.text = ''

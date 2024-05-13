@@ -28,5 +28,6 @@
       baobab # disk usage analyzer
       foliate # ebook reader
       calibre # ebook thing
+      gnome.gnome-font-viewer
   ];
 }
