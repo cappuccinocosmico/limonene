@@ -50,14 +50,16 @@
     };
 
    };
-   extraSessionCommands="light -N .1";
+   startup = [
+   { command = "light -N .1"},
+   ];
+# output "*" bg ${config.home.homeDirectory}/.config/wallpaper/johannes-plenio-DKix6Un55mw-unsplash.jpg fill
    extraConfig = ''
 input "2362:628:PIXA3854:00_093A:0274_Touchpad" {
     dwt enabled
     tap enabled
     middle_emulation enabled
 }
-output "*" bg ${config.home.homeDirectory}/.config/wallpaper/johannes-plenio-DKix6Un55mw-unsplash.jpg fill
 seat seat0 xcursor_theme default 48
 output eDP-1 scale 1
 exec mako'';
