@@ -1,6 +1,7 @@
 { inputs, lib, config, pkgs, ... }: {
   imports = [
     ./system/default.nix
+    ./temporary.nix
     inputs.home-manager.nixosModules.home-manager{
         home-manager.users = {
           nicole.imports = [
