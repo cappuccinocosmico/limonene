@@ -19,6 +19,7 @@
       shell = pkgs.nushell;
     };
   };
+  networking.firewall.enable = false;
   boot = {
     extraModulePackages = with config.boot.kernelPackages; [ ];
     loader.efi = {
