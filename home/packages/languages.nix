@@ -55,7 +55,7 @@
     julia
     zig # C alternative
     # SQL Viewer
-    dbeaver
+    dbeaver-bin
     # Proofs
     elan
   ];
