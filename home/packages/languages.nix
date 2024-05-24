@@ -43,7 +43,7 @@
     corepack
     uv
     pipx
-    python311Full
+    # python311Full
     python313Full
     poetry
     # Extra Git stuff
