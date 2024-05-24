@@ -1,10 +1,13 @@
 { inputs, lib, config, pkgs, ... }: {
   home.packages = with pkgs; [
-    # Games
+    # OSS Games
     gnome.gnome-mines
     gnome.gnome-sudoku
-    # Steam
+    minetest
+    airshipper # Veloren Launcher
+    # Stores
     steam
     heroic
+
   ];
 }
