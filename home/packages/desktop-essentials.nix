@@ -29,6 +29,6 @@
       foliate # ebook reader
       calibre # ebook thing
       gnome.gnome-font-viewer
-      diebahn # Train table viewer 
+      # diebahn # Train table viewer 
   ];
 }
