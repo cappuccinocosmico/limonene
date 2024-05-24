@@ -4,10 +4,10 @@
     gnome.gnome-mines
     gnome.gnome-sudoku
     minetest
-    airshipper # Veloren Launcher
     # Stores
     steam
     heroic
-
+    # Minecraft
+    prismlauncher
   ];
 }
