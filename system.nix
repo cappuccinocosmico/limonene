@@ -15,7 +15,7 @@
       initialPassword = "changedapassword";
       isNormalUser = true;
       # TODO: Be sure to add any other groups you need (such as networkmanager, audio, docker, etc)
-      extraGroups = [ "networkmanager" "wheel" "video" "entertain" "wireshark"];
+      extraGroups = [ "networkmanager" "wheel" "video" "entertain" "wireshark" "docker"];
       shell = pkgs.nushell;
     };
   };

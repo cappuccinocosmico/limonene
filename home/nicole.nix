@@ -36,13 +36,6 @@
       templates = null;
     };
   };
-  qt.enable = true;
-  qt.style.name = "adwaita-dark";
-  gtk.enable = true;
-  gtk.theme = {
-    name = "Arc-Dark";
-    package = pkgs.arc-theme;
-  };
   programs= {
     # Enable home-manager and git
     git={
