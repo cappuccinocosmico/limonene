@@ -68,13 +68,6 @@
   };
   networking.networkmanager.enable = true;
   users.groups.entertain.gid = 4269;
-  networking.nameservers = [
-    "1.1.1.1"
-    "1.0.0.1"
-  ];
-  networking.firewall = {
-    allowedUDPPorts = [ 2234 ];
-  };
   security.polkit.enable = true;
   programs.kdeconnect= {
     enable = true;
