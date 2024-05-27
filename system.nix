@@ -19,7 +19,12 @@
       shell = pkgs.nushell;
     };
   };
-  networking.firewall.enable = false;
+  networking = {
+      enableIPv6 = true;
+      useDHCP = true;
+      dhcpcd.persistent = true;
+      firewall.enable = false;
+    };
   boot = {
     extraModulePackages = with config.boot.kernelPackages; [ ];
     loader.efi = {
