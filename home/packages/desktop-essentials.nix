@@ -30,6 +30,7 @@
       calibre # ebook thing
       gnome.gnome-font-viewer
       gnome-text-editor
+      neovim-gtk
       # diebahn # Train table viewer 
   ];
 }
