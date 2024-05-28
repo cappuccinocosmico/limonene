@@ -20,11 +20,10 @@
     };
   };
   networking = {
-      enableIPv6 = true;
-      useDHCP = true;
-      dhcpcd.persistent = true;
-      firewall.enable = false;
-    };
+    networkmanager.enable = true;
+    enableIPv6 = true;
+    firewall.enable = false;
+  };
   boot = {
     extraModulePackages = with config.boot.kernelPackages; [ ];
     loader.efi = {

@@ -66,7 +66,6 @@
     enable = true;
     libraries = with pkgs; [];
   };
-  networking.networkmanager.enable = true;
   users.groups.entertain.gid = 4269;
   security.polkit.enable = true;
   programs.kdeconnect= {

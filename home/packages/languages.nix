@@ -43,6 +43,7 @@
     corepack
     uv
     pipx
+    prettierd
     # python311Full
     python313Full
     poetry
