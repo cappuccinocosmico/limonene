@@ -24,4 +24,8 @@ $env.PATH = (
       enable = true;
       enableNushellIntegration = true;
     };
+    programs.zoxide = {
+      enable = true;
+      enableNushellIntegration = true;
+    };
   }
