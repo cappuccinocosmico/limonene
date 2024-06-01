@@ -4,6 +4,7 @@
     ./services.nix
     # System Pkgs
     ./server-pkgs.nix
+    ./nixos-exclusive.nix
   ];
   
   boot = {

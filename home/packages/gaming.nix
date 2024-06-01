@@ -5,7 +5,7 @@
     gnome.gnome-sudoku
     minetest
     # Stores
-    steam
+    # steam
     heroic
     # Minecraft
     prismlauncher
