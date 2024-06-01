@@ -8,6 +8,7 @@
     # Select Window Managers Here:
     wm/sway.nix
     ./packages.nix
+    ,/fonts.nix
   ];
   home.packages = [ pkgs.dconf ];
   home = {
