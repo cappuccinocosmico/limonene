@@ -8,9 +8,13 @@
     # Select Window Managers Here:
     wm/sway.nix
     ./packages.nix
-    ,/fonts.nix
+    ./fonts.nix
   ];
   home.packages = [ pkgs.dconf ];
+  home.sessionVariables = {
+   NIXPKGS_ALLOW_UNFREE="1";
+   SHELL="/home/nicole/.nix-profile/bin/fish";
+  };
   home = {
     username = "nicole";
     homeDirectory = "/home/nicole";

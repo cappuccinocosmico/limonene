@@ -6,7 +6,7 @@
     packages/server-essentials.nix
     packages/gaming.nix
     packages/music.nix
-    packages/nushell.nix
+    packages/shells.nix
     packages/nvim.nix
     packages/foot.nix
     packages/languages.nix

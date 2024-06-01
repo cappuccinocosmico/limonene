@@ -12,20 +12,22 @@ $env.PATH = (
         dlp-lectures = ''yt-dlp --S "vcodec:av01 (bv*[height<=720]+ba)" --sponsorblock-remove all --embed-metadata --embed-chapters --embed-thumbnail --sub-langs all --write-subs --write-auto-subs --sub-format "srt" --embed-subs --merge-output-format "mkv" -o "%(playlist)s/%(playlist_autonumber)s - %(title)s.%(ext)s"'';
       };
     };
-    programs.carapace = {
-        enable = true;
-        enableNushellIntegration = true;
+    programs.fish  = {
+      enable = true;
     };
     programs.oh-my-posh= {
       enable = false;
       enableNushellIntegration = true;
+      enableFishIntegration = true;
     };
     programs.yazi = {
       enable = true;
       enableNushellIntegration = true;
+      enableFishIntegration = true;
     };
     programs.zoxide = {
       enable = true;
       enableNushellIntegration = true;
+      enableFishIntegration = true;
     };
   }

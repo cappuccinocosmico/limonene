@@ -7,14 +7,5 @@
     dejavu_fonts
     monocraft
     ];
-    fontconfig = {
-      antialias = true;
-      defaultFonts = {
-        serif = [ "Ubuntu" ];
-        sansSerif = [ "Ubuntu" ];
-        monospace = [ "Ubuntu" ];
-      };
-    };
-  };
 }
 
