@@ -18,7 +18,6 @@
     tofi # cmd tofi-run
     foot
     pamixer # For volume control
-    light
   ];
   programs.foot = {
     enable = true;
