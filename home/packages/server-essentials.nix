@@ -39,6 +39,7 @@
     gnome.gnome-terminal
     # mycor stuff
     thttpd
+    nmtui
     
   ];
 }
