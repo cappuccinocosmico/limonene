@@ -40,5 +40,6 @@
     # mycor stuff
     thttpd
     networkmanager
+    nettools
   ];
 }

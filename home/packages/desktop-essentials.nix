@@ -32,5 +32,6 @@
       gnome-text-editor
       neovim-gtk
       # diebahn # Train table viewer 
+      cyberchef
   ];
 }
