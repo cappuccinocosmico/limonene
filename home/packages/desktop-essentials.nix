@@ -6,8 +6,8 @@
       deadbeef
       mpv
       firefox 
+      firefox-esr # For use with i2p
       ungoogled-chromium
-      tor-browser
       nicotine-plus
       vscodium-fhs 
       gnome.nautilus
