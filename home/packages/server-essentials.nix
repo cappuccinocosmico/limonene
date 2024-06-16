@@ -41,5 +41,7 @@
     thttpd
     networkmanager
     nettools
+    # Tor hidden services stuff 
+    mkp224o
   ];
 }
