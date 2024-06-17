@@ -5,8 +5,8 @@
       vlc
       deadbeef
       mpv
+      librewolf # For use with i2p
       firefox 
-      firefox-esr # For use with i2p
       ungoogled-chromium
       nicotine-plus
       vscodium-fhs 
