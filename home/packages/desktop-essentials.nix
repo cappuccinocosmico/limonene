@@ -33,6 +33,10 @@
       neovim-gtk
       # diebahn # Train table viewer 
       cyberchef
-      spacedrive # file manager
+      # linphone # VOIP softphone
+      calls
+      jami
+      # Music
+      vcv-rack
   ];
 }
