@@ -58,5 +58,6 @@
     dbeaver-bin
     # Proofs
     elan
+    jdk
   ];
 }
