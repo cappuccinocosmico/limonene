@@ -43,6 +43,6 @@
     nettools
     # Tor hidden services stuff 
     mkp224o
-    tycat # image viewing in terminal
+    viu # image viewing in terminal
   ];
 }

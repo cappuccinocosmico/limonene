@@ -38,5 +38,6 @@
       jami
       # Music
       vcv-rack
+      gimp
   ];
 }
