@@ -4,9 +4,9 @@
     gnome.gnome-mines
     gnome.gnome-sudoku
     minetest
-    # Stores
+    # Stores Removed for incompatibility reasons
     # steam
-    heroic
+    # heroic
     # Minecraft
     prismlauncher
   ];
