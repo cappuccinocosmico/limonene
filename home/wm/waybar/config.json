@@ -13,7 +13,6 @@
     "pulseaudio",
     "network",
     "battery",
-    "custom/power-menu"
   ],
   "sway/workspaces": {
     "focused": ""
