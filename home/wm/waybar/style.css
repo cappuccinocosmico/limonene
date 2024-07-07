@@ -104,12 +104,6 @@ window#waybar {
 #backlight,
 #pulseaudio,
 #network,
-#battery {
-  background: @bg;
-  color: @fg;
-  padding: 4px;
-  margin: 4px 0px;
-}
 #backlight {
   border-radius: 42px 0px 0px 42px;
   margin-left: 4px;
@@ -127,11 +121,37 @@ window#waybar {
   margin: 4px;
   border-radius: 42px;
 }
-
-#custom-power-menu {
+#battery {
   background: @nord11;
   color: @bg;
   border-radius: 42px;
   margin: 8px;
   padding: 12px;
+  /* Add a transition effect for the battery level changes */
+  transition: background-color 0.5s ease-in-out;
+}
+
+/* Battery level styles */
+#custom-power-menu[battery-level="above-40"] {
+  background-color: @bg;
+}
+
+#custom-power-menu[battery-level="between-20-40"] {
+  background-color: @color9; /* Solid red */
+}
+
+#custom-power-menu[battery-level="below-20"] {
+  animation: flash-red 1s infinite;
+}
+
+@keyframes flash-red {
+  0% {
+    background-color: @color9;
+  }
+  50% {
+    background-color: @bg;
+  }
+  100% {
+    background-color: @color9;
+  }
 }
