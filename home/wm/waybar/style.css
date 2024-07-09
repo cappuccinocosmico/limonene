@@ -90,14 +90,11 @@ window#waybar {
 #pulseaudio,
 #network,
 #backlight {
+  background: @bg;
+  color: @fg;
   border-radius: 42px 0px 0px 42px;
-  margin-left: 4px;
-  padding-left: 8px;
-}
-#battery {
-  border-radius: 0px 42px 42px 0px;
-  margin-right: 4px;
-  padding-right: 8px;
+  margin: 8px;
+  padding: 12px;
 }
 #clock {
   background: @bg;
@@ -106,6 +103,8 @@ window#waybar {
   margin: 4px;
   border-radius: 42px;
 }
+
+
 #battery {
   background: @nord11;
   color: @bg;

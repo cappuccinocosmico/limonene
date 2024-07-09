@@ -1,5 +1,6 @@
 { inputs, lib, config, pkgs, ... }: {
   home.packages = with pkgs; [
+    kompose # docker compose to Kubernetes converter 
     # Terminal Utils
     tmux
     yt-dlp
