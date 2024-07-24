@@ -1,12 +1,13 @@
 { inputs, lib, config, pkgs, ... }: {
   home.packages = with pkgs; [
-      graphite-gtk-theme
+      # ABSOLUTELY ESSENTIAL DO NOT DELETE
+      duplicati
+      # ----------
       # Experiments
       vlc
       deadbeef
       mpv
-      librewolf # For use with i2p
-      firefox 
+      # firefox 
       ungoogled-chromium
       nicotine-plus
       vscodium-fhs 
@@ -33,6 +34,7 @@
       neovim-gtk
       # diebahn # Train table viewer 
       cyberchef
+      zed-editor
       # linphone # VOIP softphone
       calls
       jami

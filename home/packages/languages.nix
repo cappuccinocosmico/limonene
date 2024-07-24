@@ -39,9 +39,10 @@
   in [
     mylatex
     biber
-    nodejs
+    nodejs_22
     corepack
     pipx
+    black
     prettierd
     # poetry
     # Extra Git stuff
