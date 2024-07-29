@@ -9,6 +9,7 @@
       mpv
       # firefox 
       ungoogled-chromium
+      tor-browser
       nicotine-plus
       vscodium-fhs 
       gnome.nautilus
