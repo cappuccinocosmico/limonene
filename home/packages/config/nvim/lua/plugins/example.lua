@@ -14,6 +14,12 @@ return {
           require("gp").setup(conf)
 
           -- Setup shortcuts here (see Usage > Shortcuts in the Documentation/Readme)
+          -- Both visual and normal mode for each, so you can open with a visual selection or without.
+          vim.api.nvim_set_keymap('v', '<leader>a', ':GPTModelsCode<CR>', { noremap = true })
+          vim.api.nvim_set_keymap('n', '<leader>a', ':GPTModelsCode<CR>', { noremap = true })
+
+          vim.api.nvim_set_keymap('v', '<leader>d', ':GPTModelsChat<CR>', { noremap = true })
+          vim.api.nvim_set_keymap('n', '<leader>d', ':GPTModelsChat<CR>', { noremap = true })
       end,
   },
   {
