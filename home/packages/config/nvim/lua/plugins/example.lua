@@ -5,6 +5,7 @@
 -- * disable/enabled LazyVim plugins
 -- * override the configuration of LazyVim plugins
 return {
+  {"ThePrimeagen/vim-be-good"},
   {
       "robitx/gp.nvim",
       config = function()

@@ -42,5 +42,6 @@
       # Music
       vcv-rack
       gimp
+      kdePackages.kigo
   ];
 }

@@ -4,13 +4,13 @@
     kubernetes-helm
     # Terminal Utils
     tmux
+    gh # Github CLI
     yt-dlp
     age
     pciutils
     parted
     exfat
     btop
-    pv # pipe viewer??
     zip
     wget
     lazygit
@@ -26,7 +26,6 @@
     dig
     hugo
     tailscale
-    trayscale
     speedtest-cli
     nushell
     btop
