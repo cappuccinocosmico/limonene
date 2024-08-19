@@ -105,8 +105,10 @@ local function oklch_to_rgb(L, C, H)
     local function linear_to_srgb(c)
         if c >= 1 then
           return 1
+        end
         if c <= 0 then 
           return 0
+        end
         if c <= 0.0031308 then
             return 12.92 * c
         else
