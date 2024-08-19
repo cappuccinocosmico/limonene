@@ -103,6 +103,10 @@ local function oklch_to_rgb(L, C, H)
 
     -- Apply gamma correction
     local function linear_to_srgb(c)
+        if c >= 1 then
+          return 1
+        if c <= 0 then 
+          return 0
         if c <= 0.0031308 then
             return 12.92 * c
         else
@@ -143,7 +147,8 @@ return {
           oklch_color = {
             pattern = "oklch%((%d+%%) (%d+%.?%d*) (%d+%.?%d*)",
             group = function(_, _, data)
-              local L, C, H = tonumber(data.captures[1]:gsub("%%", "")) / 100, tonumber(data.captures[2]), tonumber(data.captures[3])
+              local L, C, H = tonumber(data.captures[1]:gsub("%%", "")) / 100, tonumber(data.captures[2]), tonumber(data.captures[3] * 0.0174532925)
+              -- 0.017453 = 2*pi/360
               local rgb = oklch_to_rgb(L, C, H)
               local hex_color = string.format("#%02x%02x%02x", math.floor(rgb.r * 255), math.floor(rgb.g * 255), math.floor(rgb.b * 255))
               return MiniHipatterns.compute_hex_color_group(hex_color, "bg")
