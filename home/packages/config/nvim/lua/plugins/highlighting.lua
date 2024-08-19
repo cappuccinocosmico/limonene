@@ -166,18 +166,15 @@ return {
           -- Colors outside of RGB but inside apple color space
           -- super green : oklch(84.42% 0.3417 142.94)
           -- super magenta: oklch(70.77% 0.3525 330.35)
-          -- local oklch_pattern = "oklch%((%d+)%% (%d+%.?%d*) (%d+%.?%d*)%)"
           
           oklch_color = {
-            pattern = "oklch%((%d+)%% (%d+%.?%d*) (%d+%.?%d*)%)",
+            pattern = "oklch%(([^)]+)%)",
             group = function(_, _, match)
-              local L, C, H = tonumber(match[1]), tonumber(match[2]), tonumber(match[3])
-              -- if L == nil or C == nil or H == nil then
-              --   return "bobloblawslawblog"
-              --   -- return nil
-              -- end
+              local oklch_values = match[1]
+              local L, C, H = oklch_values:match("([^ ]+) ([^ ]+) ([^ )]+)")
+              L, C, H = tonumber(L:sub(1, -2)), tonumber(C), tonumber(H)
+              
               local rgb = oklch_to_rgb(L * .01, C, H * 0.0174532925)
-              -- * 0.0174532925 = 2*pi/360
               local hex_color = string.format("#%02x%02x%02x", math.floor(rgb.r * 255), math.floor(rgb.g * 255), math.floor(rgb.b * 255))
               return MiniHipatterns.compute_hex_color_group(hex_color, "bg")
             end,
