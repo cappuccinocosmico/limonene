@@ -87,6 +87,13 @@ local function oklch_to_rgb(L, C, H)
     local a = C * math.cos(H)
     local b = C * math.sin(H)
     local Lab = {L = L, a = a, b = b}
+        },
+        oklch_color = {
+          pattern = "oklch%((%d+%%) (%d+%.?%d*) (%d+%.?%d*)",
+          group = function(_, _, data)
+            local L, C, H = tonumber(data.captures[1]:gsub("%%", "")) / 100, tonumber(data.captures[2]), tonumber(data.captures[3])
+            local rgb = oklch_to_rgb(L, C, H)
+            local hex_color = string.format("#%02x%02x%02x", math.floor(rgb.r * 255), math.floor(rgb.g * 255), math.floor(rgb.b * 255))
 
     -- Convert Lab to linear sRGB
     local l_ = Lab.L + 0.3963377774 * Lab.a + 0.2158037573 * Lab.b
@@ -139,7 +146,9 @@ return {
               return MiniHipatterns.compute_hex_color_group(hex_color, "bg")
             end,
             extmark_opts = { priority = 2000 },
-          },
+            return MiniHipatterns.compute_hex_color_group(hex_color, "bg")
+          end,
+          extmark_opts = { priority = 2000 },
         },
         -- custom LazyVim option to enable the tailwind integration
         tailwind = {
