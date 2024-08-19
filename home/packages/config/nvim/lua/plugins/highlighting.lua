@@ -1,11 +1,5 @@
 -- every spec file under the "plugins" directory will be loaded automatically by lazy.nvim
 --
--- In your plugin files, you can:
--- * add extra plugins
--- * disable/enabled LazyVim plugins
--- * override the configuration of LazyVim pluginsstruct Lab {float L; float a; float b;};
--- struct RGB {float r; float g; float b;};
--- 
 -- Lab linear_srgb_to_oklab(RGB c) 
 -- {
 --     float l = 0.4122214708f * c.r + 0.5363325363f * c.g + 0.0514459929f * c.b;
@@ -22,6 +16,12 @@
 --         0.0259040371f*l_ + 0.7827717662f*m_ - 0.8086757660f*s_,
 --     };
 -- }
+-- In your plugin files, you can:
+-- * add extra plugins
+-- * disable/enabled LazyVim plugins
+-- * override the configuration of LazyVim pluginsstruct Lab {float L; float a; float b;};
+-- struct Lab {float L; float a; float b;};
+-- struct RGB {float r; float g; float b;};
 -- 
 -- RGB oklab_to_linear_srgb(Lab c) 
 -- {
@@ -62,26 +62,41 @@
 -- 
 --     Similar to lab-d65, but the range for L is 0 to 1, and a and b range from -0.4 to 0.4.
 -- 
-return {
-  {
-    'cameron-wags/rainbow_csv.nvim',
-    config = true,
-    ft = {
-        'csv',
-        'tsv',
-        'csv_semicolon',
-        'csv_whitespace',
-        'csv_pipe',
-        'rfc_csv',
-        'rfc_semicolon'
-    },
-    cmd = {
-        'RainbowDelim',
-        'RainbowDelimSimple',
-        'RainbowDelimQuoted',
-        'RainbowMultiDelim'
+local function oklch_to_rgb(L, C, H)
+    -- Convert LCH to Lab
+    local a = C * math.cos(H)
+    local b = C * math.sin(H)
+    local Lab = {L = L, a = a, b = b}
+
+    -- Convert Lab to linear sRGB
+    local l_ = Lab.L + 0.3963377774 * Lab.a + 0.2158037573 * Lab.b
+    local m_ = Lab.L - 0.1055613458 * Lab.a - 0.0638541728 * Lab.b
+    local s_ = Lab.L - 0.0894841775 * Lab.a - 1.291485548 * Lab.b
+
+    local l = l_ * l_ * l_
+    local m = m_ * m_ * m_
+    local s = s_ * s_ * s_
+
+    local r = 4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s
+    local g = -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s
+    local b = -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s
+
+    -- Apply gamma correction
+    local function linear_to_srgb(c)
+        if c <= 0.0031308 then
+            return 12.92 * c
+        else
+            return 1.055 * (c ^ (1 / 2.4)) - 0.055
+        end
+    end
+
+    return {
+        r = linear_to_srgb(r),
+        g = linear_to_srgb(g),
+        b = linear_to_srgb(b)
     }
-  },
+end
+return {
   {
     "echasnovski/mini.hipatterns",
     recommended = true,
@@ -170,5 +185,24 @@ return {
       end
       require("mini.hipatterns").setup(opts)
     end,
-  }
+  },
+  {
+    'cameron-wags/rainbow_csv.nvim',
+    config = true,
+    ft = {
+        'csv',
+        'tsv',
+        'csv_semicolon',
+        'csv_whitespace',
+        'csv_pipe',
+        'rfc_csv',
+        'rfc_semicolon'
+    },
+    cmd = {
+        'RainbowDelim',
+        'RainbowDelimSimple',
+        'RainbowDelimQuoted',
+        'RainbowMultiDelim'
+    }
+  },
 }
