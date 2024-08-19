@@ -1,67 +1,20 @@
--- every spec file under the "plugins" directory will be loaded automatically by lazy.nvim
---
--- Lab linear_srgb_to_oklab(RGB c) 
--- {
---     float l = 0.4122214708f * c.r + 0.5363325363f * c.g + 0.0514459929f * c.b;
--- 	float m = 0.2119034982f * c.r + 0.6806995451f * c.g + 0.1073969566f * c.b;
--- 	float s = 0.0883024619f * c.r + 0.2817188376f * c.g + 0.6299787005f * c.b;
--- 
---     float l_ = cbrtf(l);
---     float m_ = cbrtf(m);
---     float s_ = cbrtf(s);
--- 
---     return {
---         0.2104542553f*l_ + 0.7936177850f*m_ - 0.0040720468f*s_,
---         1.9779984951f*l_ - 2.4285922050f*m_ + 0.4505937099f*s_,
---         0.0259040371f*l_ + 0.7827717662f*m_ - 0.8086757660f*s_,
---     };
--- }
--- In your plugin files, you can:
--- * add extra plugins
--- * disable/enabled LazyVim plugins
--- * override the configuration of LazyVim pluginsstruct Lab {float L; float a; float b;};
--- struct Lab {float L; float a; float b;};
--- struct RGB {float r; float g; float b;};
--- 
--- RGB oklab_to_linear_srgb(Lab c) 
--- {
---     float l_ = c.L + 0.3963377774f * c.a + 0.2158037573f * c.b;
---     float m_ = c.L - 0.1055613458f * c.a - 0.0638541728f * c.b;
---     float s_ = c.L - 0.0894841775f * c.a - 1.2914855480f * c.b;
--- 
---     float l = l_*l_*l_;
---     float m = m_*m_*m_;
---     float s = s_*s_*s_;
--- 
---     return {
--- 		+4.0767416621f * l - 3.3077115913f * m + 0.2309699292f * s,
--- 		-1.2684380046f * l + 2.6097574011f * m - 0.3413193965f * s,
--- 		-0.0041960863f * l - 0.7034186147f * m + 1.7076147010f * s,
---     };
--- }
--- 
--- CIELAB color spaces
--- 
--- The CIELAB (or CIELab) color space, also referred to as L*a*b* (or Lab* for short), represents the entire range of color that humans can see. This color space was defined by International Commission on Illumination (CIE). It expresses color as three values: L* for perceptual lightness, and a* and b* for the four unique colors of human vision: red, green, blue, and yellow.
--- 
--- Lab is a rectangular coordinate system, with a central lightness L axis. Positive values along the a axis are a purplish red while negative values are the complement: green. Positive values along the b axis are yellow and negative are blue/violet. Desaturated colors have small values for a and b with greater absolute values being more saturated.
--- 
--- CIELab color functions include lab() (lightness, a-axis, b-axis) and lch() (lightness, chroma, hue) as well as oklab() and oklch(). The lightness values are the same, but lch() and oklch are polar, cylindrical coordinate systems, that use polar coordinates C (chroma) and H (hue) rather than axes.
--- 
--- Note: The hue and lightness in lch() and oklch are different from the same-named values in hsl() or other sRGB color spaces.
--- 
--- CIELab color spaces, including Lab, Lch, Oklab, and Oklch, are device-independent color spaces.
--- 
--- lab-d50 color space
--- 
---     Expresses color as L in a range from 0 to 100, and a and b with a range from -125 to 125. The a and b axes are not bound by these range values, which are references in defining percentage inputs and outputs in relation to the Display P3 color space. The whitepoint is D50.
--- lab-d65 color space
--- 
---     This color space is the same as lab-d50, except that the whitepoint is D65.
--- oklab color space
--- 
---     Similar to lab-d65, but the range for L is 0 to 1, and a and b range from -0.4 to 0.4.
--- 
+-- Test the corners of the RGB Cube
+-- #000000
+-- oklch(0% 0 0)
+-- #ffffff
+-- oklch(100% 0 0)
+-- #ff0000
+-- oklch(62.8% 0.25768330773615683 29.2338851923426)
+-- #00ff00 
+-- oklch(86.64% 0.2947552610302938 142.49533888780996)
+-- #0000ff
+-- oklch(45.2% 0.3131362576587438 264.05300810418345)
+-- #ffff00
+-- oklch(96.8% 0.21095439261133309 109.76923207652135)
+-- #ff00ff
+-- oklch(70.17% 0.322 328.36)
+-- #00ffff
+-- oklch(90.54% 0.154 194.77)
 local function oklch_to_rgb(L, C, H)
     -- Convert LCH to Lab
     local a = C * math.cos(H)
@@ -102,6 +55,40 @@ local function oklch_to_rgb(L, C, H)
         b = linear_to_srgb(b)
     }
 end
+local function oklch_string_to_hex(oklch_str)
+    local L, C, H = oklch_str:match("oklch%(([%d%.]+)%% ([%d%.]+) ([%d%.]+)%)")
+    L = tonumber(L) *  0.01
+    C = tonumber(C)
+    H = tonumber(H) * 0.0174532925
+
+    local rgb = oklch_to_rgb(L, C, H)
+
+    local function to_hex(c)
+        return string.format("%02x", math.floor(c * 255 + 0.5))
+    end
+
+    return string.format("#%s%s%s", to_hex(rgb.r), to_hex(rgb.g), to_hex(rgb.b))
+end
+-- local function test_oklch_to_hex()
+--     local tests = {
+--         {oklch = "oklch(0% 0 0)", expected_hex = "#000000"},
+--         {oklch = "oklch(100% 0 0)", expected_hex = "#ffffff"},
+--         {oklch = "oklch(62.8% 0.25768330773615683 29.2338851923426)", expected_hex = "#ff0000"},
+--         {oklch = "oklch(86.64% 0.2947552610302938 142.49533888780996)", expected_hex = "#00ff00"},
+--         {oklch = "oklch(45.2% 0.3131362576587438 264.05300810418345)", expected_hex = "#0000ff"},
+--         {oklch = "oklch(96.8% 0.21095439261133309 109.76923207652135)", expected_hex = "#ffff00"},
+--         {oklch = "oklch(70.17% 0.322 328.36)", expected_hex = "#ff00ff"},
+--         {oklch = "oklch(90.54% 0.154 194.77)", expected_hex = "#00ffff"}
+--     }
+--
+--     for _, test in ipairs(tests) do
+--         print("Testing oklch to hex for: " .. test.oklch)
+--         local result_hex = oklch_string_to_hex(test.oklch)
+--         assert(result_hex == test.expected_hex, string.format("Expected %s but got %s for %s", test.expected_hex, result_hex, test.oklch))
+--     end
+--     print("All tests passed!")
+-- end
+
 
 return {
   {
@@ -113,73 +100,28 @@ return {
       local hi = require("mini.hipatterns")
       return {
         highlighters = {
-          hex_color = hi.gen_highlighter.hex_color({ priority = 2000 }),
-          shorthand = {
-            pattern = "()#%x%x%x()%f[^%x%w]",
-            group = function(_, _, data)
+          oklch_color = {
+            pattern = "oklch%((.-)%)",
+            group = function(match)
               ---@type string
-              local match = data.full_match
-              local r, g, b = match:sub(2, 2), match:sub(3, 3), match:sub(4, 4)
-              local hex_color = "#" .. r .. r .. g .. g .. b .. b
-
+              local hex_color = oklch_string_to_hex(match)
               return MiniHipatterns.compute_hex_color_group(hex_color, "bg")
             end,
             extmark_opts = { priority = 2000 },
           },
-          -- Test the corners of the RGB Cube
-          -- #000000
-          -- oklch(0% 0 0)
-          -- #ffffff
-          -- oklch(100% 0 0)
-          -- #ff0000
-          -- oklch(62.8% 0.25768330773615683 29.2338851923426)
-          -- #00ff00 
-          -- oklch(86.64% 0.2947552610302938 142.49533888780996)
-          -- #0000ff
-          -- oklch(45.2% 0.3131362576587438 264.05300810418345)
-          -- #ffff00
-          -- oklch(96.8% 0.21095439261133309 109.76923207652135)
-          -- #ff00ff
-          -- oklch(70.17% 0.322 328.36)
-          -- #00ffff
-          -- oklch(90.54% 0.154 194.77)
-          -- Colors outside of RGB but inside apple color space
-          -- super green : oklch(84.42% 0.3417 142.94)
-          -- super magenta: oklch(70.77% 0.3525 330.35)
-          -- Test the corners of the RGB Cube
-          -- #000000
-          -- oklch(0% 0 0)
-          -- #ffffff
-          -- oklch(100% 0 0)
-          -- #ff0000
-          -- oklch(62.8% 0.25768330773615683 29.2338851923426)
-          -- #00ff00 
-          -- oklch(86.64% 0.2947552610302938 142.49533888780996)
-          -- #0000ff
-          -- oklch(45.2% 0.3131362576587438 264.05300810418345)
-          -- #ffff00
-          -- oklch(96.8% 0.21095439261133309 109.76923207652135)
-          -- #ff00ff
-          -- oklch(70.17% 0.322 328.36)
-          -- #00ffff
-          -- oklch(90.54% 0.154 194.77)
-          -- Colors outside of RGB but inside apple color space
-          -- super green : oklch(84.42% 0.3417 142.94)
-          -- super magenta: oklch(70.77% 0.3525 330.35)
-          
-          oklch_color = {
-            pattern = "oklch%(([^)]+)%)",
-            group = function(_, _, match)
-              local oklch_values = match[1]
-              local L, C, H = oklch_values:match("([^ ]+) ([^ ]+) ([^ )]+)")
-              L, C, H = tonumber(L:sub(1, -2)), tonumber(C), tonumber(H)
-              
-              local rgb = oklch_to_rgb(L * .01, C, H * 0.0174532925)
-              local hex_color = string.format("#%02x%02x%02x", math.floor(rgb.r * 255), math.floor(rgb.g * 255), math.floor(rgb.b * 255))
-              return MiniHipatterns.compute_hex_color_group(hex_color, "bg")
-            end,
-            extmark_opts = { priority = 2000 },
-          }
+          hex_color = hi.gen_highlighter.hex_color({ priority = 2000 })
+          -- shorthand = {
+          --   pattern = "()#%x%x%x()%f[^%x%w]",
+          --   group = function(_, _, data)
+          --     ---@type string
+          --     local match = data.full_match
+          --     local r, g, b = match:sub(2, 2), match:sub(3, 3), match:sub(4, 4)
+          --     local hex_color = "#" .. r .. r .. g .. g .. b .. b
+          --
+          --     return MiniHipatterns.compute_hex_color_group(hex_color, "bg")
+          --   end,
+          --   extmark_opts = { priority = 2000 },
+          -- },
         },
         -- custom LazyVim option to enable the tailwind integration
         tailwind = {

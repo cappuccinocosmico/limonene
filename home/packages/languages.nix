@@ -63,5 +63,6 @@
     # Proofs
     elan
     jdk
+    lua
   ];
 }
