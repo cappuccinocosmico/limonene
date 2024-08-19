@@ -62,26 +62,6 @@
 -- 
 --     Similar to lab-d65, but the range for L is 0 to 1, and a and b range from -0.4 to 0.4.
 -- 
--- Test the corners of the RGB Cube
--- #000000
--- oklch(0% 0 0)
--- #ffffff
--- oklch(100% 0 0)
--- #ff0000
--- oklch(62.8% 0.25768330773615683 29.2338851923426)
--- #00ff00 
--- oklch(86.64% 0.2947552610302938 142.49533888780996)
--- #0000ff
--- oklch(45.2% 0.3131362576587438 264.05300810418345)
--- #ffff00
--- oklch(96.8% 0.21095439261133309 109.76923207652135)
--- #ff00ff
--- oklch(70.17% 0.322 328.36)
--- #00ffff
--- oklch(90.54% 0.154 194.77)
--- Colors outside of RGB but inside apple color space
--- super green : oklch(84.42% 0.3417 142.94)
--- super magenta: oklch(70.77% 0.3525 330.35)
 local function oklch_to_rgb(L, C, H)
     -- Convert LCH to Lab
     local a = C * math.cos(H)
@@ -146,10 +126,50 @@ return {
             end,
             extmark_opts = { priority = 2000 },
           },
+          -- Test the corners of the RGB Cube
+          -- #000000
+          -- oklch(0% 0 0)
+          -- #ffffff
+          -- oklch(100% 0 0)
+          -- #ff0000
+          -- oklch(62.8% 0.25768330773615683 29.2338851923426)
+          -- #00ff00 
+          -- oklch(86.64% 0.2947552610302938 142.49533888780996)
+          -- #0000ff
+          -- oklch(45.2% 0.3131362576587438 264.05300810418345)
+          -- #ffff00
+          -- oklch(96.8% 0.21095439261133309 109.76923207652135)
+          -- #ff00ff
+          -- oklch(70.17% 0.322 328.36)
+          -- #00ffff
+          -- oklch(90.54% 0.154 194.77)
+          -- Colors outside of RGB but inside apple color space
+          -- super green : oklch(84.42% 0.3417 142.94)
+          -- super magenta: oklch(70.77% 0.3525 330.35)
+          -- Test the corners of the RGB Cube
+          -- #000000
+          -- oklch(0% 0 0)
+          -- #ffffff
+          -- oklch(100% 0 0)
+          -- #ff0000
+          -- oklch(62.8% 0.25768330773615683 29.2338851923426)
+          -- #00ff00 
+          -- oklch(86.64% 0.2947552610302938 142.49533888780996)
+          -- #0000ff
+          -- oklch(45.2% 0.3131362576587438 264.05300810418345)
+          -- #ffff00
+          -- oklch(96.8% 0.21095439261133309 109.76923207652135)
+          -- #ff00ff
+          -- oklch(70.17% 0.322 328.36)
+          -- #00ffff
+          -- oklch(90.54% 0.154 194.77)
+          -- Colors outside of RGB but inside apple color space
+          -- super green : oklch(84.42% 0.3417 142.94)
+          -- super magenta: oklch(70.77% 0.3525 330.35)
           oklch_color = {
-            pattern = "oklch%((%d+%%) (%d+%.?%d*) (%d+%.?%d*)",
-            group = function(_, _, data)
-              local L, C, H = tonumber(data.captures[1]:gsub("%%", "")), tonumber(data.captures[2]), tonumber(data.captures[3] )
+            pattern = "oklch%((%d+%.?%d*)%% (%d+%.?%d*) (%d+%.?%d*)",
+            group = function(_, _, match)
+              local L, C, H = tonumber(match[1]), tonumber(match[2]), tonumber(match[3])
               local rgb = oklch_to_rgb(L * .01, C, H * 0.0174532925)
               -- * 0.0174532925 = 2*pi/360
               local hex_color = string.format("#%02x%02x%02x", math.floor(rgb.r * 255), math.floor(rgb.g * 255), math.floor(rgb.b * 255))

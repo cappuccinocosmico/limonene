@@ -44,8 +44,8 @@
     keybindings = let
      mod = config.wayland.windowManager.sway.config.modifier;
     in  lib.mkOptionDefault {
-     "XF86AudioRaiseVolume" =  "exec pamixer -i 5";
-     "XF86AudioLowerVolume" = "exec pamixer -d 5";
+     "XF86AudioRaiseVolume" =  "exec pamixer -i 2";
+     "XF86AudioLowerVolume" = "exec pamixer -d 2";
      "XF86AudioMute" = "exec pamixer -t";
      "XF86MonBrightnessDown" = "exec light -U 5";
      "XF86MonBrightnessUp" = "exec light -A 5";
