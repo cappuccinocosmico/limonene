@@ -150,6 +150,7 @@ return {
             end,
             extmark_opts = { priority = 2000 },
           },
+        },
         -- custom LazyVim option to enable the tailwind integration
         tailwind = {
           enabled = true,
