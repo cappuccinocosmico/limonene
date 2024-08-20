@@ -69,25 +69,30 @@ local function oklch_string_to_hex(oklch_str)
 
     return string.format("#%s%s%s", to_hex(rgb.r), to_hex(rgb.g), to_hex(rgb.b))
 end
--- local function test_oklch_to_hex()
---     local tests = {
---         {oklch = "oklch(0% 0 0)", expected_hex = "#000000"},
---         {oklch = "oklch(100% 0 0)", expected_hex = "#ffffff"},
---         {oklch = "oklch(62.8% 0.25768330773615683 29.2338851923426)", expected_hex = "#ff0000"},
---         {oklch = "oklch(86.64% 0.2947552610302938 142.49533888780996)", expected_hex = "#00ff00"},
---         {oklch = "oklch(45.2% 0.3131362576587438 264.05300810418345)", expected_hex = "#0000ff"},
---         {oklch = "oklch(96.8% 0.21095439261133309 109.76923207652135)", expected_hex = "#ffff00"},
---         {oklch = "oklch(70.17% 0.322 328.36)", expected_hex = "#ff00ff"},
---         {oklch = "oklch(90.54% 0.154 194.77)", expected_hex = "#00ffff"}
---     }
---
---     for _, test in ipairs(tests) do
---         print("Testing oklch to hex for: " .. test.oklch)
---         local result_hex = oklch_string_to_hex(test.oklch)
---         assert(result_hex == test.expected_hex, string.format("Expected %s but got %s for %s", test.expected_hex, result_hex, test.oklch))
---     end
---     print("All tests passed!")
--- end
+local function oklch_highlighter(_, match)
+  -- local hex_color = oklch_string_to_hex(match)
+  return MiniHipatterns.compute_hex_color_group("#00ffff")
+end
+
+local function test_oklch_to_hex()
+    local tests = {
+        {oklch = "oklch(0% 0 0)", expected_hex = "#000000"},
+        {oklch = "oklch(100% 0 0)", expected_hex = "#ffffff"},
+        {oklch = "oklch(62.8% 0.25768330773615683 29.2338851923426)", expected_hex = "#ff0000"},
+        {oklch = "oklch(86.64% 0.2947552610302938 142.49533888780996)", expected_hex = "#00ff00"},
+        {oklch = "oklch(45.2% 0.3131362576587438 264.05300810418345)", expected_hex = "#0000ff"},
+        {oklch = "oklch(96.8% 0.21095439261133309 109.76923207652135)", expected_hex = "#ffff00"},
+        {oklch = "oklch(70.17% 0.322 328.36)", expected_hex = "#ff00ff"},
+        {oklch = "oklch(90.54% 0.154 194.77)", expected_hex = "#00ffff"}
+    }
+
+    for _, test in ipairs(tests) do
+        print("Testing oklch to hex for: " .. test.oklch)
+        local result_hex = oklch_string_to_hex(test.oklch)
+        assert(result_hex == test.expected_hex, string.format("Expected %s but got %s for %s", test.expected_hex, result_hex, test.oklch))
+    end
+    print("All tests passed!")
+end
 
 
 return {
@@ -102,26 +107,10 @@ return {
         highlighters = {
           oklch_color = {
             pattern = "oklch%((.-)%)",
-            group = function(match)
-              ---@type string
-              local hex_color = oklch_string_to_hex(match)
-              return MiniHipatterns.compute_hex_color_group(hex_color, "bg")
-            end,
+            group = oklch_highlighter,
             extmark_opts = { priority = 2000 },
           },
-          hex_color = hi.gen_highlighter.hex_color({ priority = 2000 })
-          -- shorthand = {
-          --   pattern = "()#%x%x%x()%f[^%x%w]",
-          --   group = function(_, _, data)
-          --     ---@type string
-          --     local match = data.full_match
-          --     local r, g, b = match:sub(2, 2), match:sub(3, 3), match:sub(4, 4)
-          --     local hex_color = "#" .. r .. r .. g .. g .. b .. b
-          --
-          --     return MiniHipatterns.compute_hex_color_group(hex_color, "bg")
-          --   end,
-          --   extmark_opts = { priority = 2000 },
-          -- },
+          hex_color = hi.gen_highlighter.hex_color({ priority = 2000 }),
         },
         -- custom LazyVim option to enable the tailwind integration
         tailwind = {
