@@ -40,9 +40,9 @@
     mylatex
     biber
     nodejs_22
-    rust-analyzer
-    rustc 
-    cargo
+    # rust-analyzer 
+    # Maybe included in rustup
+    # rustup
     corepack
     pipx
     black
