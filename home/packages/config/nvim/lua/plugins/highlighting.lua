@@ -108,11 +108,11 @@ return {
           },
           -- Worried about the performance here
           -- word_color = { pattern = '%S+', group = word_color_group },
-          -- hex_color = hi.gen_highlighter.hex_color({ priority = 2000 }),
+          hex_color = hi.gen_highlighter.hex_color({ priority = 2000 }),
         },
         -- custom LazyVim option to enable the tailwind integration
         tailwind = {
-          enabled = true,
+          enabled = false,
           ft = {
             "astro",
             "css",
