@@ -10,7 +10,12 @@
     ./packages.nix
     ./fonts.nix
   ];
-  home.packages = [ pkgs.dconf ];
+  home.packages = [ 
+    pkgs.dconf 
+    # pkgs.nixGL # Necessary for getting sway to run
+    pkgs.mesa
+    pkgs.libdrm
+  ];
   home.sessionVariables = {
    NIXPKGS_ALLOW_UNFREE="1";
    SHELL="/home/nicole/.nix-profile/bin/fish";
