@@ -15,7 +15,7 @@ return {
       opts = {
           -- configuration goes here
       },
-  }
+  },
   {
     "kawre/leetcode.nvim",
     build = ":TSUpdate html",

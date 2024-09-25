@@ -18,6 +18,7 @@
     tofi # cmd tofi-run
     foot
     pamixer # For volume control
+    pwvucontrol
   ];
   programs.foot = {
     enable = true;
