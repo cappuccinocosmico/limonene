@@ -64,5 +64,6 @@
     elan
     jdk
     lua
+    go
   ];
 }
