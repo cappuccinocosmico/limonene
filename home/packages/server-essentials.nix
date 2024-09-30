@@ -3,7 +3,6 @@
     kompose # docker compose to Kubernetes converter 
     kubernetes-helm
     # Terminal Utils
-    tmux
     gh # Github CLI
     yt-dlp
     age
