@@ -1,7 +1,7 @@
 { inputs, lib, config, pkgs, ... }:  {
   programs.tmux  = {
     enable = true;
-    mode = true;
+    mouse = true;
   };
   programs.foot  = {
     enable = true;
