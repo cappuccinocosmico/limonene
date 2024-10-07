@@ -38,6 +38,6 @@
       # Music
       vcv-rack
       gimp
-      libreoffice-still-unwrapped
+      libreoffice-still
   ];
 }
