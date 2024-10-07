@@ -25,23 +25,19 @@
       syncthing
       warp
       # Shell Stuff
-      fish
       # textpieces # Text manipulation tool
       baobab # disk usage analyzer
       foliate # ebook reader
       calibre # ebook thing
       gnome.gnome-font-viewer
       gnome-text-editor
-      neovim-gtk
       # diebahn # Train table viewer 
-      cyberchef
-      zed-editor
       # linphone # VOIP softphone
       calls
       jami
       # Music
       vcv-rack
       gimp
-      kdePackages.kigo
+      libreoffice-still-unwrapped
   ];
 }
