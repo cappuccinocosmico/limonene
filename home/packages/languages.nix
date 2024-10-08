@@ -40,6 +40,7 @@
     mylatex
     biber
     nodejs_22
+    tailwindcss
     # rust-analyzer 
     # Maybe included in rustup
     # rustup
