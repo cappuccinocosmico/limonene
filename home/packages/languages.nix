@@ -64,6 +64,9 @@
     elan
     jdk
     lua
+    # Go Ecosystem
     go
+    sqlc
+    goose
   ];
 }
