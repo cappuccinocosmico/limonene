@@ -2,6 +2,9 @@
   programs.tmux  = {
     enable = true;
     mouse = true;
+    keyMode = "vi";
+    sensibleOnTop = true;
+    terminal = "screen-256color";
   };
   programs.foot  = {
     enable = true;

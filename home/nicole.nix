@@ -50,6 +50,7 @@
     # Enable home-manager and git
     git={
       enable = true;
+      lfs.enable = true;
       userName = "Nicole Venner";
       userEmail = "nvenner@protonmail.ch";
     };
