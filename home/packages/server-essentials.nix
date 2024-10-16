@@ -2,6 +2,7 @@
   home.packages = with pkgs; [
     kompose # docker compose to Kubernetes converter 
     kubernetes-helm
+    frp # Fast Reverse Proxy
     # Terminal Utils
     gh # Github CLI
     yt-dlp
