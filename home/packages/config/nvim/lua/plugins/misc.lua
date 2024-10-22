@@ -5,6 +5,12 @@
 -- * disable/enabled LazyVim plugins
 -- * override the configuration of LazyVim plugins
 return {
+  { "nvchad/volt", lazy = true },
+
+  {
+  "nvchad/minty",
+  cmd = { "Shades", "Huefy" },
+  }
   {"ThePrimeagen/vim-be-good"},
   {
     "rcarriga/nvim-notify",
