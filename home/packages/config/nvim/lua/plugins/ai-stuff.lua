@@ -50,7 +50,7 @@ return {
         ft = { "markdown", "Avante" },
       },
     },
-  }
+  },
   {
       "robitx/gp.nvim",
       config = function()
