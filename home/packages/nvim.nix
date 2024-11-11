@@ -19,5 +19,5 @@
   };
   programs.micro = {
     enable = true;
-  }
+  };
 }
