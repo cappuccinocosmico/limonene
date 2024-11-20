@@ -24,10 +24,12 @@
     enable = true;
   };
   programs.fish.loginShellInit = "
+  if test (tty) = '/dev/tty1'
     set -Ux XDG_CURRENT_DESKTOP sway
     set -Ux MOZ_ENABLE_WAYLAND 1
     /usr/bin/sway
-    ";
+  end
+  ";
   wayland.windowManager.sway = {
    enable = true;
    config = rec {
