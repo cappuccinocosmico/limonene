@@ -23,6 +23,11 @@
   programs.foot = {
     enable = true;
   };
+  programs.fish.loginShellInit = "
+    set -Ux XDG_CURRENT_DESKTOP sway
+    set -Ux MOZ_ENABLE_WAYLAND 1
+    /usr/bin/sway
+    ";
   wayland.windowManager.sway = {
    enable = true;
    config = rec {
