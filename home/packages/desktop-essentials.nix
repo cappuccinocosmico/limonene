@@ -34,7 +34,6 @@
       # diebahn # Train table viewer 
       # linphone # VOIP softphone
       calls
-      jami
       # Music
       vcv-rack
       gimp
