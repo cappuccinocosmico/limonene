@@ -12,7 +12,7 @@
       tor-browser
       nicotine-plus
       vscodium-fhs 
-      gnome.nautilus
+      nautilus
       # Audio
       easyeffects
       # Recording
@@ -29,7 +29,8 @@
       baobab # disk usage analyzer
       foliate # ebook reader
       calibre # ebook thing
-      gnome.gnome-font-viewer
+      gnome-font-viewer
+      gnome-terminal
       gnome-text-editor
       # diebahn # Train table viewer 
       # linphone # VOIP softphone
