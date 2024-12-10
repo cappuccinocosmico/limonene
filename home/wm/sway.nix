@@ -40,6 +40,8 @@
       };
     startup = [
       { command = "light -N .1";}
+      { command = "signal-desktop";}
+      { command = "vlc";}
     ];
     modifier = "Mod1";
     terminal = "foot";

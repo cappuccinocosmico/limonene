@@ -37,7 +37,6 @@
     pandoc
     # SSH annoyingness
     xterm
-    gnome.gnome-terminal
     # mycor stuff
     thttpd
     networkmanager
