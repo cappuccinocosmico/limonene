@@ -1,4 +1,6 @@
-{ inputs, lib, config, pkgs, ... }: {
+{ inputs, lib, config, pkgs, ... }: 
+let wallpaper_path = "~/Pictures/wallpaper.jpg"; in
+{
   # You can import other home-manager modules here
   
   home.packages =  with pkgs; [
@@ -77,7 +79,10 @@ input "2362:628:PIXA3854:00_093A:0274_Touchpad" {
 }
 seat seat0 xcursor_theme default 48
 output eDP-1 scale 1
-exec mako'';
+exec mako
+exec swaybg -i ${wallpaper_path} -m fill
+'';
+# output * background ${wallpaper_path} fill
   };
   programs.waybar = {
     enable = true;   
