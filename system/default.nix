@@ -82,7 +82,10 @@
   fonts= {
     enableDefaultPackages=true;
     packages = with pkgs;[
-    nerdfonts
+    nerdfonts.FiraCode
+    nerdfonts.DroidSansMono
+    nerdfonts.Monofur
+    nerdfonts.VictorMono
     # (nerdfonts.override { fonts = ["3270" "FiraCode" "DroidSansMono" "Monofur" "VictorMono" "HeavyData" ]; })
     dejavu_fonts
     monocraft
