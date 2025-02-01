@@ -38,7 +38,6 @@
     # SSH annoyingness
     xterm
     # mycor stuff
-    thttpd
     networkmanager
     nettools
     # Tor hidden services stuff 

@@ -6,6 +6,7 @@
     nerd-fonts.droid-sans-mono
     nerd-fonts.monofur
     nerd-fonts.victor-mono
+    nerd-fonts.ubuntu
     dejavu_fonts
     monocraft
     ];
