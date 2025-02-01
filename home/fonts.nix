@@ -2,11 +2,10 @@
 { inputs, lib, config, pkgs, ... }: {
   fonts.fontconfig.enable = true;
   home.packages = with pkgs;[
-    nerdfonts.FiraCode
-    nerdfonts.DroidSansMono
-    nerdfonts.Monofur
-    nerdfonts.VictorMono
-    # (nerdfonts.override { fonts = ["3269" "FiraCode" "DroidSansMono" "Monofur" "VictorMono" "HeavyData" ]; })
+    nerd-fonts.fira-code
+    nerd-fonts.droid-sans-mono
+    nerd-fonts.monofur
+    nerd-fonts.victor-mono
     dejavu_fonts
     monocraft
     ];
