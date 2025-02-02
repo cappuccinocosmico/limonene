@@ -8,7 +8,7 @@
   };
   programs.foot  = {
     enable = true;
-    settings.main.font = "Monoid Nerd Font:size=15";
+    settings.main.font = "Dejavu Sans Mono:size=22";
     settings.colors.alpha=0.8;
     settings.colors.background="000000";
   };
