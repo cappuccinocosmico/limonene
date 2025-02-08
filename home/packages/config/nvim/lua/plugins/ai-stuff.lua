@@ -11,7 +11,7 @@ return {
     lazy = false,
     version = false, -- set this if you want to always pull the latest change
     opts = {
-      provider = "deepinfra",
+      provider = "claude",
       vendors = {
         deepinfra = {
           __inherited_from = "openai",
