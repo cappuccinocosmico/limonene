@@ -11,6 +11,16 @@ return {
     lazy = false,
     version = false, -- set this if you want to always pull the latest change
     opts = {
+      provider = "deepinfra",
+      vendors = {
+        deepinfra = {
+          __inherited_from = "openai",
+          api_key_name = "DEEPINFRA_API_KEY",
+          endpoint = "https://api.deepinfra.com/v1/openai",
+          model = "deepseek-ai/DeepSeek-R1",
+          -- model = "deepseek-ai/DeepSeek-R1-Distill-Llama-70B",
+        },
+      },
       -- add any opts here
     },
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
