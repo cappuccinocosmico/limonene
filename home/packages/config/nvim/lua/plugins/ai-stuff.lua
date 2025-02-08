@@ -16,7 +16,7 @@ return {
         deepinfra = {
           __inherited_from = "openai",
           api_key_name = "DEEPINFRA_API_KEY",
-          endpoint = "https://api.deepinfra.com/v1/openai",
+          endpoint = "https://api.deepinfra.com/v1/openai/chat/completions",
           model = "deepseek-ai/DeepSeek-R1",
           -- model = "deepseek-ai/DeepSeek-R1-Distill-Llama-70B",
         },
