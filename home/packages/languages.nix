@@ -67,6 +67,7 @@
     lua
     # Go Ecosystem
     go
+    go-swag
     sqlc
     goose
   ];

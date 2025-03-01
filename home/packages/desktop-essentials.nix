@@ -7,6 +7,8 @@
       vlc
       deadbeef
       mpv
+      transmission_4-gtk
+      zotero
       # firefox 
       ungoogled-chromium
       tor-browser
