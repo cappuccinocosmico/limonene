@@ -51,6 +51,7 @@
     # poetry
     # Extra Git stuff
     git-town
+    git-filter-repo
     # Nixos Bs 
     steam-run
     # Browser stuff
