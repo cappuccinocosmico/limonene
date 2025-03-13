@@ -43,6 +43,7 @@ let wallpaper_path = "~/Pictures/wallpaper.jpg"; in
     startup = [
       { command = "light -N .1";}
       { command = "signal-desktop";}
+      # { command = "slack";}
       { command = "vlc";}
     ];
     modifier = "Mod1";

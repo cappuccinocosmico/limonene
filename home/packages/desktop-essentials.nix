@@ -22,6 +22,7 @@
       audacity
       # Messaging
       signal-desktop
+      slack
       zoom-us
       # Networking Stuff
       syncthing
