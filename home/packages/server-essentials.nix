@@ -1,5 +1,10 @@
 { inputs, lib, config, pkgs, ... }: {
   home.packages = with pkgs; [
+    # better cli tools 
+    bat # cat but actually adds formatting stuff 
+    dua # disk usage but actually useful
+
+
     kompose # docker compose to Kubernetes converter 
     kubernetes-helm
     frp # Fast Reverse Proxy

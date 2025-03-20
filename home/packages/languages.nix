@@ -71,5 +71,6 @@
     go-swag
     sqlc
     goose
+    air
   ];
 }
