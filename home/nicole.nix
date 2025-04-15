@@ -28,9 +28,12 @@
 
   programs.home-manager.enable = true;
   # Add stuff for your user as you see fit:
+
   home.sessionVariables = {
-    EDITOR = "vi";
     GTK_THEME = "Arc-Dark";
+    EDITOR = "nvim";
+    BROWSER = "firefox";
+    TERMINAL = "foot";
   };
   # XDG Everything
   xdg={
