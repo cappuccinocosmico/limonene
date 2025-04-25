@@ -58,7 +58,7 @@
     cypress
     julia
     zig # C alternative
-    ruff-lsp # Rust based python lsp
+    # ruff-lsp # Rust based python lsp
     pyright # Another python lsp
     # SQL Viewer
     dbeaver-bin
