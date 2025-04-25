@@ -23,7 +23,8 @@ return {
                     __inherited_from = "openai",
                     api_key_name = "DEEPINFRA_API_KEY",
                     endpoint = "https://api.deepinfra.com/v1/openai",
-                    model = "meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8"
+                    model = "google/gemma-3-27b-it"
+                    -- model = "meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8"
                 }
             }
             -- add any opts here

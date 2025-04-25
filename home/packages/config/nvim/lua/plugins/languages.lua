@@ -1,5 +1,12 @@
 return {
   {
+    'cordx56/rustowl',
+    version = '*', -- Latest stable version
+    build = 'cd rustowl && cargo install --path . --locked',
+    lazy = false, -- This plugin is already lazy
+    opts = {},
+  },
+  {
     "ray-x/go.nvim",
     dependencies = {  -- optional packages
       "ray-x/guihua.lua",
