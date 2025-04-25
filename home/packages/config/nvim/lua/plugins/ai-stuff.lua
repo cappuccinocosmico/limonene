@@ -18,6 +18,11 @@ return {
                     api_key_name = "DEEPINFRA_API_KEY",
                     endpoint = "https://api.deepinfra.com/v1/openai",
                     model = "deepseek-ai/DeepSeek-R1-Turbo",
+                },
+                deepinfra2 = {
+                    __inherited_from = "openai",
+                    api_key_name = "DEEPINFRA_API_KEY",
+                    endpoint = "https://api.deepinfra.com/v1/openai",
                     model = "meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8"
                 }
             }
