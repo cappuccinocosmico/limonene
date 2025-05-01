@@ -11,25 +11,26 @@ return {
         lazy = false,
         version = false, -- set this if you want to always pull the latest change
         opts = {
-            provider = "deepinfra",
-            cursor_applying_provider = 'deepinframinimal', 
+            provider = "deepinfra_reasoning",
+            cursor_applying_provider = 'deepinfra_minimal', 
             behaviour = {
                 enable_cursor_planning_mode = true, -- enable cursor planning mode!
             },
             vendors = {
-                deepinframinimal = {
+                deepinfra_minimal = {
                     __inherited_from = "openai",
                     api_key_name = "DEEPINFRA_API_KEY",
                     endpoint = "https://api.deepinfra.com/v1/openai",
                     model = "meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8",
+                    max_completion_tokens = 32768, -- remember to increase this value, otherwise it will stop generating halfway
                 },
-                deepinfra = {
+                deepinfra_reasoning = {
                     __inherited_from = "openai",
                     api_key_name = "DEEPINFRA_API_KEY",
                     endpoint = "https://api.deepinfra.com/v1/openai",
-                    model = "Qwen/Qwen3-235B-A22B",
+                    model = "deepseek-ai/DeepSeek-R1-Turbo",
                 },
-                deepinfra2 = {
+                deepinfra_cheap_reasoning = {
                     __inherited_from = "openai",
                     api_key_name = "DEEPINFRA_API_KEY",
                     endpoint = "https://api.deepinfra.com/v1/openai",
