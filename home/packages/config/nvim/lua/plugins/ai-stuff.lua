@@ -11,8 +11,8 @@ return {
         lazy = false,
         version = false, -- set this if you want to always pull the latest change
         opts = {
-            provider = "deepinframinimal",
-            cursor_applying_provider = 'groq', 
+            provider = "deepinfra",
+            cursor_applying_provider = 'deepinframinimal', 
             behaviour = {
                 enable_cursor_planning_mode = true, -- enable cursor planning mode!
             },
