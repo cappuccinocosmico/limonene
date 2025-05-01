@@ -11,8 +11,18 @@ return {
         lazy = false,
         version = false, -- set this if you want to always pull the latest change
         opts = {
-            provider = "deepinfra",
+            provider = "deepinframinimal",
+            cursor_applying_provider = 'groq', 
+            behaviour = {
+                enable_cursor_planning_mode = true, -- enable cursor planning mode!
+            },
             vendors = {
+                deepinframinimal = {
+                    __inherited_from = "openai",
+                    api_key_name = "DEEPINFRA_API_KEY",
+                    endpoint = "https://api.deepinfra.com/v1/openai",
+                    model = "meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8",
+                },
                 deepinfra = {
                     __inherited_from = "openai",
                     api_key_name = "DEEPINFRA_API_KEY",
