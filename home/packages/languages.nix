@@ -70,7 +70,7 @@
     go
     go-swag
     sqlc
-    goose
+    # goose
     air
   ];
 }
