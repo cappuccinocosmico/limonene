@@ -17,9 +17,17 @@
     pkgs.libdrm
   ];
   home.sessionVariables = {
-   NIXPKGS_ALLOW_UNFREE="1";
-   SHELL="/home/nicole/.nix-profile/bin/fish";
+    NIXPKGS_ALLOW_UNFREE="1";
+    SHELL="/home/nicole/.nix-profile/bin/fish";
+    GTK_THEME = "Arc-Dark";
+    EDITOR = "nvim";
+    BROWSER = "firefox";
+    TERMINAL = "foot";
   };
+  home.sessionPath = [
+    "$HOME/.local/bin"
+    "$HOME/.cargo/bin"
+  ];
   home = {
     username = "nicole";
     homeDirectory = "/home/nicole";
@@ -30,10 +38,6 @@
   # Add stuff for your user as you see fit:
 
   home.sessionVariables = {
-    GTK_THEME = "Arc-Dark";
-    EDITOR = "nvim";
-    BROWSER = "firefox";
-    TERMINAL = "foot";
   };
   # XDG Everything
   xdg={
