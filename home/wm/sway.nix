@@ -35,6 +35,15 @@ let wallpaper_path = "~/Pictures/wallpaper.jpg"; in
   wayland.windowManager.sway = {
    enable = true;
    config = rec {
+    assigns = {
+      "10" = [
+        { class = "signal-desktop"; }
+        { class = "vlc"; }
+      ];
+      "9" = [
+        { class = "easyeffects"; }
+      ];
+    };
     output = {
         eDP-1 = {
           # bg = "~/.config/wallpaper/johannes-plenio-DKix6Un55mw-unsplash.jpg fill";
@@ -44,6 +53,7 @@ let wallpaper_path = "~/Pictures/wallpaper.jpg"; in
       { command = "light -N .1";}
       { command = "signal-desktop";}
       # { command = "slack";}
+      { command = "easyeffects";}
       { command = "vlc";}
     ];
     modifier = "Mod1";
