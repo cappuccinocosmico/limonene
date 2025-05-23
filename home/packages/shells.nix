@@ -6,6 +6,10 @@
     sensibleOnTop = true;
     terminal = "screen-256color";
   };
+  programs.zellij = {
+    enable=true;
+    enableFishIntegration=true;
+  };
   programs.foot  = {
     enable = true;
     settings.main.font = "Dejavu Sans Mono:size=20";

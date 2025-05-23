@@ -43,5 +43,6 @@
       vcv-rack
       gimp
       libreoffice-still
+      postman
   ];
 }
