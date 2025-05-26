@@ -2,6 +2,7 @@
   home.packages = with pkgs; [
     # better cli tools 
     dua # disk usage but actually useful
+    xh # better curl
 
 
     kompose # docker compose to Kubernetes converter 
