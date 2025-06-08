@@ -3,6 +3,12 @@
     # better cli tools 
     dua # disk usage but actually useful
     xh # better curl
+    otel-desktop-viewer
+    otel-cli
+    hyperfine
+
+    imv 
+    libsixel
 
 
     kompose # docker compose to Kubernetes converter 
