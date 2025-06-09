@@ -10,6 +10,8 @@
     imv 
     libsixel
 
+    tmate # Backup remote terminal viewer assuming ziiij is broken.
+
 
     kompose # docker compose to Kubernetes converter 
     kubernetes-helm
