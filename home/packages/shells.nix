@@ -5,8 +5,11 @@
     ls = "eza";
     cat = "bat";
     find = "fd";
-    nziina = ''if set -q ZELLIJ; exit; else; eval (ssh-agent -c); /home/nicole/Documents/mycorrhizae/ziina/ziina -l 0.0.0.0:2222; end'';
-    ziina-sshget= ''echo "ssh -p 2222 $ZELLIJ_SESSION_NAME" | wl-copy'';
+    nziina = ''eval "if set -q ZELLIJ; exit; else; eval (ssh-agent -c); /home/nicole/Documents/mycorrhizae/ziina/ziina -l 0.0.0.0:2222; end"'';
+    # For this to work you might need to run the following:
+    # set -Ux WAYLAND_DISPLAY wayland-1
+    # set -Ux XDG_RUNTIME_DIR /run/user/1000
+    ziina-sshget= ''echo "ssh -p 2222 $ZELLIJ_SESSION_NAME@apiarist" | tee /dev/tty | wl-copy'';
   };
   programs.tmux  = {
     enable = true;
