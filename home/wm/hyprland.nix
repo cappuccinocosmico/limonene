@@ -25,6 +25,10 @@ let wallpaper_path = "~/Pictures/wallpaper.jpg"; in
   ];
   programs.foot = {
     enable = true;
+    settings.main.font = "Dejavu Sans Mono:size=12";
+    settings.colors.alpha=0.8;
+    settings.colors.background="000000";
+
   };
   # programs.fish.loginShellInit = "
   # if test (tty) = '/dev/tty1'
@@ -37,86 +41,128 @@ let wallpaper_path = "~/Pictures/wallpaper.jpg"; in
   wayland.windowManager.hyprland = {
     enable = true;
     # Example hyperland config, go ahead and try to make the hyperland config as identical as possible to the sway config below:
-    config = {
-      decoration = {
-        shadow_offset = "0 5";
-        "col.shadow" = "rgba(00000099)";
-      };
+#     extraConfig = ''
+# $mod = ALT
+# bind = $mod RETURN,,
+#     '';
+    settings = {
+      # decoration = {
+      #   shadow_offset = "0 5";
+      #   "col.shadow" = "rgba(00000099)";
+      # };
 
       "$mod" = "SUPER";
+      "$terminal" = "foot";
+      "$menu" = "fuzzel";
 
-      bindm = [
-        # mouse movements
-        "$mod, mouse:272, movewindow"
-        "$mod, mouse:273, resizewindow"
-        "$mod ALT, mouse:272, resizewindow"
+      # # Mouse movements
+      # bindm = [
+      #   "$mod, mouse:272, movewindow";
+      #   "$mod, mouse:273, resizewindow";
+      #   "$mod ALT, mouse:272, resizewindow";
+      # ];
+      #
+      bind = [
+        "$mod, Return, exec, $terminal"
+        "$mod, D, exec, $menu"
+        "$mod, T, exec, $terminal"
+        "$mod, P, exec, firefox"
+        "$mod, Q, killactive"
+        "$mod, left, movefocus, l"
+        "$mod, right, movefocus, r"
+        "$mod, up, movefocus, u"
+        "$mod, down, movefocus, d"
+        "$mod, 1, workspace, 1"
+        "$mod, 2, workspace, 2"
+        "$mod, 3, workspace, 3"
+        "$mod, 4, workspace, 4"
+        "$mod, 5, workspace, 5"
+        "$mod, 6, workspace, 6"
+        "$mod, 7, workspace, 7"
+        "$mod, 8, workspace, 8"
+        "$mod, 9, workspace, 9"
+        "$mod, 0, workspace, 10"
+        "$mod SHIFT, 1, movetoworkspace, 1"
+        "$mod SHIFT, 2, movetoworkspace, 2"
+        "$mod SHIFT, 3, movetoworkspace, 3"
+        "$mod SHIFT, 4, movetoworkspace, 4"
+        "$mod SHIFT, 5, movetoworkspace, 5"
+        "$mod SHIFT, 6, movetoworkspace, 6"
+        "$mod SHIFT, 7, movetoworkspace, 7"
+        "$mod SHIFT, 8, movetoworkspace, 8"
+        "$mod SHIFT, 9, movetoworkspace, 9"
+        "$mod SHIFT, 0, movetoworkspace, 10"
       ];
+
+      # Keyboard bindings
+      # bindm = [
+      #   "XF86AudioRaiseVolume,exec,pamixer -i 2"
+      #   "XF86AudioLowerVolume,exec,pamixer -d 2"
+      #   "XF86AudioMute,exec,pamixer -t"
+      #   "XF86MonBrightnessDown,exec,light -U 5"
+      #   "XF86MonBrightnessUp,exec,light -A 5"
+      #   "XF86AudioPlay,exec,mpc toggle -q"
+      #   "XF86AudioNext,exec,mpc -q seek +5% && mpc toggle -q && mpc toggle -q"
+      #   "XF86AudioPrev,exec,mpc -q seek -5% && mpc toggle -q && mpc toggle -q"
+      #   "Print,exec,grimshot copy area"
+      #   "ALT+q,killactive"
+      #   "ALT+Return, exec, $terminal"
+      #   "ALT+d,exec,fuzzel-run"
+      # ];
+
+      # Window rules: workspace assignments
+      # windowrules = [
+      #   "workspace=10;class=\"signal-desktop\""
+      #   "workspace=10;class=\"vlc\""
+      #   "workspace=9;class=\"easyeffects\""
+      # ];
+
+      # Gaps configuration
+      # gaps = {
+      #   inner = 4;
+      #   outer = 10;
+      # };
+
+      # Autostart commands
+      exec-once = [
+        "light -N .1"
+        # "signal-desktop"
+        # "easyeffects"
+        # "vlc"
+        "waybar"
+        # "mako"
+      ];
+
+      # Monitor settings
+      monitor = [
+        "eDP-1,2256x1504,0x0,1"  
+      ];
+
+      # Background (wallpaper)
+      # background = {
+      #   "eDP-1" = {
+      #     path = wallpaper_path;
+      #     mode = "fill";
+      #   };
+      # };
+
+      # Cursor settings
+      # cursor = {
+      #   theme = "default";
+      #   size = 48;
+      # };
+
+      # Input devices settings
+      # input = {
+      #   "2362:628:PIXA3854:00_093A:0274_Touchpad" = {
+      #     dwt = true;
+      #     tap = true;
+      #     middle_emulation = true;
+      #   };
+      # };
     };
   };
   # REFERENCE SWAY CONFIG: try to copy and make the hyprland config as close to this as possible.
-  wayland.windowManager.sway = {
-   enable = true;
-   config = rec {
-    assigns = {
-      "10" = [
-        { class = "signal-desktop"; }
-        { class = "vlc"; }
-      ];
-      "9" = [
-        { class = "easyeffects"; }
-      ];
-    };
-    output = {
-        eDP-1 = {
-          # bg = "~/.config/wallpaper/johannes-plenio-DKix6Un55mw-unsplash.jpg fill";
-        };
-      };
-    startup = [
-      { command = "light -N .1";}
-      { command = "signal-desktop";}
-      # { command = "slack";}
-      { command = "easyeffects";}
-      { command = "vlc";}
-    ];
-    modifier = "Mod1";
-    terminal = "foot";
-    menu = "fuzzel";
-    gaps.inner = 4;
-    gaps.outer = 10;
-    bars = [{
-     command = "waybar";
-    }];
-    keybindings = let
-     mod = config.wayland.windowManager.sway.config.modifier;
-    in  lib.mkOptionDefault {
-     "XF86AudioRaiseVolume" =  "exec pamixer -i 2";
-     "XF86AudioLowerVolume" = "exec pamixer -d 2";
-     "XF86AudioMute" = "exec pamixer -t";
-     "XF86MonBrightnessDown" = "exec light -U 5";
-     "XF86MonBrightnessUp" = "exec light -A 5";
-     "XF86AudioPlay" = "exec mpc toggle -q";
-     # Awful Hack to fix the fact that seeking is broken
-     "XF86AudioNext" = "exec mpc -q seek +5% && mpc toggle -q && mpc toggle -q";
-     "XF86AudioPrev" = "exec mpc -q seek -5% && mpc toggle -q && mpc toggle -q";
-     "Print" = "exec grimshot copy area";
-     "${mod}+q" = "kill";
-    };
-
-   };
-# output "*" bg  fill
-   extraConfig = ''
-input "2362:628:PIXA3854:00_093A:0274_Touchpad" {
-    dwt enabled
-    tap enabled
-    middle_emulation enabled
-}
-seat seat0 xcursor_theme default 48
-output eDP-1 scale 1
-exec mako
-exec swaybg -i ${wallpaper_path} -m fill
-'';
-# output * background ${wallpaper_path} fill
-  };
   programs.waybar = {
     enable = true;   
   };

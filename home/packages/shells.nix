@@ -43,9 +43,6 @@
   };
   programs.foot  = {
     enable = true;
-    settings.main.font = "Dejavu Sans Mono:size=20";
-    settings.colors.alpha=0.8;
-    settings.colors.background="000000";
   };
   programs.nushell  = {
     enable = true;

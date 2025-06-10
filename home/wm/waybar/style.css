@@ -67,7 +67,7 @@ window#waybar {
   border-radius: 42px;
   transition: all 0.5s cubic-bezier(0.5, 1, 0.89, 1);
 }
-#workspaces button.focused {
+#workspaces button.active {
   color: @fg;
   padding: 4px 18px;
 }

@@ -6,7 +6,9 @@
   # You can import other home-manager modules here
   imports = [
     # Select Window Managers Here:
-    wm/sway.nix
+    # wm/sway.nix
+    wm/hyprland.nix
+
     ./packages.nix
     ./fonts.nix
   ];
