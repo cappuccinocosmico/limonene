@@ -26,16 +26,17 @@ let wallpaper_path = "~/Pictures/wallpaper.jpg"; in
   programs.foot = {
     enable = true;
   };
-  programs.fish.loginShellInit = "
-  if test (tty) = '/dev/tty1'
-    set -Ux XDG_CURRENT_DESKTOP sway
-    set -Ux MOZ_ENABLE_WAYLAND 1
-    /usr/bin/sway
-  end
-  ";
+  # programs.fish.loginShellInit = "
+  # if test (tty) = '/dev/tty1'
+  #   set -Ux XDG_CURRENT_DESKTOP sway
+  #   set -Ux MOZ_ENABLE_WAYLAND 1
+  #   /usr/bin/sway
+  # end
+  # ";
 
   wayland.windowManager.hyprland = {
     enable = true;
+    # Example hyperland config, go ahead and try to make the hyperland config as identical as possible to the sway config below:
     config = {
       decoration = {
         shadow_offset = "0 5";
@@ -52,6 +53,7 @@ let wallpaper_path = "~/Pictures/wallpaper.jpg"; in
       ];
     };
   };
+  # REFERENCE SWAY CONFIG: try to copy and make the hyprland config as close to this as possible.
   wayland.windowManager.sway = {
    enable = true;
    config = rec {
