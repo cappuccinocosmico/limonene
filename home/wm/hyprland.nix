@@ -1,3 +1,4 @@
+
 { inputs, lib, config, pkgs, ... }: 
 let wallpaper_path = "~/Pictures/wallpaper.jpg"; in
 {
@@ -32,6 +33,25 @@ let wallpaper_path = "~/Pictures/wallpaper.jpg"; in
     /usr/bin/sway
   end
   ";
+
+  wayland.windowManager.hyprland = {
+    enable = true;
+    config = {
+      decoration = {
+        shadow_offset = "0 5";
+        "col.shadow" = "rgba(00000099)";
+      };
+
+      "$mod" = "SUPER";
+
+      bindm = [
+        # mouse movements
+        "$mod, mouse:272, movewindow"
+        "$mod, mouse:273, resizewindow"
+        "$mod ALT, mouse:272, resizewindow"
+      ];
+    };
+  };
   wayland.windowManager.sway = {
    enable = true;
    config = rec {
