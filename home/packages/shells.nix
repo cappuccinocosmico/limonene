@@ -5,6 +5,8 @@
     ls = "eza";
     cat = "bat";
     find = "fd";
+    nziina = ''if set -q ZELLIJ; exit; else; eval (ssh-agent -c); /home/nicole/Documents/mycorrhizae/ziina/ziina -l 0.0.0.0:2222; end'';
+    ziina-sshget= ''echo "ssh -p 2222 $ZELLIJ_SESSION_NAME" | wl-copy'';
   };
   programs.tmux  = {
     enable = true;
