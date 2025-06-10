@@ -25,7 +25,7 @@ let wallpaper_path = "~/Pictures/wallpaper.jpg"; in
   ];
   programs.foot = {
     enable = true;
-    settings.main.font = "Dejavu Sans Mono:size=12";
+    settings.main.font = "Dejavu Sans Mono:size=20";
     settings.colors.alpha=0.8;
     settings.colors.background="000000";
 
@@ -92,6 +92,14 @@ let wallpaper_path = "~/Pictures/wallpaper.jpg"; in
         "$mod SHIFT, 8, movetoworkspace, 8"
         "$mod SHIFT, 9, movetoworkspace, 9"
         "$mod SHIFT, 0, movetoworkspace, 10"
+      ];
+      bindel = [
+        ",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
+        ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+        ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+        ",XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+        ",XF86MonBrightnessUp, exec, brightnessctl -e4 -n2 set 5%+"
+        ",XF86MonBrightnessDown, exec, brightnessctl -e4 -n2 set 5%-"
       ];
 
       # Keyboard bindings
