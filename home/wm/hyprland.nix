@@ -46,10 +46,13 @@ let wallpaper_path = "~/Pictures/wallpaper.jpg"; in
 # bind = $mod RETURN,,
 #     '';
     settings = {
-      # decoration = {
-      #   shadow_offset = "0 5";
-      #   "col.shadow" = "rgba(00000099)";
-      # };
+      decoration = {
+        blur.enabled = false;
+        shadow.enabled = false;
+      };
+      misc = {
+        vfr = true;
+      };
 
       "$mod" = "SUPER";
       "$terminal" = "foot";
@@ -62,6 +65,9 @@ let wallpaper_path = "~/Pictures/wallpaper.jpg"; in
       #   "$mod ALT, mouse:272, resizewindow";
       # ];
       #
+      animation = [
+        "global,0"
+      ];
       bind = [
         "$mod, Return, exec, $terminal"
         "$mod, D, exec, $menu"
@@ -94,12 +100,16 @@ let wallpaper_path = "~/Pictures/wallpaper.jpg"; in
         "$mod SHIFT, 0, movetoworkspace, 10"
       ];
       bindel = [
-        ",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
-        ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+        ",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 2%+"
+        ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"
         ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
         ",XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
         ",XF86MonBrightnessUp, exec, brightnessctl -e4 -n2 set 5%+"
         ",XF86MonBrightnessDown, exec, brightnessctl -e4 -n2 set 5%-"
+      ];
+      bindm = [
+        "$mod, mouse:272, movewindow"
+        "$mod, mouse:273, resizewindow"
       ];
 
       # Keyboard bindings
