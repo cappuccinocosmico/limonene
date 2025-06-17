@@ -13,12 +13,29 @@ return {
     lazy = false,
     version = false, -- set this if you want to always pull the latest change
     opts = {
-      provider = "deepinfra_reasoning",
-      cursor_applying_provider = "deepinfra_minimal",
-      behaviour = {
-        enable_cursor_planning_mode = true, -- enable cursor planning mode!
-      },
+      provider = "oai_fast",
+      -- cursor_applying_provider = "deepinfra_minimal",
+      -- behaviour = {
+      --   enable_cursor_planning_mode = true, -- enable cursor planning mode!
+      -- },
       providers = {
+        oai_best = {
+          __inherited_from = "openai",
+          api_key_name = "OPENAI_API_KEY",
+          model = "o4-mini-2025-04-16",
+          extra_request_body = {
+            max_completion_tokens = 32768,
+          },
+        },
+
+        oai_fast = {
+          __inherited_from = "openai",
+          api_key_name = "OPENAI_API_KEY",
+          model = "gpt-4.1-mini-2025-04-14",
+          extra_request_body = {
+            max_completion_tokens = 32768,
+          },
+        },
         deepinfra_minimal = {
           __inherited_from = "openai",
           api_key_name = "DEEPINFRA_API_KEY",

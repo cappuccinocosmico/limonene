@@ -9,7 +9,7 @@
     # For this to work you might need to run the following:
     # set -Ux WAYLAND_DISPLAY wayland-1
     # set -Ux XDG_RUNTIME_DIR /run/user/1000
-    ziina-sshget= ''echo "ssh -p 2222 $ZELLIJ_SESSION_NAME@apiarist" | tee /dev/tty | wl-copy'';
+    ziina-sshget= ''set -x XDG_RUNTIME_DIR /run/user/1000 && set -x WAYLAND_DISPLAY wayland-1 && echo "ssh -p 2222 $ZELLIJ_SESSION_NAME@apiarist" | tee /dev/tty | wl-copy'';
   };
   programs.tmux  = {
     enable = true;

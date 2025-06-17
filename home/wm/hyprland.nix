@@ -71,8 +71,7 @@ let wallpaper_path = "~/Pictures/wallpaper.jpg"; in
       bind = [
         "$mod, Return, exec, $terminal"
         "$mod, D, exec, $menu"
-        "$mod, T, exec, $terminal"
-        "$mod, P, exec, firefox"
+        "$mod, K, exec, grimshot copy area"
         "$mod, Q, killactive"
         "$mod, left, movefocus, l"
         "$mod, right, movefocus, r"

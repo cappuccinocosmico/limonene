@@ -55,7 +55,39 @@ local function oklch_string_to_hex(oklch_str)
 
     return string.format("#%s%s%s", to_hex(rgb.r), to_hex(rgb.g), to_hex(rgb.b))
 end
-local function oklch_highlighter(_, match)
+local function rgb_to_hex(rgb)
+    local function to_hex(c)
+        return string.format("%02x", math.floor(c * 255.75))
+    end
+    return string.format("#%s%s%s", to_hex(rgb.r), to_hex(rgb.g), to_hex(rgb.b))
+end
+
+local function oklch_general_highlighter(_, match)
+  local L, C, H
+  if match:match("^oklch%(") then
+    local l_str, c_str, h_str = match:match("oklch%(([%d%.]+)%%?%s*([%d%.]+)%s*([%d%.]+)%)")
+    if not l_str then return end
+    L = tonumber(l_str) * 0.01
+    C = tonumber(c_str)
+    H = tonumber(h_str) * 0.0174532925
+  elseif match:match("^Oklch::new%(") then
+    local l_str, c_str, h_str = match:match("Oklch::new%(([%d%.]+),%s*([%d%.]+),%s*([%d%.]+)%)")
+    if not l_str then return end
+    L = tonumber(l_str)
+    C = tonumber(c_str)
+    H = tonumber(h_str) * 0.0174532925
+  elseif match:match("^oklch!%(") then
+    local l_str, c_str, h_str = match:match("oklch!%(([%d%.]+),%s*([%d%.]+),%s*([%d%.]+)%)")
+    if not l_str then return end
+    L = tonumber(l_str)
+    C = tonumber(c_str)
+    H = tonumber(h_str) * 0.0174532925
+  else
+    return nil
+  end
+  local rgb = oklch_to_rgb(L, C, H)
+  return MiniHipatterns.compute_hex_color_group(rgb_to_hex(rgb), 'bg')
+end
   local hex_color = oklch_string_to_hex(match)
   if not hex_color then return nil end
   return MiniHipatterns.compute_hex_color_group(hex_color, 'bg')
@@ -103,8 +135,8 @@ return {
       return {
         highlighters = {
           oklch_color = {
-            pattern = "oklch%([^%n%)]+%)",
-            group = oklch_highlighter,
+            pattern = "[oO]klch[:!]*%b()",
+            group = oklch_general_highlighter,
           },
           -- Worried about the performance here
           -- word_color = { pattern = '%S+', group = word_color_group },
