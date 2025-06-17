@@ -17,6 +17,11 @@ local function oklch_to_rgb(L, C, H)
   local g = -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s
   local b = -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s
 
+  -- Check for out-of-bounds and return pure red if so
+  if r < 0 or r > 1 or g < 0 or g > 1 or b < 0 or b > 1 then
+    return { r = 1, g = 0, b = 0 }
+  end
+
   -- Apply gamma correction
   local function linear_to_srgb(c)
     if c >= 1 then
@@ -71,14 +76,6 @@ local function oklch_general_highlighter(_, match)
       return
     end
     L = tonumber(l_str) * 0.01
-    C = tonumber(c_str)
-    H = tonumber(h_str) * 0.0174532925
-  elseif match:match("^Oklch::new%(") then
-    local l_str, c_str, h_str = match:match("Oklch::new%(([%d%.]+),%s*([%d%.]+),%s*([%d%.]+)%)")
-    if not l_str then
-      return
-    end
-    L = tonumber(l_str)
     C = tonumber(c_str)
     H = tonumber(h_str) * 0.0174532925
   elseif match:match("^oklch!%(") then
