@@ -6,8 +6,8 @@
   # You can import other home-manager modules here
   imports = [
     # Select Window Managers Here:
-    # wm/sway.nix
-    wm/hyprland.nix
+    wm/sway.nix
+    # wm/hyprland.nix
 
     ./packages.nix
     ./fonts.nix
@@ -75,5 +75,5 @@
   systemd.user.startServices = "sd-switch";
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  home.stateVersion = "22.11";
+  home.stateVersion = "25.05";
 }

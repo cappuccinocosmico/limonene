@@ -24,6 +24,9 @@ let wallpaper_path = "~/Pictures/wallpaper.jpg"; in
   ];
   programs.foot = {
     enable = true;
+    settings.main.font = "Dejavu Sans Mono:size=20";
+    settings.colors.alpha=0.8;
+    settings.colors.background="000000";
   };
   programs.fish.loginShellInit = "
   if test (tty) = '/dev/tty1'
@@ -56,7 +59,7 @@ let wallpaper_path = "~/Pictures/wallpaper.jpg"; in
       { command = "easyeffects";}
       { command = "vlc";}
     ];
-    modifier = "Mod1";
+    modifier = "Mod4";
     terminal = "foot";
     menu = "fuzzel";
     gaps.inner = 4;
@@ -93,6 +96,17 @@ output eDP-1 scale 1
 exec mako
 exec swaybg -i ${wallpaper_path} -m fill
 '';
+
+# exec LT="$lock_timeout" ST="$screen_timeout" LT=${LT:-300} ST=${ST:-60} && \
+#     swayidle -w \
+#     timeout $LT 'swaylock -f' \
+#     timeout $((LT + ST)) 'swaymsg "output * power off"' \
+#                   resume 'swaymsg "output * power on"'  \
+#     timeout $ST 'pgrep -xu "$USER" swaylock >/dev/null && swaymsg "output * power off"' \
+#          resume 'pgrep -xu "$USER" swaylock >/dev/null && swaymsg "output * power on"'  \
+#     before-sleep 'swaylock -f' \
+#     lock 'swaylock -f' \
+#     unlock 'pkill -xu "$USER" -SIGUSR1 swaylock'
 # output * background ${wallpaper_path} fill
   };
   programs.waybar = {

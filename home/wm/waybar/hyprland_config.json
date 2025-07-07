@@ -5,11 +5,11 @@
   "margin-top": 8,
   "margin-right": 8,
   "margin-left": 8,
-  "modules-left": ["tray", "sway/workspaces"],
+  "modules-left": ["tray", "hyprland/workspaces"],
   "modules-center": ["clock"],
   "modules-right": ["mpd", "backlight", "pulseaudio", "network", "battery"],
-  "sway/workspaces": {
-    "focused": ""
+  "hyprland/workspaces": {
+    "active": ""
   },
 
   "custom/nix": {
