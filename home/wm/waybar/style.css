@@ -96,9 +96,9 @@ window#waybar {
 #backlight {
   background: @bg;
   color: @fg;
-  border-radius: 42px 0px 0px 42px;
+  border-radius: 42px 42px 42px 42px;
   margin: 8px;
-  padding: 12px;
+  padding: 12px 12px;
 }
 #clock {
   background: @bg;
