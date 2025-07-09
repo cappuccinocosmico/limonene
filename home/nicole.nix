@@ -25,11 +25,13 @@
     EDITOR = "nvim";
     BROWSER = "firefox";
     TERMINAL = "foot";
+    PNPM_HOME = ".binaries/pnpm";
   };
   home.sessionPath = [
     "$HOME/.local/bin"
     "$HOME/.cargo/bin"
     "$HOME/go/bin"
+    "$HOME/.binaries/pnpm"
   ];
   home = {
     username = "nicole";

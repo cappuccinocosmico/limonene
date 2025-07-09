@@ -46,12 +46,6 @@
   };
   programs.nushell  = {
     enable = true;
-    extraEnv = "
-$env.PATH = (
-$env.PATH | split row (char esep)
-  | append /home/nicole/.local/bin
-)
-    ";
   };
   programs.fish  = {
     enable = true;
