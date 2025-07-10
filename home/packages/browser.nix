@@ -1,4 +1,4 @@
-{ inputs, lib, config, pkgs, zen-browser, ... }: {
+{ inputs, lib, config, pkgs, system, ... }: {
   imports = [
     # inputs.zen-browser.homeModules.beta
     # inputs.zen-browser.homeModules.beta
@@ -12,4 +12,10 @@
   #   nativeMessagingHosts = [pkgs.firefoxpwa];
   # };
   # mozilla = true;
+  home.packages = [
+    # inputs.zen-browser.packages."${system}".beta
+    inputs.zen-browser.packages."x86_64-linux".beta
+    # inputs.zen-browser.packages
+    # inputs.zen-browser.packages."x86-64-linux".beta
+  ];
 }
