@@ -19,7 +19,7 @@
   };
 
   outputs =
-    { nixpkgs, home-manager,... }:
+    { nixpkgs, home-manager, zen-browser,... }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -30,7 +30,9 @@
 
         # Specify your home configuration modules here, for example,
         # the path to your home.nix.
-        modules = [ ./home/nicole.nix ];
+        modules = [ ./home/nicole.nix      
+        zen-browser.homeModules.beta
+        ];
 
         # Optionally use extraSpecialArgs
         # to pass through arguments to home.nix
