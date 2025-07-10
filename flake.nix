@@ -14,12 +14,12 @@
       url = "github:0xc000022070/zen-browser-flake";
       # IMPORTANT: we're using "libgbm" and is only available in unstable so ensure
       # to have it up-to-date or simply don't specify the nixpkgs input
-      inputs.nixpkgs.follows = "nixpkgs";
+      # inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
   outputs =
-    { nixpkgs, home-manager, zen-browser,... }:
+    { self, nixpkgs, home-manager, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -30,12 +30,13 @@
 
         # Specify your home configuration modules here, for example,
         # the path to your home.nix.
-        modules = [ ./home/nicole.nix      
-        zen-browser.homeModules.beta
+        modules = [
+          ./home/nicole.nix
         ];
 
         # Optionally use extraSpecialArgs
         # to pass through arguments to home.nix
+        extraSpecialArgs = { inherit inputs; };
       };
     };
 }

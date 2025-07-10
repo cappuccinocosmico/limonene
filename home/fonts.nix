@@ -2,7 +2,7 @@
 { inputs, lib, config, pkgs, ... }: {
   fonts.fontconfig.enable = true;
   home.packages = with pkgs;[
-    # nerd-fonts.fira-code
+    fira-code
     # nerd-fonts.droid-sans-mono
     # nerd-fonts.monofur
     # nerd-fonts.victor-mono
