@@ -67,7 +67,11 @@
       userEmail = "nvenner@protonmail.ch";
     };
   };
-
+  nix.package=pkgs.nix;
+  nix.extraOptions="
+    experimental-features = nix-command flakes
+  ";
+  # allowUnfree = true
 
 
 
