@@ -11,7 +11,6 @@ let wallpaper_path = "~/Pictures/wallpaper.jpg"; in
     swaybg # wallpaper
     wlsunset
     sway-contrib.grimshot # Screenshotting
-    swaylock
     mako # Notifications
     # Other
     mpc-cli

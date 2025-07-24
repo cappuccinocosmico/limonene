@@ -13,7 +13,7 @@ return {
     lazy = false,
     version = false, -- set this if you want to always pull the latest change
     opts = {
-      provider = "oai_fast",
+      provider = "deepinfra_reasoning",
       -- cursor_applying_provider = "deepinfra_minimal",
       -- behaviour = {
       --   enable_cursor_planning_mode = true, -- enable cursor planning mode!
@@ -49,7 +49,7 @@ return {
           __inherited_from = "openai",
           api_key_name = "DEEPINFRA_API_KEY",
           endpoint = "https://api.deepinfra.com/v1/openai",
-          model = "deepseek-ai/DeepSeek-R1-0528",
+          model = "moonshotai/Kimi-K2-Instruct",
         },
         deepinfra_cheap_reasoning = {
           __inherited_from = "openai",

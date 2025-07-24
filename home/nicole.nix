@@ -25,7 +25,7 @@
     EDITOR = "nvim";
     BROWSER = "firefox";
     TERMINAL = "foot";
-    PNPM_HOME = ".binaries/pnpm";
+    PNPM_HOME = "$HOME/.binaries/pnpm";
   };
   home.sessionPath = [
     "$HOME/.local/bin"
@@ -33,6 +33,11 @@
     "$HOME/go/bin"
     "$HOME/.binaries/pnpm"
   ];
+
+  qt.enable = true;
+  qt.style.name = "adwaita-dark";
+  gtk.enable = true;
+  gtk.theme.name = "Adwaita-dark";
   home = {
     username = "nicole";
     homeDirectory = "/home/nicole";

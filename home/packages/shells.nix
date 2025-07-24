@@ -20,7 +20,7 @@
   };
   programs.zellij = {
     enable=true;
-    enableFishIntegration=true;
+    enableFishIntegration=false;
     settings={
       pane_frames=false;
       show_startup_tips=false;
