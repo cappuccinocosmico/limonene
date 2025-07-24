@@ -49,7 +49,7 @@ return {
           __inherited_from = "openai",
           api_key_name = "DEEPINFRA_API_KEY",
           endpoint = "https://api.deepinfra.com/v1/openai",
-          model = "moonshotai/Kimi-K2-Instruct",
+          model = "Qwen/Qwen3-Coder-480B-A35B-Instruct",
         },
         deepinfra_cheap_reasoning = {
           __inherited_from = "openai",
