@@ -34,10 +34,11 @@
     "$HOME/.binaries/pnpm"
   ];
 
-  qt.enable = true;
-  qt.style.name = "adwaita-dark";
-  gtk.enable = true;
-  gtk.theme.name = "Adwaita-dark";
+  # qt.enable = true;
+  # qt.style.name = "adwaita-dark";
+  # gtk.enable = true;
+  # gtk.theme.name = "Adwaita-dark";
+  # programs.dconf.enable = true;
   home = {
     username = "nicole";
     homeDirectory = "/home/nicole";
