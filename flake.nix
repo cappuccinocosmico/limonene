@@ -38,5 +38,17 @@
         # to pass through arguments to home.nix
         extraSpecialArgs = { inherit inputs; };
       };
+      # NixOS system configuration
+      nixosConfigurations = {
+        nixos = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./configuration.nix  # Import your system configuration file
+          ];
+
+          # Pass the flake as an argument for the system
+          specialArgs = { inherit inputs; };
+        };
+      };
     };
 }
