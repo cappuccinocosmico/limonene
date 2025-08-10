@@ -11,13 +11,11 @@
     # inputs.nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     hardware.url = github:NixOS/nixos-hardware;
 
-    nix-ld.url = "github:Mic92/nix-ld";
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # this line assume that you also have nixpkgs as an input
-    nix-ld.inputs.nixpkgs.follows = "nixpkgs";
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
       # IMPORTANT: we're using "libgbm" and is only available in unstable so ensure
@@ -27,7 +25,7 @@
   };
 
   outputs =
-    { self, nixpkgs, home-manager, nix-ld, hardware, rust-overlay,... }@inputs:
+    { self, nixpkgs, home-manager,  hardware, rust-overlay,... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -61,7 +59,6 @@
             })
             ./configuration.nix  # Import your system configuration file
             hardware.nixosModules.framework-amd-ai-300-series
-            nix-ld.nixosModules.nix-ld
             # Enable home-manager as a NixOS module
             home-manager.nixosModules.home-manager
 

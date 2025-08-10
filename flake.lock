@@ -56,26 +56,6 @@
         "type": "github"
       }
     },
-    "nix-ld": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1754307865,
-        "narHash": "sha256-szgcvEy0DioqlwNDtsh6/ExFsgygI115HdJiPLHZXiY=",
-        "owner": "Mic92",
-        "repo": "nix-ld",
-        "rev": "d46eb24a727a329c69b7af45935236297d5934bb",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Mic92",
-        "repo": "nix-ld",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1754498491,
@@ -112,7 +92,6 @@
       "inputs": {
         "hardware": "hardware",
         "home-manager": "home-manager",
-        "nix-ld": "nix-ld",
         "nixpkgs": "nixpkgs",
         "rust-overlay": "rust-overlay",
         "zen-browser": "zen-browser"

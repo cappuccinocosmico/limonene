@@ -13,6 +13,8 @@
     ./fonts.nix
   ];
   home.packages = [ 
+
+    pkgs.nix-ld
     pkgs.dconf 
     # pkgs.nixGL # Necessary for getting sway to run
     pkgs.mesa
