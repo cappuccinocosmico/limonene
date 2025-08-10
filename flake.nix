@@ -12,6 +12,10 @@
     hardware.url = github:NixOS/nixos-hardware;
 
     nix-ld.url = "github:Mic92/nix-ld";
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # this line assume that you also have nixpkgs as an input
     nix-ld.inputs.nixpkgs.follows = "nixpkgs";
     zen-browser = {
@@ -23,7 +27,7 @@
   };
 
   outputs =
-    { self, nixpkgs, home-manager, nix-ld, hardware, ... }@inputs:
+    { self, nixpkgs, home-manager, nix-ld, hardware, rust-overlay,... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -47,6 +51,14 @@
         nixos = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
+            ({ pkgs, ... }: {
+              nixpkgs.overlays = [ rust-overlay.overlays.default ];
+              environment.systemPackages = [
+                (pkgs.rust-bin.stable.latest.default.override {
+                  extensions = [ "rust-analyzer" ];
+                })
+              ];
+            })
             ./configuration.nix  # Import your system configuration file
             hardware.nixosModules.framework-amd-ai-300-series
             nix-ld.nixosModules.nix-ld

@@ -2,8 +2,6 @@
 { inputs, lib, config, pkgs, ... }: {
   home.packages = with pkgs; [
 
-    # Rust shit 
-    rustup
     # JabbaScript
     nodejs_22
     tailwindcss
