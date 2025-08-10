@@ -9,6 +9,8 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
+  # Software for bios updates.
+  services.fwupd.enable = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -18,7 +20,7 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   boot.initrd.luks.devices."luks-e4c4f4e3-e6c7-43f2-8a41-5bc7add2a577".device = "/dev/disk/by-uuid/e4c4f4e3-e6c7-43f2-8a41-5bc7add2a577";
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "incarnadine"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -111,6 +113,7 @@
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
+  programs.fish.enable = true;
   users.users.nicole = {
     isNormalUser = true;
     description = "Nicole";
@@ -118,6 +121,7 @@
     packages = with pkgs; [
     #  thunderbird
     ];
+    shell= pkgs.fish;
   };
 
   nixpkgs.config.permittedInsecurePackages = [
