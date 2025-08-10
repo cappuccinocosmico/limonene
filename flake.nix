@@ -44,6 +44,16 @@
           system = "x86_64-linux";
           modules = [
             ./configuration.nix  # Import your system configuration file
+            # Enable home-manager as a NixOS module
+            home-manager.nixosModules.home-manager
+
+            # Home-manager config for user 'nicole'
+            {
+              home-manager.useUserPackages = true;
+              home-manager.useGlobalPkgs = true;
+              home-manager.users.nicole = import ./home/nicole.nix;
+            }
+
           ];
 
           # Pass the flake as an argument for the system

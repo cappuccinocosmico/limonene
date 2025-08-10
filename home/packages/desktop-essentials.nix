@@ -21,7 +21,7 @@
       obs-studio
       audacity
       # Messaging
-      # signal-desktop
+      signal-desktop
       slack
       zoom-us
       # Networking Stuff
