@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 pkgs.buildFHSEnv {
-  name = "rust-dev-fhs";
+  name = "rl";
   
   targetPkgs = pkgs: with pkgs; [
     # Core development tools
@@ -45,7 +45,7 @@ pkgs.buildFHSEnv {
     xorg.libXrandr
     xorg.libXi
     mesa
-    mesa.dev
+    # mesa.dev
     vulkan-headers
     vulkan-loader
     
@@ -88,7 +88,7 @@ pkgs.buildFHSEnv {
     gcc_multi
   ];
   
-  runScript = "bash";
+  runScript = "fish";
   
   profile = ''
     export CC=gcc

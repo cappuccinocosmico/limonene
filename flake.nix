@@ -50,9 +50,9 @@
           system = "x86_64-linux";
           modules = [
             ({ pkgs, ... }: {
-              (import ./rust-shell.nix { inherit pkgs; })
               nixpkgs.overlays = [ rust-overlay.overlays.default ];
               environment.systemPackages = [
+                (import ./regular-linux-shell.nix { inherit pkgs; })
                 # pkgs.rust-bin.stable.latest.default
                 (pkgs.rust-bin.stable.latest.default.override {
                   extensions = [ "rust-analyzer" ];
