@@ -1,7 +1,6 @@
-# rust-fhs-shell.nix
-{ pkgs ? import <nixpkgs> {} }:
+{ pkgs, ... }:
 
-pkgs.buildFHSUserEnv {
+pkgs.buildFHSEnv {
   name = "rust-dev-fhs";
   
   targetPkgs = pkgs: with pkgs; [
