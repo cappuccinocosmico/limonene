@@ -5,6 +5,8 @@
     # JabbaScript
     nodejs_22
     tailwindcss
+    # python shit 
+    uv
     # rust-analyzer 
     # Maybe included in rustup
     # rustup
