@@ -50,11 +50,21 @@
           system = "x86_64-linux";
           modules = [
             ({ pkgs, ... }: {
+              (import ./rust-shell.nix { inherit pkgs; })
               nixpkgs.overlays = [ rust-overlay.overlays.default ];
               environment.systemPackages = [
+                # pkgs.rust-bin.stable.latest.default
                 (pkgs.rust-bin.stable.latest.default.override {
                   extensions = [ "rust-analyzer" ];
+                  # build-inputs= [
+                  #   pkgs.libclang
+                  #   pkgs.pkg-config
+                  #   pkgs.openssl
+                  # ];
                 })
+                pkgs.libclang
+                pkgs.pkg-config
+                pkgs.openssl
               ];
             })
             ./configuration.nix  # Import your system configuration file
