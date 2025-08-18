@@ -38,7 +38,6 @@
     exfat
     dig
     hugo
-    tailscale
     speedtest-cli
     nushell
     btop
