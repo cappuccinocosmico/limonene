@@ -22,10 +22,13 @@
       # to have it up-to-date or simply don't specify the nixpkgs input
       # inputs.nixpkgs.follows = "nixpkgs";
     };
+    
+    # nixos-cli
+    nixos-cli.url = "github:nix-community/nixos-cli";
   };
 
   outputs =
-    { self, nixpkgs, home-manager,  hardware, rust-overlay,... }@inputs:
+    { self, nixpkgs, home-manager,  hardware, rust-overlay, nixos-cli, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -46,7 +49,7 @@
       };
       # NixOS system configuration
       nixosConfigurations = {
-        nixos = nixpkgs.lib.nixosSystem {
+        incarnadine = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
             ({ pkgs, ... }: {
@@ -54,14 +57,10 @@
               environment.systemPackages = [
                 (import ./regular-linux-shell.nix { inherit pkgs; })
                 # pkgs.rust-bin.stable.latest.default
-                (pkgs.rust-bin.stable.latest.default.override {
-                  extensions = [ "rust-analyzer" ];
-                  # build-inputs= [
-                  #   pkgs.libclang
-                  #   pkgs.pkg-config
-                  #   pkgs.openssl
-                  # ];
-                })
+                # (pkgs.rust-bin.stable.latest.default.override {
+                #   extensions = [ "rust-analyzer" ];
+                # })
+                # pkgs.rustup
                 pkgs.libclang
                 pkgs.pkg-config
                 pkgs.openssl
@@ -71,6 +70,9 @@
             hardware.nixosModules.framework-amd-ai-300-series
             # Enable home-manager as a NixOS module
             home-manager.nixosModules.home-manager
+            
+            # nixos-cli module
+            nixos-cli.nixosModules.nixos-cli
 
             # Home-manager config for user 'nicole'
             {

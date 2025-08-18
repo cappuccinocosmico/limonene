@@ -9,14 +9,31 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
+
+  environment.systemPackages = with pkgs; [
+    nix-ld
+    wineWowPackages.waylandFull
+    lutris
+  ];
+  services.tailscale.enable = true;
   # Software for bios updates.
   services.fwupd.enable = true;
   programs.nix-ld.enable = true;
 
+  # nixos-cli service
+  services.nixos-cli = {
+    enable = true;
+    config = {
+      # You can add specific configuration options here if needed
+    };
+  };
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
+  virtualisation.docker = {
+    enable = true;
+  };
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
@@ -138,9 +155,6 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    nix-ld
-  ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

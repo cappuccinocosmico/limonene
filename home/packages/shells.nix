@@ -11,6 +11,7 @@
     # set -Ux XDG_RUNTIME_DIR /run/user/1000
     ziina-sshget= ''set -x XDG_RUNTIME_DIR /run/user/1000 && set -x WAYLAND_DISPLAY wayland-1 && echo "ssh -p 2222 $ZELLIJ_SESSION_NAME@apiarist" | tee /dev/tty | wl-copy'';
     deepqwen = ''qwen --openai-base-url https://api.deepinfra.com/v1/openai/ --openai-api-key $DEEPINFRA_API_KEY --model Qwen/Qwen3-Coder-480B-A35B-Instruct'';
+    nrs = ''sudo nixos-rebuild switch --flake ~/limonene'';
   };
   programs.tmux  = {
     enable = true;

@@ -10,7 +10,6 @@ let wallpaper_path = "~/Pictures/wallpaper.jpg"; in
     swaybg # wallpaper
     wlsunset
     sway-contrib.grimshot # Screenshotting
-    swaylock
     mako # Notifications
     # Other
     mpc-cli
@@ -118,4 +117,13 @@ exec swaybg -i ${wallpaper_path} -m fill
 	  "waybar/assets/nix.svg".source = waybar/nix.svg;
   };
   programs.swaylock.settings = {};
+  services.swayidle = {
+      enable= true;
+      timeouts= [
+        {
+          timeout = 600; 
+          command = "${pkgs.systemd}/bin/systemctl suspend"; 
+        }
+      ];
+    };
 }
