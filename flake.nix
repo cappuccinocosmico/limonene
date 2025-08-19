@@ -67,6 +67,7 @@
               ];
             })
             ./configuration.nix  # Import your system configuration file
+            ./otel_setup.nix
             hardware.nixosModules.framework-amd-ai-300-series
             # Enable home-manager as a NixOS module
             home-manager.nixosModules.home-manager
