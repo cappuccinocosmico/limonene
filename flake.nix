@@ -26,7 +26,7 @@
   };
 
   outputs =
-    { self, nixpkgs, home-manager,  hardware, rust-overlay, nixos-cli, ... }@inputs:
+    { self, nixpkgs, home-manager,  hardware, rust-overlay, nixos-cli, nixvim,... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -87,7 +87,7 @@
                 pkgs.openssl
               ];
             })
-            ./configuration.nix  # Import your system configuration file
+            ./system/incarnadine-configuration.nix  # Import your system configuration file
             ./otel_setup.nix
             hardware.nixosModules.framework-amd-ai-300-series
             # Enable home-manager as a NixOS module
