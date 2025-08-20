@@ -8,23 +8,21 @@
     # Home manager
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    # inputs.nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     hardware.url = github:NixOS/nixos-hardware;
 
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # this line assume that you also have nixpkgs as an input
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
-      # IMPORTANT: we're using "libgbm" and is only available in unstable so ensure
-      # to have it up-to-date or simply don't specify the nixpkgs input
-      # inputs.nixpkgs.follows = "nixpkgs";
     };
     
     # nixos-cli
     nixos-cli.url = "github:nix-community/nixos-cli";
+
+    # neovim configuration
+    nixvim.url = "github:nix-community/nixvim";
   };
 
   outputs =
@@ -32,6 +30,21 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+
+      nvim_config = import ./nvim;
+      nvim = nixvim.legacyPackages.${system}.makeNixvimWithModule {
+        inherit pkgs;
+        module = nvim_config;
+      };
+      nvimWithMeta = nvim.overrideAttrs (oldAttrs: {
+        meta = (oldAttrs.meta or {}) // {
+          description = "Neovim configured with nixvim";
+          longDescription = "Custom Neovim configuration built with nixvim, originally from: https://github.com/XhuyZ/nixvim";
+          license = pkgs.lib.licenses.mit;
+          maintainers = [ ];
+          platforms = pkgs.lib.platforms.unix;
+        };
+      });
     in
     {
       homeConfigurations."nicole" = home-manager.lib.homeManagerConfiguration {
@@ -41,6 +54,14 @@
         # the path to your home.nix.
         modules = [
           ./home/nicole.nix
+          {
+            programs.neovim = {
+              enable = true;
+              package=nvimWithMeta;
+              viAlias = true;
+              vimAlias = true;
+            };
+          }
         ];
 
         # Optionally use extraSpecialArgs
