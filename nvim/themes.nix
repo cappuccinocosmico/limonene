@@ -1,7 +1,7 @@
 { ... }:
 {
   colorschemes = {
-catppuccin = {
+    catppuccin = {
       enable = true;
       settings = {
         background = {
@@ -39,7 +39,7 @@ catppuccin = {
           telescope.enabled = true;
           indent_blankline.enabled = true;
           mini = {
-            enabled = true;
+            enabled = false;
             indentscope_color = "rosewater";
           };
           native_lsp = {

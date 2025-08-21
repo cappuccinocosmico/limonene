@@ -8,7 +8,6 @@
     packages/gaming.nix
     packages/music.nix
     packages/shells.nix
-    packages/nvim.nix
     packages/languages.nix
   ];
 }

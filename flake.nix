@@ -33,19 +33,20 @@
 
     in
     {
-      homeConfigurations."nicole" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-
-        # Specify your home configuration modules here, for example,
-        # the path to your home.nix.
-        modules = [
-          ./home/nicole.nix
-        ];
-
-        # Optionally use extraSpecialArgs
-        # to pass through arguments to home.nix
-        extraSpecialArgs = { inherit inputs; };
-      };
+      # homeConfigurations."nicole" = home-manager.lib.homeManagerConfiguration {
+      #   inherit pkgs;
+      #
+      #   # Specify your home configuration modules here, for example,
+      #   # the path to your home.nix.
+      #   modules = [
+      #     ./home/nicole.nix
+      #     inputs.nixvim.homeModules.nixvim
+      #   ];
+      #
+      #   # Optionally use extraSpecialArgs
+      #   # to pass through arguments to home.nix
+      #   extraSpecialArgs = { inherit inputs; };
+      # };
       # NixOS system configuration
       nixosConfigurations = {
         incarnadine = nixpkgs.lib.nixosSystem {
@@ -78,7 +79,12 @@
             {
               home-manager.useUserPackages = true;
               home-manager.useGlobalPkgs = true;
-              home-manager.users.nicole = import ./home/nicole.nix;
+              home-manager.users.nicole = {
+                imports = [
+                  inputs.nixvim.homeModules.nixvim
+                  ./home/nicole.nix
+                ];
+              };
             }
 
           ];
