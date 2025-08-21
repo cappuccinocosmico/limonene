@@ -81,7 +81,8 @@
               home-manager.useGlobalPkgs = true;
               home-manager.users.nicole = {
                 imports = [
-                  inputs.nixvim.homeModules.nixvim
+                  # inputs.nixvim.homeModules.nixvim
+		  
                   ./home/nicole.nix
                 ];
               };
