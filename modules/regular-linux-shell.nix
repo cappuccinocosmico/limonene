@@ -1,9 +1,46 @@
 { pkgs, ... }:
 
+let
+  # Cypress dependencies for GUI testing
+  cypressDeps = with pkgs; [
+    # libgtk2.0-0t64
+    gtk2
+    
+    # libgtk-3-0t64
+    gtk3
+    
+    # libgbm-dev
+    mesa
+    
+    # libnotify-dev
+    libnotify
+    
+    # libnss3
+    nss
+    nss.dev
+    
+    # libxss1
+    # libXScrnSaver
+    
+    # libasound2t64
+    alsa-lib
+    
+    # libxtst6
+    # libXtst
+    
+    # xauth and xvfb
+    xorg.xauth
+    xorg.xvfb
+
+    glib
+    glib.dev
+  ];
+in
+
 pkgs.buildFHSEnv {
   name = "rl";
   
-  targetPkgs = pkgs: with pkgs; [
+  targetPkgs = pkgs: (with pkgs; [
     # Core development tools
     gcc
     glibc
@@ -37,6 +74,8 @@ pkgs.buildFHSEnv {
     systemd.dev
     dbus
     dbus.dev
+    glib
+    glib.dev
     
     # Graphics and GUI libraries (for GUI Rust apps)
     xorg.libX11
@@ -80,7 +119,7 @@ pkgs.buildFHSEnv {
     
     # Git for version control
     git
-  ];
+  ]) ++ cypressDeps;
   
   multiPkgs = pkgs: with pkgs; [
     # 32-bit compatibility libraries (useful for some C extensions)
