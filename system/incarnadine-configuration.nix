@@ -22,6 +22,8 @@ programs.steam = {
     wineWowPackages.waylandFull
     lutris
     heroic
+    feather
+    devenv
   ];
   services.tailscale.enable = true;
   # Software for bios updates.

@@ -23,10 +23,20 @@
 
     # neovim configuration
     nixvim.url = "github:nix-community/nixvim";
+    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
   };
 
   outputs =
-    { self, nixpkgs, home-manager,  hardware, rust-overlay, nixos-cli, nixvim,... }@inputs:
+    { 
+      self, 
+      nixpkgs, 
+      home-manager,  
+      hardware, 
+      rust-overlay,
+      nix-vscode-extensions, 
+      nixos-cli, 
+      nixvim
+      ,... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -53,7 +63,10 @@
           system = "x86_64-linux";
           modules = [
             ({ pkgs, ... }: {
-              nixpkgs.overlays = [ rust-overlay.overlays.default ];
+              nixpkgs.overlays = [ 
+                rust-overlay.overlays.default
+                nix-vscode-extensions.overlays.default
+              ];
               environment.systemPackages = [
                 (import ./modules/regular-linux-shell.nix { inherit pkgs; })
                 # pkgs.rust-bin.stable.latest.default
