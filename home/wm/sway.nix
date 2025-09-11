@@ -116,14 +116,14 @@ exec swaybg -i ${wallpaper_path} -m fill
 	  "waybar/style.css".source = waybar/style.css;
 	  "waybar/assets/nix.svg".source = waybar/nix.svg;
   };
-  programs.swaylock.settings = {};
-  services.swayidle = {
-      enable= true;
-      timeouts= [
-        {
-          timeout = 600; 
-          command = "${pkgs.systemd}/bin/systemctl suspend"; 
-        }
-      ];
-    };
+  # programs.swaylock.settings = {};
+  # services.swayidle = {
+  #     enable= true;
+  #     timeouts= [
+  #       {
+  #         timeout = 600; 
+  #         command = "${pkgs.systemd}/bin/systemctl suspend"; 
+  #       }
+  #     ];
+  #   };
 }
