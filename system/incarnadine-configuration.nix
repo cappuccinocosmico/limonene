@@ -25,7 +25,7 @@ programs.steam = {
     feather
     devenv
   ];
-  services.tailscale.enable = true;
+  services.tailscale.enable = false;
   # Software for bios updates.
   services.fwupd.enable = true;
   programs.nix-ld.enable = true;

@@ -32,7 +32,8 @@
       # Shell Stuff
       # textpieces # Text manipulation tool
       baobab # disk usage analyzer
-      bookworm # yet another ebook reader
+# disabled since it might be requiring a huge manual build of webkitgtk
+      # bookworm # yet another ebook reader
       koreader # Another Ebook Reader, mostly for embedded
       calibre # ebook thing
       gnome-font-viewer
@@ -40,9 +41,7 @@
       gnome-text-editor
       # diebahn # Train table viewer 
       # linphone # VOIP softphone
-      calls
       # Music
-      vcv-rack
       gimp
       libreoffice-still
       postman
