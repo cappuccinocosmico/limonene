@@ -8,6 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./vermissian-hardware-configuration.nix
+      ./all-systems.nix
     ];
 
   # Bootloader.

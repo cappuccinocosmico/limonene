@@ -14,15 +14,6 @@
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    zen-browser = {
-      url = "github:0xc000022070/zen-browser-flake";
-    };
-
-    # nixos-cli
-    nixos-cli.url = "github:nix-community/nixos-cli";
-
-    # neovim configuration
-    nixvim.url = "github:nix-community/nixvim";
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
   };
 
@@ -34,9 +25,7 @@
       hardware, 
       rust-overlay,
       nix-vscode-extensions, 
-      nixos-cli, 
-      nixvim
-      ,... }@inputs:
+      ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -85,9 +74,6 @@
             # Enable home-manager as a NixOS module
             home-manager.nixosModules.home-manager
 
-            # nixos-cli module
-            nixos-cli.nixosModules.nixos-cli
-
             # Home-manager config for user 'nicole'
             {
               home-manager.useUserPackages = true;
@@ -133,8 +119,6 @@
                   # Enable home-manager as a NixOS module
                   home-manager.nixosModules.home-manager
       
-                  # nixos-cli module
-                  nixos-cli.nixosModules.nixos-cli
       
                   # Home-manager config for user 'nicole'
                   {

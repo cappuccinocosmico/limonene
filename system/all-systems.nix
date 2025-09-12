@@ -29,12 +29,12 @@ programs.steam = {
   programs.nix-ld.enable = true;
 
   # nixos-cli service
-  services.nixos-cli = {
-    enable = true;
-    config = {
-      # You can add specific configuration options here if needed
-    };
-  };
+  # services.nixos-cli = {
+  #   enable = true;
+  #   config = {
+  #     # You can add specific configuration options here if needed
+  #   };
+  # };
 
 
   # Enable networking
