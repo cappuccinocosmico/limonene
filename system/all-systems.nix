@@ -21,6 +21,7 @@ programs.steam = {
     heroic
     feather
     devenv
+    gnome-disk-utility
   ];
   services.tailscale.enable = false;
   # Software for bios updates.
