@@ -1,5 +1,7 @@
 { inputs, lib, config, pkgs, ... }: {
   home.packages = with pkgs; [
+      # experimental youtube client
+      grayjay
       # ABSOLUTELY ESSENTIAL DO NOT DELETE
       duplicati
       # ----------
