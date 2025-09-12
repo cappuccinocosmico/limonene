@@ -106,6 +106,54 @@
           # Pass the flake as an argument for the system
           specialArgs = { inherit inputs; };
         };
-      };
+      
+              vermissian = nixpkgs.lib.nixosSystem {
+                system = "x86_64-linux";
+                modules = [
+                  ({ pkgs, ... }: {
+                    nixpkgs.overlays = [ 
+                      rust-overlay.overlays.default
+                      nix-vscode-extensions.overlays.default
+                    ];
+                    environment.systemPackages = [
+                      (import ./modules/regular-linux-shell.nix { inherit pkgs; })
+                      # pkgs.rust-bin.stable.latest.default
+                      # (pkgs.rust-bin.stable.latest.default.override {
+                      #   extensions = [ "rust-analyzer" ];
+                      # })
+                      # pkgs.rustup
+                      pkgs.libclang
+                      pkgs.pkg-config
+                      pkgs.openssl
+                    ];
+                  })
+                  ./system/vermissian-configuration.nix  # Import your system configuration file
+                  # ./modules/otel_setup.nix
+                  hardware.nixosModules.framework-amd-ai-300-series
+                  # Enable home-manager as a NixOS module
+                  home-manager.nixosModules.home-manager
+      
+                  # nixos-cli module
+                  nixos-cli.nixosModules.nixos-cli
+      
+                  # Home-manager config for user 'nicole'
+                  {
+                    home-manager.useUserPackages = true;
+                    home-manager.useGlobalPkgs = true;
+                    home-manager.users.nicole = {
+                      imports = [
+                        # inputs.nixvim.homeModules.nixvim
+      		  
+                        ./home/nicole.nix
+                      ];
+                    };
+                  }
+      
+                ];
+      
+                # Pass the flake as an argument for the system
+                specialArgs = { inherit inputs; };
+              };
+            };
     };
 }
