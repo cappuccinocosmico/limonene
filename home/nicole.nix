@@ -68,6 +68,7 @@
     };
   };
   programs= {
+    firefox.enable = true;
     # Enable home-manager and git
     git={
       enable = true;
