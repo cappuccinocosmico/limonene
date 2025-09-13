@@ -56,7 +56,7 @@ programs.steam = {
   services.openssh = {
     enable = true;
     settings.PasswordAuthentication = true;
-  }
+  };
 
   # Set your time zone.
   time.timeZone = "America/Denver";
