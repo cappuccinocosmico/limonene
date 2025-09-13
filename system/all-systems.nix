@@ -40,6 +40,24 @@ programs.steam = {
   # Enable networking
   networking.networkmanager.enable = true;
 
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 80 443 8080 8443]; # don’t globally allow ssh
+    extraCommands = ''
+      # Allow RFC1918 IPv4 ranges
+      iptables -A INPUT -p tcp --dport 22 -s 192.168.0.0/16 -j ACCEPT
+      iptables -A INPUT -p tcp --dport 22 -s 10.0.0.0/8 -j ACCEPT
+      iptables -A INPUT -p tcp --dport 22 -s 172.16.0.0/12 -j ACCEPT
+
+      # Block all other SSH attempts
+      iptables -A INPUT -p tcp --dport 22 -j DROP
+    '';
+  };
+  services.openssh = {
+    enable = true;
+    settings.PasswordAuthentication = true;
+  }
+
   # Set your time zone.
   time.timeZone = "America/Denver";
   services.gnome.gnome-keyring.enable = true;
