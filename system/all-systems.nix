@@ -39,6 +39,9 @@ programs.steam = {
 
   # Enable networking
   networking.networkmanager.enable = true;
+  # networking.wireless.enable= true;
+  hardware.enableAllFirmware= true;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.firewall = {
     enable = true;

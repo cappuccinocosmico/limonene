@@ -1,5 +1,7 @@
 { inputs, lib, config, pkgs, ... }: {
   home.packages = with pkgs; [
+    sqlite-interactive
+    sqlite
     # better cli tools 
     dua # disk usage but actually useful
     xh # better curl
@@ -41,7 +43,6 @@
     speedtest-cli
     nushell
     btop
-    keepassxc
     # audio
     pavucontrol
     helvum

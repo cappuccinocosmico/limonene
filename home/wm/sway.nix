@@ -85,11 +85,14 @@ let wallpaper_path = "~/Pictures/wallpaper.jpg"; in
    };
 # output "*" bg  fill
    extraConfig = ''
-input "2362:628:PIXA3854:00_093A:0274_Touchpad" {
+input "1267:13037:ELAN0130:00_04F3:32ED_Touchpad" {
     dwt enabled
     tap enabled
     middle_emulation enabled
 }
+input "1:1:AT_Translated_Set_2_keyboard" {
+events disabled
+} 
 seat seat0 xcursor_theme default 48
 output eDP-1 scale 1
 exec mako
