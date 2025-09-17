@@ -1,6 +1,6 @@
 { inputs, lib, config, pkgs, ... }: {
   home.packages = with pkgs; [
-    sqlite-interactive
+    # sqlite-interactive
     sqlite
     # better cli tools 
     dua # disk usage but actually useful
