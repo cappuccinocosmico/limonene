@@ -28,6 +28,10 @@ programs.steam = {
   services.fwupd.enable = true;
   programs.nix-ld.enable = true;
 
+  virtualisation.docker = {
+    enable = true;
+  };
+
   # nixos-cli service
   # services.nixos-cli = {
   #   enable = true;
