@@ -22,13 +22,17 @@
   };
   programs.zellij = {
     enable=true;
-    enableFishIntegration=true;
+    # enableFishIntegration=true;
     settings={
       pane_frames=false;
       show_startup_tips=false;
       default_shell="fish";
     };
   };
+  programs.direnv = {
+      enable=true;
+      enableFishIntegration=true;
+    };
   programs.eza = {
     enable = true;
     enableFishIntegration = true;
