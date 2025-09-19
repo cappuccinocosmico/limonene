@@ -31,7 +31,7 @@
   };
   programs.direnv = {
       enable=true;
-      enableFishIntegration=true;
+      # enableFishIntegration=true;
     };
   programs.eza = {
     enable = true;
