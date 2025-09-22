@@ -22,6 +22,7 @@ programs.steam = {
     feather
     devenv
     gnome-disk-utility
+    git
   ];
   services.tailscale.enable = false;
   # Software for bios updates.
@@ -101,7 +102,7 @@ programs.steam = {
   users.users.nicole = {
     isNormalUser = true;
     description = "Nicole";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker"];
     packages = with pkgs; [
     #  thunderbird
     ];
@@ -115,6 +116,8 @@ programs.steam = {
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-
+  nix.extraOptions = ''
+    experimental-features = nix-command flakes
+  '';
 
 }
