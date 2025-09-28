@@ -49,7 +49,7 @@ programs.steam = {
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.firewall = {
-    enable = true;
+    enable = false;
     allowedTCPPorts = [ 80 443 8080 8443]; # don’t globally allow ssh
     extraCommands = ''
       # Allow RFC1918 IPv4 ranges
