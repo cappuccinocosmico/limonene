@@ -1,6 +1,7 @@
 { inputs, lib, config, pkgs, ... }: {
   home.packages = with pkgs; [
-    # sqlite-interactive
+    nmap 
+    arp-scan-rs
     sqlite
     # better cli tools 
     dua # disk usage but actually useful
