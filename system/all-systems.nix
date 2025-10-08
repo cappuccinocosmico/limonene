@@ -6,7 +6,10 @@
 { config, pkgs, ... }:
 
 {
-
+services.kavita = {
+  enable = true;
+  tokenKeyFile = ./kavita.secret;
+};
 services.flatpak.enable = true;
 programs.steam = {
   enable = true;
