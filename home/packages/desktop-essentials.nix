@@ -34,7 +34,6 @@
 # disabled since it might be requiring a huge manual build of webkitgtk
       # bookworm # yet another ebook reader
       koreader # Another Ebook Reader, mostly for embedded
-      kavita
       gnome-font-viewer
       gnome-terminal
       gnome-text-editor
