@@ -18,7 +18,6 @@ let wallpaper_path = "~/Pictures/wallpaper.jpg"; in
     fuzzel
     tofi # cmd tofi-run
     foot
-    pamixer # For volume control
     pwvucontrol
   ];
   programs.foot = {

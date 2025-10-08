@@ -12,41 +12,41 @@
 
   # prometheus: port 3020 (8020)
   #
-  services.prometheus = {
-    port = 3020;
-    enable = true;
-  };
-
-  # loki: port 3030 (8030)
+  # services.prometheus = {
+  #   port = 3020;
+  #   enable = true;
+  # };
   #
-  services.loki = {
-    enable = true;
-    configuration = {
-      server.http_listen_port = 3030;
-      auth_enabled = false;
-    };
-  };
-
-  # promtail: port 3031 (8031)
+  # # loki: port 3030 (8030)
+  # #
+  # services.loki = {
+  #   enable = true;
+  #   configuration = {
+  #     server.http_listen_port = 3030;
+  #     auth_enabled = false;
+  #   };
+  # };
   #
-  services.promtail = {
-    enable = true;
-  };
-
-  # grafana: port 3010 (8010)
+  # # promtail: port 3031 (8031)
+  # #
+  # services.promtail = {
+  #   enable = true;
+  # };
   #
-  services.grafana = {
-    settings.server.http_port = 3010;
-    # WARNING: this should match nginx setup!
-    # prevents "Request origin is not authorized"
-    settings.server.root_url = "http://192.168.1.10:8010"; # helps with nginx / ws / live
-
-    settings.server.protocol = "http";
-    settings.server.http_addr = "127.0.0.1";
-    settings.analytics.reporting_enabled = false;
-    enable = true;
-
-  };
+  # # grafana: port 3010 (8010)
+  # #
+  # services.grafana = {
+  #   settings.server.http_port = 3010;
+  #   # WARNING: this should match nginx setup!
+  #   # prevents "Request origin is not authorized"
+  #   settings.server.root_url = "http://192.168.1.10:8010"; # helps with nginx / ws / live
+  #
+  #   settings.server.protocol = "http";
+  #   settings.server.http_addr = "127.0.0.1";
+  #   settings.analytics.reporting_enabled = false;
+  #   enable = true;
+  #
+  # };
 
   # nginx reverse proxy
 }

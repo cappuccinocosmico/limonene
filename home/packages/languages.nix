@@ -21,8 +21,6 @@
     # Nixos Bs 
     steam-run
     # Browser stuff
-    # cypress
-    julia
     zig # C alternative
     # ruff-lsp # Rust based python lsp
     pyright # Another python lsp

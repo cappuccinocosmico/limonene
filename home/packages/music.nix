@@ -1,6 +1,6 @@
 { inputs, lib, config, pkgs, ... }:  {
     programs.beets ={
-      enable = true;
+      enable = false;
       settings = {
         "plugins" = "inline convert web embedart beetcamp discogs spotify";
         "convert" = {

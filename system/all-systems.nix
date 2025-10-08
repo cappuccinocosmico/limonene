@@ -17,7 +17,7 @@ programs.steam = {
   environment.systemPackages = with pkgs; [
     nix-ld
     wineWowPackages.waylandFull
-    lutris
+    # lutris
     heroic
     feather
     devenv

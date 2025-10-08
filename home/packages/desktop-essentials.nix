@@ -7,7 +7,6 @@
       # ----------
       # Experiments
       vlc
-      deadbeef
       mpv
       transmission_4-gtk
       zotero
@@ -35,7 +34,7 @@
 # disabled since it might be requiring a huge manual build of webkitgtk
       # bookworm # yet another ebook reader
       koreader # Another Ebook Reader, mostly for embedded
-      calibre # ebook thing
+      kavita
       gnome-font-viewer
       gnome-terminal
       gnome-text-editor
@@ -43,7 +42,7 @@
       # linphone # VOIP softphone
       # Music
       gimp
-      libreoffice-still
+      # libreoffice-still
       postman
   ];
 }

@@ -3,7 +3,7 @@
     # OSS Games
     gnome-mines
     gnome-sudoku
-    minetest
+    # minetest
     # Stores Removed for incompatibility reasons
     # steam
     # heroic
