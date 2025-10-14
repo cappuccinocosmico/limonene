@@ -8,8 +8,8 @@
 {
 
   environment.shellAliases = {
-    nrs = ''sudo nixos-rebuild switch --flake ~/limonene'';
-    nrb = ''nixos-rebuild build --verbose --flake ~/limonene'';
+    nrs = ''sudo nixos-rebuild switch --flake /home/nicole/limonene'';
+    nrb = ''nixos-rebuild build --verbose --flake /home/nicole/limonene'';
     };
 services.kavita = {
   enable = true;
