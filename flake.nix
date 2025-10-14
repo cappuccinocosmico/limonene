@@ -5,6 +5,9 @@
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    # Flake parts for better organization
+    flake-parts.url = "github:hercules-ci/flake-parts";
+
     # Home manager
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -16,116 +19,59 @@
     };
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
+
+    # Hyphae distributed storage system
+    hyphae.url = "path:/home/nicole/Documents/hyphae";
+    hyphae.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs =
-    { 
-      self, 
-      nixpkgs, 
-      home-manager,  
-      hardware, 
-      rust-overlay,
-      nix-vscode-extensions, 
-      determinate,
-      ... }@inputs:
-    let
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+  outputs = inputs@{ flake-parts, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [ "x86_64-linux" ];
 
-    in
-    {
-      nixosConfigurations = {
-        incarnadine = nixpkgs.lib.nixosSystem {
+      # Shared base configuration for all NixOS systems
+      flake.lib.baseNixOSModules = [
+        ({ pkgs, ... }: {
+          nixpkgs.overlays = [
+            inputs.rust-overlay.overlays.default
+            inputs.nix-vscode-extensions.overlays.default
+          ];
+          environment.systemPackages = [
+            (import ./modules/regular-linux-shell.nix { inherit pkgs; })
+            pkgs.libclang
+            pkgs.pkg-config
+            pkgs.openssl
+          ];
+        })
+        inputs.hardware.nixosModules.framework-amd-ai-300-series
+        inputs.determinate.nixosModules.default
+        inputs.home-manager.nixosModules.home-manager
+        {
+          home-manager.useUserPackages = true;
+          home-manager.useGlobalPkgs = true;
+          home-manager.users.nicole = {
+            imports = [ ./home/nicole.nix ];
+          };
+        }
+      ];
+
+      flake.nixosConfigurations = {
+        incarnadine = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
-            ({ pkgs, ... }: {
-              nixpkgs.overlays = [ 
-                rust-overlay.overlays.default
-                nix-vscode-extensions.overlays.default
-              ];
-              environment.systemPackages = [
-                (import ./modules/regular-linux-shell.nix { inherit pkgs; })
-                # pkgs.rust-bin.stable.latest.default
-                # (pkgs.rust-bin.stable.latest.default.override {
-                #   extensions = [ "rust-analyzer" ];
-                # })
-                # pkgs.rustup
-                pkgs.libclang
-                pkgs.pkg-config
-                pkgs.openssl
-              ];
-            })
-            ./system/incarnadine-configuration.nix  # Import your system configuration file
-            # ./modules/otel_setup.nix
-            hardware.nixosModules.framework-amd-ai-300-series
-            determinate.nixosModules.default
-            # Enable home-manager as a NixOS module
-            home-manager.nixosModules.home-manager
-
-            # Home-manager config for user 'nicole'
-            {
-              home-manager.useUserPackages = true;
-              home-manager.useGlobalPkgs = true;
-              home-manager.users.nicole = {
-                imports = [
-                  # inputs.nixvim.homeModules.nixvim
-		  
-                  ./home/nicole.nix
-                ];
-              };
-            }
-
-          ];
-
-          # Pass the flake as an argument for the system
+            ./system/incarnadine-configuration.nix
+          ] ++ inputs.self.lib.baseNixOSModules;
           specialArgs = { inherit inputs; };
         };
-        vermissian = nixpkgs.lib.nixosSystem {
+
+        vermissian = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
-            ({ pkgs, ... }: {
-              nixpkgs.overlays = [ 
-                rust-overlay.overlays.default
-                nix-vscode-extensions.overlays.default
-              ];
-              environment.systemPackages = [
-                (import ./modules/regular-linux-shell.nix { inherit pkgs; })
-                # pkgs.rust-bin.stable.latest.default
-                # (pkgs.rust-bin.stable.latest.default.override {
-                #   extensions = [ "rust-analyzer" ];
-                # })
-                # pkgs.rustup
-                  pkgs.libclang
-                  pkgs.pkg-config
-                  pkgs.openssl
-                ];
-              })
-              ./system/vermissian-configuration.nix  # Import your system configuration file
-              # ./modules/otel_setup.nix
-              hardware.nixosModules.framework-amd-ai-300-series
-              # Enable home-manager as a NixOS module
-              home-manager.nixosModules.home-manager
-              determinate.nixosModules.default
-  
-  
-              # Home-manager config for user 'nicole'
-              {
-                home-manager.useUserPackages = true;
-                home-manager.useGlobalPkgs = true;
-                home-manager.users.nicole = {
-                  imports = [
-                    # inputs.nixvim.homeModules.nixvim
-        
-                    ./home/nicole.nix
-                  ];
-                };
-              }
-  
-            ];
-  
-            # Pass the flake as an argument for the system
-            specialArgs = { inherit inputs; };
-          };
+            ./system/vermissian-configuration.nix
+            inputs.hyphae.nixosModules.default
+          ] ++ inputs.self.lib.baseNixOSModules;
+          specialArgs = { inherit inputs; };
         };
+      };
     };
 }

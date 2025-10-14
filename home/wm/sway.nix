@@ -4,6 +4,7 @@ let wallpaper_path = "~/Pictures/wallpaper.jpg"; in
   # You can import other home-manager modules here
   
   home.packages =  with pkgs; [
+    wireplumber
     # Sway DE Stuff
     wl-clipboard
     wev # Wayland Event Viewer
@@ -68,9 +69,11 @@ let wallpaper_path = "~/Pictures/wallpaper.jpg"; in
     keybindings = let
      mod = config.wayland.windowManager.sway.config.modifier;
     in  lib.mkOptionDefault {
-     "XF86AudioRaiseVolume" =  "exec pamixer -i 2";
-     "XF86AudioLowerVolume" = "exec pamixer -d 2";
-     "XF86AudioMute" = "exec pamixer -t";
+     "XF86AudioRaiseVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+ --limit 1.0";
+     "XF86AudioLowerVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-";
+     "${mod}+equal" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+ --limit 1.0";
+     "${mod}+minus" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-";
+     "XF86AudioMute"        = "exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
      "XF86MonBrightnessDown" = "exec light -U 5";
      "XF86MonBrightnessUp" = "exec light -A 5";
      "XF86AudioPlay" = "exec mpc toggle -q";

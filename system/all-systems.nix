@@ -6,6 +6,11 @@
 { config, pkgs, ... }:
 
 {
+
+  environment.shellAliases = {
+    nrs = ''sudo nixos-rebuild switch --flake ~/limonene'';
+    nrb = ''nixos-rebuild build --verbose --flake ~/limonene'';
+    };
 services.kavita = {
   enable = true;
   tokenKeyFile = ./kavita.secret;
