@@ -199,11 +199,12 @@
       "inputs": {
         "nixpkgs": [
           "nixpkgs"
-        ]
+        ],
+        "sops-nix": "sops-nix"
       },
       "locked": {
-        "lastModified": 1760192237,
-        "narHash": "sha256-YiLX3kwvy3l6Kqi7xYRMa8Mtyy07a0laBrCorL0RN3s=",
+        "lastModified": 1760759741,
+        "narHash": "sha256-eIfQvtBRNIRB+pqUFZD0cxfI7gGsjasbwH4vRs5JBbo=",
         "path": "/home/nicole/Documents/hyphae",
         "type": "path"
       },
@@ -388,6 +389,27 @@
       "original": {
         "owner": "oxalica",
         "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "sops-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "hyphae",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1760393368,
+        "narHash": "sha256-8mN3kqyqa2PKY0wwZ2UmMEYMcxvNTwLaOrrDsw6Qi4E=",
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "rev": "ab8d56e85b8be14cff9d93735951e30c3e86a437",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "sops-nix",
         "type": "github"
       }
     },

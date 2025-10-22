@@ -11,10 +11,6 @@
     nrs = ''sudo nixos-rebuild switch --flake /home/nicole/limonene'';
     nrb = ''nixos-rebuild build --verbose --flake /home/nicole/limonene'';
     };
-services.kavita = {
-  enable = true;
-  tokenKeyFile = ./kavita.secret;
-};
 services.flatpak.enable = true;
 programs.steam = {
   enable = true;
@@ -23,6 +19,8 @@ programs.steam = {
   localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
 };
   environment.systemPackages = with pkgs; [
+    python314
+    postgresql_17
     nix-ld
     wineWowPackages.waylandFull
     # lutris

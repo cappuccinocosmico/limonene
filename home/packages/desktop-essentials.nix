@@ -1,5 +1,6 @@
 { inputs, lib, config, pkgs, ... }: {
   home.packages = with pkgs; [
+      gnucash
       # experimental youtube client
       # grayjay
       # ABSOLUTELY ESSENTIAL DO NOT DELETE
