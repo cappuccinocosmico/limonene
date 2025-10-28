@@ -2,6 +2,8 @@
   home.packages = with pkgs; [
       gnucash
       chessx
+      chess-tui
+      stockfish
       # experimental youtube client
       # grayjay
       # ABSOLUTELY ESSENTIAL DO NOT DELETE

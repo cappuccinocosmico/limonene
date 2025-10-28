@@ -68,7 +68,7 @@
           system = "x86_64-linux";
           modules = [
             ./system/vermissian-configuration.nix
-            inputs.hyphae.nixosModules.default
+            # inputs.hyphae.nixosModules.default
           ] ++ inputs.self.lib.baseNixOSModules;
           specialArgs = { inherit inputs; };
         };
