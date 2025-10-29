@@ -80,7 +80,8 @@ let wallpaper_path = "~/Pictures/wallpaper.jpg"; in
      # Awful Hack to fix the fact that seeking is broken
      "XF86AudioNext" = "exec mpc -q seek +5% && mpc toggle -q && mpc toggle -q";
      "XF86AudioPrev" = "exec mpc -q seek -5% && mpc toggle -q && mpc toggle -q";
-     "Print" = "exec grimshot copy area";
+     "Print" = "exec grimshot savecopy area";
+     "Ctrl+Print" = "exec grimshot savecopy active";
      "${mod}+q" = "kill";
     };
 
