@@ -13,7 +13,7 @@ let wallpaper_path = "~/Pictures/wallpaper.jpg"; in
     sway-contrib.grimshot # Screenshotting
     mako # Notifications
     # Other
-    mpc-cli
+    mpc
     # dmenu clones
     bemenu # cmd bemenu-run
     fuzzel
