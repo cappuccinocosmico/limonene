@@ -30,12 +30,14 @@ programs.steam = {
     gnome-disk-utility
     git
   ];
-  services.tailscale.enable = false;
   # Software for bios updates.
   services.fwupd.enable = true;
   programs.nix-ld.enable = true;
 
   virtualisation.docker = {
+    enable = true;
+  };
+  services.tailscale = {
     enable = true;
   };
 
@@ -130,5 +132,4 @@ programs.steam = {
       extra-trusted-public-keys = devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=
     '';
   };
-
 }
