@@ -27,7 +27,7 @@
     GTK_THEME = "Arc-Dark";
     # EDITOR = "nvim";
     BROWSER = "firefox";
-    TERMINAL = "foot";
+    TERMINAL = "kitty";
     PNPM_HOME = "$HOME/.binaries/pnpm";
   };
   home.sessionPath = [

@@ -47,9 +47,6 @@
     enableNushellIntegration = true;
     enableFishIntegration = true;
   };
-  programs.foot  = {
-    enable = true;
-  };
   programs.nushell  = {
     enable = true;
   };

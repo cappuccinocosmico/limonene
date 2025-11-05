@@ -21,11 +21,14 @@ let wallpaper_path = "~/Pictures/wallpaper.jpg"; in
     foot
     pwvucontrol
   ];
-  programs.foot = {
+  programs.kitty = {
     enable = true;
-    settings.main.font = "Dejavu Sans Mono:size=20";
-    settings.colors.alpha=0.8;
-    settings.colors.background="000000";
+    settings = {
+      font_family = "DejaVu Sans Mono";
+      font_size = 20;
+      background_opacity = "0.8";
+      background = "#000000";
+    };
   };
   programs.fish.loginShellInit = "
   if test (tty) = '/dev/tty1'
@@ -59,7 +62,7 @@ let wallpaper_path = "~/Pictures/wallpaper.jpg"; in
       { command = "vlc";}
     ];
     modifier = "Mod4";
-    terminal = "foot";
+    terminal = "kitty";
     menu = "fuzzel";
     gaps.inner = 4;
     gaps.outer = 10;
