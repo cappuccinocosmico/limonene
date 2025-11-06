@@ -1,23 +1,22 @@
-{ inputs, lib, config, pkgs, ... }: {
+{pkgs, ...}: {
   home.packages = with pkgs; [
     jq
-    nmap 
+    nmap
     arp-scan-rs
     sqlite
-    # better cli tools 
+    # better cli tools
     dua # disk usage but actually useful
     xh # better curl
     otel-desktop-viewer
     otel-cli
     hyperfine
 
-    imv 
+    imv
     libsixel
 
     tmate # Backup remote terminal viewer assuming ziiij is broken.
 
-
-    kompose # docker compose to Kubernetes converter 
+    kompose # docker compose to Kubernetes converter
     kubernetes-helm
     frp # Fast Reverse Proxy
     # Terminal Utils
@@ -55,7 +54,7 @@
     # mycor stuff
     networkmanager
     nettools
-    # Tor hidden services stuff 
+    # Tor hidden services stuff
     mkp224o
     viu # image viewing in terminal
   ];

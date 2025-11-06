@@ -1,13 +1,11 @@
-
-{ inputs, lib, config, pkgs, ... }: {
+{pkgs, ...}: {
   home.packages = with pkgs; [
-
     # JabbaScript
     nodejs_22
     tailwindcss
-    # python shit 
+    # python shit
     uv
-    # rust-analyzer 
+    # rust-analyzer
     # Maybe included in rustup
     # rustup
     corepack
@@ -18,7 +16,7 @@
     # Extra Git stuff
     git-town
     git-filter-repo
-    # Nixos Bs 
+    # Nixos Bs
     steam-run
     # Browser stuff
     zig # C alternative

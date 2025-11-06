@@ -1,7 +1,12 @@
 # This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
-
-{ inputs, lib, config, pkgs, ... }: {
+{
+  inputs,
+  lib,
+  config,
+  pkgs,
+  ...
+}: {
   # You can import other home-manager modules here
   imports = [
     # Select Window Managers Here:
@@ -13,17 +18,16 @@
     # ./nvim-home.nix
     packages/nvim.nix
   ];
-  home.packages = [ 
-
+  home.packages = [
     pkgs.nix-ld
-    pkgs.dconf 
+    pkgs.dconf
     # pkgs.nixGL # Necessary for getting sway to run
     pkgs.mesa
     pkgs.libdrm
   ];
   home.sessionVariables = {
-    NIXPKGS_ALLOW_UNFREE="1";
-    SHELL="/home/nicole/.nix-profile/bin/fish";
+    NIXPKGS_ALLOW_UNFREE = "1";
+    SHELL = "/home/nicole/.nix-profile/bin/fish";
     GTK_THEME = "Arc-Dark";
     # EDITOR = "nvim";
     BROWSER = "firefox";
@@ -47,17 +51,16 @@
     homeDirectory = "/home/nicole";
   };
 
-
   programs.home-manager.enable = true;
   # Add stuff for your user as you see fit:
 
   home.sessionVariables = {
   };
   # XDG Everything
-  xdg={
+  xdg = {
     systemDirs.data = ["${pkgs.gsettings-desktop-schemas}/share"];
     # Default user directories
-    userDirs={
+    userDirs = {
       enable = true;
       createDirectories = true;
       music = "${config.home.homeDirectory}/Music";
@@ -67,10 +70,10 @@
       templates = null;
     };
   };
-  programs= {
+  programs = {
     firefox.enable = true;
     # Enable home-manager and git
-    git={
+    git = {
       enable = true;
       lfs.enable = false; # Very scary
       userName = "Nicole Venner";
@@ -81,12 +84,9 @@
     };
   };
 
-
-
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "25.05";
-
 }

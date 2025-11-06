@@ -23,6 +23,10 @@
     # Hyphae distributed storage system
     hyphae.url = "path:/home/nicole/Documents/hyphae";
     hyphae.inputs.nixpkgs.follows = "nixpkgs";
+
+    # nvf for Neovim configuration
+    nvf.url = "github:notashelf/nvf";
+    nvf.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs@{ flake-parts, ... }:
@@ -50,7 +54,10 @@
           home-manager.useUserPackages = true;
           home-manager.useGlobalPkgs = true;
           home-manager.users.nicole = {
-            imports = [ ./home/nicole.nix ];
+            imports = [
+              ./home/nicole.nix
+              inputs.nvf.homeManagerModules.default
+            ];
           };
         }
       ];
