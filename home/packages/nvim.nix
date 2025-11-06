@@ -20,6 +20,20 @@
         viAlias = false;
         vimAlias = true;
 
+        # Use system clipboard for yank/paste
+        clipboard = {
+          enable = true;
+          registers = "unnamedplus";
+          providers = {
+            wl-copy.enable = true;
+          };
+        };
+
+        # Extra Lua configuration files
+        extraLuaFiles = [
+          ./config/nvim-extra.lua
+        ];
+
         # Theme
         theme = {
           enable = true;
@@ -226,7 +240,7 @@
 
             # Application and window management
             "<leader>qq" = {
-              action = ":qa<CR>";
+              action = ":qa!<CR>";
               desc = "Quit application";
             };
             "<leader>wo" = {
@@ -248,7 +262,7 @@
           insert = {
             # Save file and return to normal mode
             "<C-s>" = {
-              action = "<ESC>:w<CR>";
+              action = "<ESC>:w<CR>a";
               desc = "Save file and exit insert mode";
             };
           };
