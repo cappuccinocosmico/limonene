@@ -262,7 +262,7 @@
           insert = {
             # Save file and return to normal mode
             "<C-s>" = {
-              action = "<ESC>:w<CR>a";
+              action = "<ESC>:w<CR>";
               desc = "Save file and exit insert mode";
             };
           };

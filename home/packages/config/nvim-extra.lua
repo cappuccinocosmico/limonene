@@ -1,3 +1,6 @@
+-- Use system clipboard for yank/paste
+vim.opt.clipboard:append("unnamedplus")
+
 -- Auto-reload files when they change on disk
 vim.opt.autoread = true
 
