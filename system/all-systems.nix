@@ -31,6 +31,7 @@ in {
     localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
   };
   environment.systemPackages = with pkgs; [
+    yggdrasil
     python314
     postgresql_17
     nix-ld
