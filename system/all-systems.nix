@@ -12,7 +12,7 @@
   ];
 in {
   users.users.nicole = {
-    openssh.authorizedKeys = nicole_ssh_keys;
+    openssh.authorizedKeys.keys = nicole_ssh_keys;
   };
 
   services.openssh = {
