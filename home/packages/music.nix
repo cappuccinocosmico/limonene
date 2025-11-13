@@ -6,7 +6,7 @@
   ...
 }: {
   programs.beets = {
-    enable = false;
+    enable = true;
     settings = {
       "plugins" = "inline convert web embedart beetcamp discogs spotify";
       "convert" = {
