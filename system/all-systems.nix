@@ -54,14 +54,6 @@ in {
     enable = true;
   };
 
-  # nixos-cli service
-  # services.nixos-cli = {
-  #   enable = true;
-  #   config = {
-  #     # You can add specific configuration options here if needed
-  #   };
-  # };
-
   # Enable networking
   networking.networkmanager.enable = true;
   # networking.wireless.enable= true;

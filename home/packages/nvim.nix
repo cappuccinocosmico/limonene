@@ -189,7 +189,15 @@
               action = ":Telescope find_files<CR>";
               desc = "Find files";
             };
+            "<leader><leader>" = {
+              action = ":Telescope find_files<CR>";
+              desc = "Find files";
+            };
             "<leader>fg" = {
+              action = ":Telescope live_grep<CR>";
+              desc = "Live grep";
+            };
+            "<leader>/" = {
               action = ":Telescope live_grep<CR>";
               desc = "Live grep";
             };
