@@ -1,0 +1,49 @@
+#!/usr/bin/env sh
+
+# Scripting addition (requires SIP partially disabled)
+# yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+# sudo yabai --load-sa
+
+# Layout
+yabai -m config layout bsp
+yabai -m config auto_balance on
+
+# Gaps (matching sway: inner 4, outer 10)
+yabai -m config top_padding    10
+yabai -m config bottom_padding 10
+yabai -m config left_padding   10
+yabai -m config right_padding  10
+yabai -m config window_gap     4
+
+# Mouse
+yabai -m config mouse_follows_focus on
+yabai -m config focus_follows_mouse off
+yabai -m config mouse_modifier alt
+yabai -m config mouse_action1 move
+yabai -m config mouse_action2 resize
+yabai -m config mouse_drop_action swap
+
+# Window appearance
+yabai -m config window_placement second_child
+yabai -m config split_ratio 0.5
+
+# Disable management for system apps
+yabai -m rule --add app="^System Preferences$" manage=off
+yabai -m rule --add app="^System Settings$" manage=off
+yabai -m rule --add app="^Calculator$" manage=off
+yabai -m rule --add app="^Karabiner-Elements$" manage=off
+yabai -m rule --add app="^Archive Utility$" manage=off
+yabai -m rule --add app="^Finder$" title="(Co(py|nnect)|Move|Info|Pref)" manage=off
+yabai -m rule --add app="^Alfred Preferences$" manage=off
+yabai -m rule --add app="^1Password$" manage=off
+
+# App assignments (similar to sway assigns)
+# Space 5: Browser
+yabai -m rule --add app="^Firefox$" space=5
+yabai -m rule --add app="^Safari$" space=5
+
+# Space 10: Communication
+yabai -m rule --add app="^Signal$" space=10
+yabai -m rule --add app="^VLC$" space=10
+
+echo "yabai configuration loaded"

@@ -81,6 +81,62 @@ pnpm is provided via corepack. Enable it with:
 corepack enable pnpm
 ```
 
+### Window Management (yabai + skhd)
+
+The configuration files for yabai and skhd are managed by nix, but the binaries must be installed separately via Homebrew for better permission handling.
+
+#### Installation
+
+```bash
+brew install koekeishiya/formulae/yabai
+brew install koekeishiya/formulae/skhd
+```
+
+#### Start Services
+
+```bash
+yabai --start-service
+skhd --start-service
+```
+
+#### Permissions
+
+Both tools require Accessibility permissions:
+1. Open System Settings > Privacy & Security > Accessibility
+2. Add and enable `/opt/homebrew/bin/yabai`
+3. Add and enable `/opt/homebrew/bin/skhd`
+
+#### Optional: Full yabai Functionality
+
+For features like moving windows across spaces, yabai requires SIP to be partially disabled:
+
+1. Boot into Recovery Mode (hold power button on Apple Silicon, or Cmd+R on Intel)
+2. Open Terminal from Utilities menu
+3. Run:
+   ```bash
+   csrutil enable --without fs --without debug --without nvram
+   ```
+4. Reboot and run:
+   ```bash
+   sudo yabai --load-sa
+   ```
+
+To load the scripting addition on startup, uncomment the relevant lines in the yabairc.
+
+#### Key Bindings
+
+The skhd configuration uses `alt` (option) as the modifier to avoid conflicts with macOS defaults:
+
+- **Focus**: `alt + h/j/k/l`
+- **Swap**: `alt + shift + h/j/k/l`
+- **Space**: `alt + 1-9,0`
+- **Move to space**: `alt + shift + 1-9,0`
+- **Close window**: `alt + q`
+- **Terminal**: `alt + return`
+- **Fullscreen**: `alt + f`
+- **Float toggle**: `alt + shift + space`
+- **Restart yabai**: `alt + shift + r`
+
 ## NixOS Setup
 
 ### Rebuilding

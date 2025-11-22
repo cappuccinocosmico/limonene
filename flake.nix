@@ -90,7 +90,7 @@
       flake.darwinConfigurations = {
         # Replace "nicole-mac" with your Mac's hostname
         # Run: scutil --get LocalHostName
-        "nicole-mac" = inputs.nix-darwin.lib.darwinSystem {
+        "cheddar" = inputs.nix-darwin.lib.darwinSystem {
           system = "aarch64-darwin";  # Use "x86_64-darwin" for Intel Macs
           modules = [
             ({ pkgs, ... }: {
@@ -99,8 +99,8 @@
               ];
 
               # Basic nix-darwin configuration
-              services.nix-daemon.enable = true;
-              nix.settings.experimental-features = [ "nix-command" "flakes" ];
+              # services.nix-daemon.enable = true;
+              # nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
               # System packages available to all users
               environment.systemPackages = [
@@ -116,6 +116,7 @@
                 name = "nicole";
                 home = "/Users/nicole";
               };
+              nix.enable = false;
 
               # Used for backwards compatibility
               system.stateVersion = 5;
