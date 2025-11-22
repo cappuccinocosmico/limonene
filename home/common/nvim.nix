@@ -4,7 +4,10 @@
   config,
   pkgs,
   ...
-}: {
+}: let
+  isLinux = pkgs.stdenv.isLinux;
+  isDarwin = pkgs.stdenv.isDarwin;
+in {
   home.packages = with pkgs; [
     ripgrep
     ripgrep-all
@@ -25,13 +28,13 @@
           enable = true;
           registers = "unnamedplus";
           providers = {
-            wl-copy.enable = true;
+            wl-copy.enable = isLinux;
           };
         };
 
         # Extra Lua configuration files
         extraLuaFiles = [
-          ./config/nvim-extra.lua
+          ../config/nvim-extra.lua
         ];
 
         # Theme

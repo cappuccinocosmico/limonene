@@ -11,6 +11,11 @@
     # Home manager
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    # nix-darwin for macOS
+    nix-darwin.url = "github:nix-darwin/nix-darwin";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+
     hardware.url = "github:NixOS/nixos-hardware";
 
     rust-overlay = {
@@ -31,7 +36,7 @@
 
   outputs = inputs@{ flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [ "x86_64-linux" ];
+      systems = [ "x86_64-linux" "aarch64-darwin" "x86_64-darwin" ];
 
       # Shared base configuration for all NixOS systems
       flake.lib.baseNixOSModules = [
@@ -77,6 +82,56 @@
             ./system/vermissian-configuration.nix
             # inputs.hyphae.nixosModules.default
           ] ++ inputs.self.lib.baseNixOSModules;
+          specialArgs = { inherit inputs; };
+        };
+      };
+
+      # macOS/Darwin configurations
+      flake.darwinConfigurations = {
+        # Replace "nicole-mac" with your Mac's hostname
+        # Run: scutil --get LocalHostName
+        "nicole-mac" = inputs.nix-darwin.lib.darwinSystem {
+          system = "aarch64-darwin";  # Use "x86_64-darwin" for Intel Macs
+          modules = [
+            ({ pkgs, ... }: {
+              nixpkgs.overlays = [
+                inputs.rust-overlay.overlays.default
+              ];
+
+              # Basic nix-darwin configuration
+              services.nix-daemon.enable = true;
+              nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+              # System packages available to all users
+              environment.systemPackages = [
+                pkgs.pkg-config
+                pkgs.openssl
+              ];
+
+              # Allow unfree packages
+              nixpkgs.config.allowUnfree = true;
+
+              # Set your primary user
+              users.users.nicole = {
+                name = "nicole";
+                home = "/Users/nicole";
+              };
+
+              # Used for backwards compatibility
+              system.stateVersion = 5;
+            })
+            inputs.home-manager.darwinModules.home-manager
+            {
+              home-manager.useUserPackages = true;
+              home-manager.useGlobalPkgs = true;
+              home-manager.users.nicole = {
+                imports = [
+                  ./home/nicole-darwin.nix
+                  inputs.nvf.homeManagerModules.default
+                ];
+              };
+            }
+          ];
           specialArgs = { inherit inputs; };
         };
       };

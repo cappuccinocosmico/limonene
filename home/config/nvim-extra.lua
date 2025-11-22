@@ -1,6 +1,12 @@
 -- Use system clipboard for yank/paste
 vim.opt.clipboard:append("unnamedplus")
 
+-- Tab spacing configuration (2 spaces)
+vim.opt.tabstop = 2        -- Number of spaces a tab character displays as
+vim.opt.shiftwidth = 2     -- Number of spaces for each indent level
+vim.opt.softtabstop = 2    -- Number of spaces for <Tab> key press
+vim.opt.expandtab = true   -- Convert tabs to spaces
+
 -- Auto-reload files when they change on disk
 vim.opt.autoread = true
 

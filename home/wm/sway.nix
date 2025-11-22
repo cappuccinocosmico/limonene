@@ -49,11 +49,18 @@ in {
     config = rec {
       assigns = {
         "10" = [
-          {class = "signal-desktop";}
+          {class = "Signal";}
+          {app_id = "signal";}
           {class = "vlc";}
+          {app_id = "vlc";}
         ];
         "9" = [
           {class = "easyeffects";}
+          {app_id = "com.github.wwmm.easyeffects";}
+        ];
+        "5" = [
+          {app_id = "firefox";}
+          {class = "firefox";}
         ];
       };
       output = {
@@ -63,10 +70,11 @@ in {
       };
       startup = [
         {command = "light -N .1";}
-        {command = "signal-desktop";}
-        # { command = "slack";}
-        {command = "easyeffects";}
-        {command = "vlc";}
+        {command = "swaymsg 'workspace 1; exec kitty'";}
+        {command = "swaymsg 'workspace 5; exec firefox'";}
+        {command = "swaymsg 'workspace 9; exec easyeffects'";}
+        {command = "swaymsg 'workspace 10; exec signal-desktop'";}
+        {command = "swaymsg 'workspace 10; exec vlc'";}
       ];
       modifier = "Mod4";
       terminal = "kitty";
@@ -112,6 +120,20 @@ in {
       output eDP-1 scale 1
       exec mako
       exec swaybg -i ${wallpaper_path} -m fill
+
+      # Disable laptop display if external 4K monitor is detected
+      exec_always ${pkgs.writeShellScript "check-4k-display" ''
+        # Check for external displays with 4K resolution (3840x2160 or higher)
+        external_4k=$(${pkgs.sway}/bin/swaymsg -t get_outputs -r | ${pkgs.jq}/bin/jq -r '.[] | select(.name != "eDP-1") | select(.current_mode.width >= 3840 and .current_mode.height >= 2160) | .name')
+
+        if [ -n "$external_4k" ]; then
+          # External 4K display found, disable laptop screen
+          ${pkgs.sway}/bin/swaymsg output eDP-1 disable
+        else
+          # No external 4K display, enable laptop screen
+          ${pkgs.sway}/bin/swaymsg output eDP-1 enable
+        fi
+      ''}
     '';
 
     # exec LT="$lock_timeout" ST="$screen_timeout" LT=${LT:-300} ST=${ST:-60} && \

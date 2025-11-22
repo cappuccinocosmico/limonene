@@ -1,0 +1,1 @@
+- This is a repo that determines all the system configuration. For example if you are wanting to modify the system configuration for neovim, go ahead and look in "~/limonene/home/packages/nvim.nix" not "~/.config/nvim". Simlarly window management is in "~/limonene/home/wm/sway.nix", and packages should be installed in the appropriate file in "~/limonene/home/packages"

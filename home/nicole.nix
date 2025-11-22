@@ -1,5 +1,4 @@
-# This is your home-manager configuration file
-# Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
+# Linux home-manager configuration for nicole
 {
   inputs,
   lib,
@@ -7,59 +6,75 @@
   pkgs,
   ...
 }: {
-  # You can import other home-manager modules here
   imports = [
-    # Select Window Managers Here:
-    wm/sway.nix
-    # wm/hyprland.nix
+    # Cross-platform configuration
+    ./common.nix
 
-    ./packages.nix
+    # Linux-specific window manager
+    wm/sway.nix
+
+    # Linux-specific packages
     ./fonts.nix
-    # ./nvim-home.nix
-    packages/nvim.nix
+    linux/desktop-essentials.nix
+    linux/gaming.nix
+    linux/music.nix
   ];
-  home.packages = [
-    pkgs.nix-ld
-    pkgs.dconf
-    # pkgs.nixGL # Necessary for getting sway to run
-    pkgs.mesa
-    pkgs.libdrm
+
+  # Linux-specific packages
+  home.packages = with pkgs; [
+    nix-ld
+    dconf
+    mesa
+    libdrm
+
+    # Linux-specific CLI tools (from server-essentials)
+    arp-scan-rs
+    otel-desktop-viewer
+    otel-cli
+    imv
+    libsixel
+    pciutils
+    parted
+    exfat
+    pavucontrol
+    helvum
+    xterm
+    networkmanager
+    nettools
+    mkp224o
+
+    # Linux-specific dev tools
+    steam-run
+    dbeaver-bin
   ];
+
+  # Linux-specific shell aliases
+  home.shellAliases = {
+    nziina = ''eval "if set -q ZELLIJ; exit; else; eval (ssh-agent -c); /home/nicole/Documents/mycorrhizae/ziina/ziina -l 0.0.0.0:2222; end"'';
+    ziina-sshget = ''set -x XDG_RUNTIME_DIR /run/user/1000 && set -x WAYLAND_DISPLAY wayland-1 && echo "ssh -p 2222 $ZELLIJ_SESSION_NAME@apiarist" | tee /dev/tty | wl-copy'';
+  };
+
   home.sessionVariables = {
     NIXPKGS_ALLOW_UNFREE = "1";
-    SHELL = "/home/nicole/.nix-profile/bin/fish";
+    SHELL = "${config.home.homeDirectory}/.nix-profile/bin/fish";
     GTK_THEME = "Arc-Dark";
-    # EDITOR = "nvim";
     BROWSER = "firefox";
     TERMINAL = "kitty";
     PNPM_HOME = "$HOME/.binaries/pnpm";
   };
+
   home.sessionPath = [
-    "$HOME/.local/bin"
-    "$HOME/.cargo/bin"
-    "$HOME/go/bin"
     "$HOME/.binaries/pnpm"
   ];
 
-  # qt.enable = true;
-  # qt.style.name = "adwaita-dark";
-  # gtk.enable = true;
-  # gtk.theme.name = "Adwaita-dark";
-  # programs.dconf.enable = true;
   home = {
     username = "nicole";
     homeDirectory = "/home/nicole";
   };
 
-  programs.home-manager.enable = true;
-  # Add stuff for your user as you see fit:
-
-  home.sessionVariables = {
-  };
-  # XDG Everything
+  # XDG directories (Linux-specific)
   xdg = {
     systemDirs.data = ["${pkgs.gsettings-desktop-schemas}/share"];
-    # Default user directories
     userDirs = {
       enable = true;
       createDirectories = true;
@@ -70,18 +85,9 @@
       templates = null;
     };
   };
+
   programs = {
     firefox.enable = true;
-    # Enable home-manager and git
-    git = {
-      enable = true;
-      lfs.enable = false; # Very scary
-      settings.user.name = "Nicole Venner";
-      settings.user.email = "nvenner@protonmail.ch";
-      settings = {
-        init.defaultBranch = "main";
-      };
-    };
   };
 
   # Nicely reload system units when changing configs

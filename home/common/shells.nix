@@ -1,56 +1,58 @@
-{ inputs, lib, config, pkgs, ... }:  {
+{ inputs, lib, config, pkgs, ... }: {
   home.shellAliases = {
     dlp-album = ''yt-dlp -o "%(playlist)s/%(playlist_autonumber)s - %(title)s.%(ext)s" -x --audio-quality 10 --parse-metadata "playlist_index:%(track_number)s" --embed-metadata --embed-thumbnail'';
     dlp-lectures = ''yt-dlp --S "vcodec:av01 (bv*[height<=720]+ba)" --sponsorblock-remove all --embed-metadata --embed-chapters --embed-thumbnail --sub-langs all --write-subs --write-auto-subs --sub-format "srt" --embed-subs --merge-output-format "mkv" -o "%(playlist)s/%(playlist_autonumber)s - %(title)s.%(ext)s"'';
     ls = "eza";
     cat = "bat";
     find = "fd";
-    nziina = ''eval "if set -q ZELLIJ; exit; else; eval (ssh-agent -c); /home/nicole/Documents/mycorrhizae/ziina/ziina -l 0.0.0.0:2222; end"'';
-    # For this to work you might need to run the following:
-    # set -Ux WAYLAND_DISPLAY wayland-1
-    # set -Ux XDG_RUNTIME_DIR /run/user/1000
-    ziina-sshget= ''set -x XDG_RUNTIME_DIR /run/user/1000 && set -x WAYLAND_DISPLAY wayland-1 && echo "ssh -p 2222 $ZELLIJ_SESSION_NAME@apiarist" | tee /dev/tty | wl-copy'';
     deepqwen = ''qwen --openai-base-url https://api.deepinfra.com/v1/openai/ --openai-api-key $DEEPINFRA_API_KEY --model Qwen/Qwen3-Coder-480B-A35B-Instruct'';
   };
-  programs.tmux  = {
+
+  programs.tmux = {
     enable = true;
     mouse = true;
     keyMode = "vi";
     sensibleOnTop = true;
     terminal = "screen-256color";
   };
+
   programs.zellij = {
-    enable=true;
-    # enableFishIntegration=true;
-    settings={
-      pane_frames=false;
-      show_startup_tips=false;
-      default_shell="fish";
+    enable = true;
+    settings = {
+      pane_frames = false;
+      show_startup_tips = false;
+      default_shell = "fish";
     };
   };
+
   programs.direnv = {
-      enable=true;
-      # enableFishIntegration=true;
-    };
+    enable = true;
+  };
+
   programs.eza = {
     enable = true;
     enableFishIntegration = true;
   };
+
   programs.bat = {
     enable = true;
   };
+
   programs.fd = {
     enable = true;
   };
+
   programs.zoxide = {
     enable = true;
     enableNushellIntegration = true;
     enableFishIntegration = true;
   };
-  programs.nushell  = {
+
+  programs.nushell = {
     enable = true;
   };
-  programs.fish  = {
+
+  programs.fish = {
     enable = true;
     functions = {
       envsource = ''
