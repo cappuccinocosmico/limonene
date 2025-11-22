@@ -26,27 +26,27 @@
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
 
     # Hyphae distributed storage system
-    hyphae.url = "path:/home/nicole/Documents/hyphae";
-    hyphae.inputs.nixpkgs.follows = "nixpkgs";
+    # hyphae.url = "path:/home/nicole/Documents/hyphae";
+    # hyphae.inputs.nixpkgs.follows = "nixpkgs";
 
     # nvf for Neovim configuration
     nvf.url = "github:notashelf/nvf";
     nvf.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ flake-parts, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [ "x86_64-linux" "aarch64-darwin" "x86_64-darwin" ];
+  outputs = inputs @ {flake-parts, ...}:
+    flake-parts.lib.mkFlake {inherit inputs;} {
+      systems = ["x86_64-linux" "aarch64-darwin" "x86_64-darwin"];
 
       # Shared base configuration for all NixOS systems
       flake.lib.baseNixOSModules = [
-        ({ pkgs, ... }: {
+        ({pkgs, ...}: {
           nixpkgs.overlays = [
             inputs.rust-overlay.overlays.default
             inputs.nix-vscode-extensions.overlays.default
           ];
           environment.systemPackages = [
-            (import ./modules/regular-linux-shell.nix { inherit pkgs; })
+            (import ./modules/regular-linux-shell.nix {inherit pkgs;})
             pkgs.libclang
             pkgs.pkg-config
             pkgs.openssl
@@ -70,19 +70,23 @@
       flake.nixosConfigurations = {
         incarnadine = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          modules = [
-            ./system/incarnadine-configuration.nix
-          ] ++ inputs.self.lib.baseNixOSModules;
-          specialArgs = { inherit inputs; };
+          modules =
+            [
+              ./system/incarnadine-configuration.nix
+            ]
+            ++ inputs.self.lib.baseNixOSModules;
+          specialArgs = {inherit inputs;};
         };
 
         vermissian = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          modules = [
-            ./system/vermissian-configuration.nix
-            # inputs.hyphae.nixosModules.default
-          ] ++ inputs.self.lib.baseNixOSModules;
-          specialArgs = { inherit inputs; };
+          modules =
+            [
+              ./system/vermissian-configuration.nix
+              # inputs.hyphae.nixosModules.default
+            ]
+            ++ inputs.self.lib.baseNixOSModules;
+          specialArgs = {inherit inputs;};
         };
       };
 
@@ -91,9 +95,9 @@
         # Replace "nicole-mac" with your Mac's hostname
         # Run: scutil --get LocalHostName
         "cheddar" = inputs.nix-darwin.lib.darwinSystem {
-          system = "aarch64-darwin";  # Use "x86_64-darwin" for Intel Macs
+          system = "aarch64-darwin"; # Use "x86_64-darwin" for Intel Macs
           modules = [
-            ({ pkgs, ... }: {
+            ({pkgs, ...}: {
               nixpkgs.overlays = [
                 inputs.rust-overlay.overlays.default
               ];
@@ -133,7 +137,7 @@
               };
             }
           ];
-          specialArgs = { inherit inputs; };
+          specialArgs = {inherit inputs;};
         };
       };
     };
