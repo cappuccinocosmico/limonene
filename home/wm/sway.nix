@@ -27,16 +27,6 @@ in {
     foot
     pwvucontrol
   ];
-  programs.kitty = {
-    enable = true;
-    settings = {
-      confirm_os_window_close = 0;
-      font_family = "DejaVu Sans Mono";
-      font_size = 20;
-      background_opacity = "0.8";
-      background = "#000000";
-    };
-  };
   programs.fish.loginShellInit = "
   if test (tty) = '/dev/tty1'
     set -Ux XDG_CURRENT_DESKTOP sway

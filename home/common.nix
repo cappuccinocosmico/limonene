@@ -5,6 +5,8 @@
     ./common/cli-tools.nix
     ./common/languages.nix
     ./common/git.nix
+    ./common/kitty.nix
+    ./fonts.nix
   ];
 
   # Cross-platform session paths

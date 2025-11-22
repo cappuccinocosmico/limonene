@@ -8,6 +8,9 @@
     dua # disk usage but actually useful
     xh # better curl
     hyperfine
+    devenv
+
+    just
 
     tmate # Backup remote terminal viewer
 

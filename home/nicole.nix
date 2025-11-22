@@ -14,7 +14,6 @@
     wm/sway.nix
 
     # Linux-specific packages
-    ./fonts.nix
     linux/desktop-essentials.nix
     linux/gaming.nix
     linux/music.nix
