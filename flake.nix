@@ -112,6 +112,11 @@
                 pkgs.openssl
               ];
 
+              # Shell aliases for darwin
+              environment.shellAliases = {
+                nrs = "sudo darwin-rebuild switch --flake /Users/nicole/limonene#cheddar";
+              };
+
               # Allow unfree packages
               nixpkgs.config.allowUnfree = true;
 
@@ -121,6 +126,15 @@
                 home = "/Users/nicole";
               };
               nix.enable = false;
+
+              nix.settings = {
+                extra-substituters = [
+                  "https://devenv.cachix.org"
+                ];
+                extra-trusted-public-keys = [
+                  "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
+                ];
+              };
 
               # Used for backwards compatibility
               system.stateVersion = 5;

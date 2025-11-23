@@ -27,7 +27,6 @@
     libdrm
 
     # Linux-specific CLI tools (from server-essentials)
-    arp-scan-rs
     otel-desktop-viewer
     otel-cli
     imv
@@ -55,7 +54,7 @@
 
   home.sessionVariables = {
     NIXPKGS_ALLOW_UNFREE = "1";
-    SHELL = "${config.home.homeDirectory}/.nix-profile/bin/fish";
+    SHELL = "${pkgs.fish}/bin/fish";
     GTK_THEME = "Arc-Dark";
     BROWSER = "firefox";
     TERMINAL = "kitty";
