@@ -8,6 +8,7 @@
         email = "nvenner@protonmail.ch";
       };
       init.defaultBranch = "main";
+      pull.rebase = true;
     };
   };
 }
