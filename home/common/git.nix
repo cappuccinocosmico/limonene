@@ -2,9 +2,11 @@
   programs.git = {
     enable = true;
     lfs.enable = false; # Very scary
-    userName = "Nicole Venner";
-    userEmail = "nvenner@protonmail.ch";
-    extraConfig = {
+    settings = {
+      user = {
+        name = "Nicole Venner";
+        email = "nvenner@protonmail.ch";
+      };
       init.defaultBranch = "main";
     };
   };

@@ -94,6 +94,8 @@ in {
           "Print" = "exec grimshot savecopy area";
           "Ctrl+Print" = "exec grimshot savecopy active";
           "${mod}+q" = "kill";
+          "${mod}+Right" = "workspace next";
+          "${mod}+Left" = "workspace prev";
         };
     };
     # output "*" bg  fill
