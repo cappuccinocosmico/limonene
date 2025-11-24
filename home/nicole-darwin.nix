@@ -14,6 +14,7 @@
   home.sessionVariables = {
     NIXPKGS_ALLOW_UNFREE = "1";
     PNPM_HOME = "$HOME/.binaries/pnpm";
+    SHELL = "${pkgs.fish}/bin/fish";
   };
 
   home.sessionPath = [

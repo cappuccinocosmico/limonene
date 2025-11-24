@@ -107,6 +107,33 @@ in {
           snacks-nvim = {
             enable = true;
             setupOpts = {
+              dashboard = {
+                preset = {
+                  header = ''
+
+
+                    .__  .__
+                    |  | |__| _____   ____   ____   ____   ____   ____
+                    |  | |  |/     \ /  _ \ /    \_/ __ \ /    \_/ __ \
+                    |  |_|  |  Y Y  (  <_> )   |  \  ___/|   |  \  ___/
+                    |____/__|__|_|  /\____/|___|  /\___  >___|  /\___  >
+                                  \/            \/     \/     \/     \/
+                  '';
+                };
+                sections = [
+                  {section = "header";}
+                  {
+                    section = "keys";
+                    gap = 1;
+                    padding = 1;
+                  }
+                  {
+                    section = "recent_files";
+                    limit = 8;
+                    padding = 1;
+                  }
+                ];
+              };
               explorer = {
                 replace_netrw = true;
                 trash = true;
