@@ -124,3 +124,12 @@ end
 
 -- Start the autosave timer
 autosave_timer:start(autosave_interval, autosave_interval, vim.schedule_wrap(autosave_current_buffer))
+
+-- Enable spell check for markdown files
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = {"markdown", "md"},
+  callback = function()
+    vim.opt_local.spell = true
+    vim.opt_local.spelllang = "en_us"
+  end,
+})
