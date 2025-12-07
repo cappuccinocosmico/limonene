@@ -38,6 +38,10 @@ alt - 8 : yabai -m space --focus 8
 alt - 9 : yabai -m space --focus 9
 alt - 0 : yabai -m space --focus 10
 
+# Switch between adjacent workspaces
+alt - left : yabai -m space --focus prev
+alt - right : yabai -m space --focus next
+
 # Window operations
 alt - q : yabai -m window --close
 alt - f : yabai -m window --toggle zoom-fullscreen
