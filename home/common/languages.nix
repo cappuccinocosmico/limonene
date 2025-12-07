@@ -1,7 +1,6 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
     # JavaScript/TypeScript
-    nodejs_22
     tailwindcss
     corepack # includes pnpm, yarn
 
