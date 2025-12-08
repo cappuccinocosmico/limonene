@@ -21,6 +21,7 @@
 
   # Linux-specific packages
   home.packages = with pkgs; [
+    nodejs_25
     nix-ld
     dconf
     mesa
