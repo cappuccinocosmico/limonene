@@ -7,7 +7,6 @@
 }: let
   isLinux = pkgs.stdenv.isLinux;
   isDarwin = pkgs.stdenv.isDarwin;
-  bannerImage = ../config/nvim/neovim_banner.png;
 in {
   vim = {
     # Basic configuration
@@ -99,23 +98,29 @@ in {
         enable = true;
         setupOpts = {
           dashboard = {
+            preset = {
+              header = ''
+
+
+                .__  .__
+                |  | |__| _____   ____   ____   ____   ____   ____
+                |  | |  |/     \ /  _ \ /    \_/ __ \ /    \_/ __ \
+                |  |_|  |  Y Y  (  <_> )   |  \  ___/|   |  \  ___/
+                |____/__|__|_|  /\____/|___|  /\___  >___|  /\___  >
+                              \/            \/     \/     \/     \/
+              '';
+            };
             sections = [
+              {section = "header";}
               {
-                section = "terminal";
-                cmd = "chafa ${bannerImage} --format symbols --symbols vhalf --size 60x17 --stretch; sleep .1";
-                height = 17;
+                section = "keys";
+                gap = 1;
                 padding = 1;
               }
               {
-                pane = 2;
-                sections = [
-                  {
-                    section = "keys";
-                    gap = 1;
-                    padding = 1;
-                  }
-                  {section = "startup";}
-                ];
+                section = "recent_files";
+                limit = 8;
+                padding = 1;
               }
             ];
           };
