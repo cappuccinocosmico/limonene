@@ -9,6 +9,7 @@
       perSystem = {
         system,
         pkgs,
+        self',
         ...
       }: {
         packages.nvim =
@@ -16,6 +17,11 @@
             modules = [./home/common/nvim.nix];
             inherit pkgs;
           }).neovim;
+
+        apps.default = {
+          type = "app";
+          program = "${self'.packages.nvim}/bin/nvim";
+        };
       };
 
       # Shared base configuration for all NixOS systems
