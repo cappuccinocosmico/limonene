@@ -112,6 +112,10 @@
                 name = "nicole";
                 home = "/Users/nicole";
               };
+
+              # Primary user for services that require user-level activation
+              system.primaryUser = "nicole";
+
               nix.enable = false;
 
               nix.settings = {
@@ -174,9 +178,5 @@
     # nvf for Neovim configuration
     nvf.url = "github:notashelf/nvf";
     nvf.inputs.nixpkgs.follows = "nixpkgs";
-
-    # spacebar for macOS status bar
-    spacebar.url = "github:cmacrae/spacebar";
-    spacebar.inputs.nixpkgs.follows = "nixpkgs";
   };
 }

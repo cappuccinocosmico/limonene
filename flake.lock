@@ -149,21 +149,6 @@
         "type": "github"
       }
     },
-    "flake-utils": {
-      "locked": {
-        "lastModified": 1644229661,
-        "narHash": "sha256-1YdnJAsNy69bpcjuoKdOYQX0YxZBiCYZo4Twxerqv7k=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "3cecb5b042f7f209c56ffd8371b2711a290ec797",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
     "git-hooks-nix": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -440,8 +425,7 @@
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixpkgs": "nixpkgs_4",
         "nvf": "nvf",
-        "rust-overlay": "rust-overlay",
-        "spacebar": "spacebar"
+        "rust-overlay": "rust-overlay"
       }
     },
     "rust-overlay": {
@@ -461,27 +445,6 @@
       "original": {
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "type": "github"
-      }
-    },
-    "spacebar": {
-      "inputs": {
-        "flake-utils": "flake-utils",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1652089322,
-        "narHash": "sha256-9RBiWNP9iL41nV/EUNuTehOsBL5pZA6pZfqkyEf1yrg=",
-        "owner": "cmacrae",
-        "repo": "spacebar",
-        "rev": "8431008fcf97ba57228a21d212bfd1738db6e7c9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "cmacrae",
-        "repo": "spacebar",
         "type": "github"
       }
     },

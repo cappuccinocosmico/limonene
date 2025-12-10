@@ -138,7 +138,7 @@
   };
 
   services.spacebar = {
-    enable = true;
+    enable = false;
 
     config = {
       position = "top";
