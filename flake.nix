@@ -1,42 +1,22 @@
 {
   description = "Smells Strongly of Oranges";
 
-  inputs = {
-    # Nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-
-    # Flake parts for better organization
-    flake-parts.url = "github:hercules-ci/flake-parts";
-
-    # Home manager
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
-
-    # nix-darwin for macOS
-    nix-darwin.url = "github:nix-darwin/nix-darwin";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-
-    hardware.url = "github:NixOS/nixos-hardware";
-
-    rust-overlay = {
-      url = "github:oxalica/rust-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
-    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
-
-    # Hyphae distributed storage system
-    # hyphae.url = "path:/home/nicole/Documents/hyphae";
-    # hyphae.inputs.nixpkgs.follows = "nixpkgs";
-
-    # nvf for Neovim configuration
-    nvf.url = "github:notashelf/nvf";
-    nvf.inputs.nixpkgs.follows = "nixpkgs";
-  };
-
   outputs = inputs @ {flake-parts, ...}:
     flake-parts.lib.mkFlake {inherit inputs;} {
       systems = ["x86_64-linux" "aarch64-darwin" "x86_64-darwin"];
+
+      # Per-system packages
+      perSystem = {
+        system,
+        pkgs,
+        ...
+      }: {
+        packages.nvim =
+          (inputs.nvf.lib.neovimConfiguration {
+            modules = [./home/common/nvim-config.nix];
+            inherit pkgs;
+          }).neovim;
+      };
 
       # Shared base configuration for all NixOS systems
       flake.lib.baseNixOSModules = [
@@ -155,4 +135,37 @@
         };
       };
     };
+
+  inputs = {
+    # Nixpkgs
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
+    # Flake parts for better organization
+    flake-parts.url = "github:hercules-ci/flake-parts";
+
+    # Home manager
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    # nix-darwin for macOS
+    nix-darwin.url = "github:nix-darwin/nix-darwin";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+
+    hardware.url = "github:NixOS/nixos-hardware";
+
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
+
+    # Hyphae distributed storage system
+    # hyphae.url = "path:/home/nicole/Documents/hyphae";
+    # hyphae.inputs.nixpkgs.follows = "nixpkgs";
+
+    # nvf for Neovim configuration
+    nvf.url = "github:notashelf/nvf";
+    nvf.inputs.nixpkgs.follows = "nixpkgs";
+  };
 }

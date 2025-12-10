@@ -1,7 +1,7 @@
-{ ... }: {
+{...}: {
   imports = [
     ./common/shells.nix
-    ./common/nvim.nix
+    ./common/nvim-wrapped.nix
     ./common/cli-tools.nix
     ./common/languages.nix
     ./common/git.nix
