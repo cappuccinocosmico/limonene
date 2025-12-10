@@ -66,7 +66,7 @@ in {
         {command = "swaymsg 'workspace 10; exec signal-desktop'";}
         {command = "swaymsg 'workspace 10; exec vlc'";}
       ];
-      modifier = "Mod4";
+      modifier = "Mod1";
       terminal = "kitty";
       menu = "fuzzel";
       gaps.inner = 4;
