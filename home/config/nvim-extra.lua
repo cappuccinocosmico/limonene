@@ -133,3 +133,16 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.spelllang = "en_us"
   end,
 })
+
+-- Set custom orange color for dashboard header
+local dashboard_header_color = "#ec9d7a" -- softer coral orange
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+  pattern = "*",
+  callback = function()
+    vim.api.nvim_set_hl(0, "SnacksDashboardHeader", { fg = dashboard_header_color, bold = true })
+  end,
+})
+
+-- Set it immediately as well
+vim.api.nvim_set_hl(0, "SnacksDashboardHeader", { fg = dashboard_header_color, bold = true })

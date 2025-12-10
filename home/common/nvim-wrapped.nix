@@ -14,7 +14,7 @@
   # New nvf configuration
   programs.nvf = {
     enable = true;
-    settings = import ./nvim-config.nix {inherit inputs lib config pkgs;};
+    settings = import ./nvim.nix {inherit inputs lib config pkgs;};
   };
 
   programs.micro = {
