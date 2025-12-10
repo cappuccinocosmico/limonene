@@ -13,7 +13,7 @@
       }: {
         packages.nvim =
           (inputs.nvf.lib.neovimConfiguration {
-            modules = [./home/common/nvim-config.nix];
+            modules = [./home/common/nvim.nix];
             inherit pkgs;
           }).neovim;
       };
