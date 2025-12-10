@@ -83,6 +83,7 @@
         "cheddar" = inputs.nix-darwin.lib.darwinSystem {
           system = "aarch64-darwin"; # Use "x86_64-darwin" for Intel Macs
           modules = [
+            ./system/darwin-wm.nix
             ({pkgs, ...}: {
               nixpkgs.overlays = [
                 inputs.rust-overlay.overlays.default
@@ -173,5 +174,9 @@
     # nvf for Neovim configuration
     nvf.url = "github:notashelf/nvf";
     nvf.inputs.nixpkgs.follows = "nixpkgs";
+
+    # spacebar for macOS status bar
+    spacebar.url = "github:cmacrae/spacebar";
+    spacebar.inputs.nixpkgs.follows = "nixpkgs";
   };
 }

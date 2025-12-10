@@ -26,15 +26,6 @@
     homeDirectory = "/Users/nicole";
   };
 
-  # yabai and skhd configuration (binaries installed via Homebrew)
-  xdg.configFile = {
-    "yabai/yabairc" = {
-      source = ./wm/yabai/yabairc;
-      executable = true;
-    };
-    "skhd/skhdrc".source = ./wm/yabai/skhdrc;
-  };
-
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "25.05";
 }
