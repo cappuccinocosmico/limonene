@@ -1,5 +1,11 @@
 # Limonene
 
+
+TO INSTALL ON MACOS CLONE THE REPO CD INTO IT AND RUN:
+
+sudo nix --extra-experimental-features nix-command --extra-experimental-features flakes run nix-darwin/master#darwin-rebuild -- switch --flake .#cheddar
+
+
 NixOS and macOS system configuration flake.
 
 ## Structure

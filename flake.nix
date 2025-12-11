@@ -90,7 +90,7 @@
               ];
 
               # Basic nix-darwin configuration
-              # services.nix-daemon.enable = true;
+              nix.enable = false;
               # nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
               # System packages available to all users
@@ -115,8 +115,6 @@
 
               # Primary user for services that require user-level activation
               system.primaryUser = "nicole";
-
-              nix.enable = false;
 
               nix.settings = {
                 extra-substituters = [
