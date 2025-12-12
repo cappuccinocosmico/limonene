@@ -3,6 +3,7 @@
 
   services.yabai = {
     enable = true;
+    enableScriptingAddition = true;
 
     config = {
       # Layout
@@ -138,7 +139,8 @@
   };
 
   services.spacebar = {
-    enable = false;
+    enable = true;
+    package = pkgs.spacebar;
 
     config = {
       position = "top";

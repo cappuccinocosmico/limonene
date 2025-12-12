@@ -28,15 +28,6 @@ vim.api.nvim_create_autocmd("FileChangedShellPost", {
   end,
 })
 
--- Suppress deprecation warnings for lspconfig and null-ls
-local notify = vim.notify
-vim.notify = function(msg, ...)
-  if msg:match("lspconfig") or msg:match("null_ls") or msg:match("null%-ls") then
-    return
-  end
-  notify(msg, ...)
-end
-
 -- Autosave active buffer every 5 minutes
 -- Only saves if:
 -- 1. Buffer is modifiable and has a file name

@@ -87,6 +87,7 @@
             ({pkgs, ...}: {
               nixpkgs.overlays = [
                 inputs.rust-overlay.overlays.default
+                inputs.spacebar.overlay.aarch64-darwin
               ];
 
               # Basic nix-darwin configuration
@@ -176,5 +177,8 @@
     # nvf for Neovim configuration
     nvf.url = "github:notashelf/nvf";
     nvf.inputs.nixpkgs.follows = "nixpkgs";
+
+    # spacebar for macOS status bar
+    spacebar.url = "github:cmacrae/spacebar/v1.4.0";
   };
 }
