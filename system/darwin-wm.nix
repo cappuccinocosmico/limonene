@@ -1,6 +1,9 @@
 {pkgs, ...}: {
   # Window management services for macOS
 
+  environment.systemPackages = with pkgs; [
+    spacebar
+  ];
   services.yabai = {
     enable = true;
     enableScriptingAddition = true;
