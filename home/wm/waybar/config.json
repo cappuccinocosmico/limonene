@@ -9,8 +9,27 @@
   "modules-center": ["clock"],
   "modules-right": ["mpd", "backlight", "pulseaudio", "network", "battery"],
   "sway/workspaces": {
-    "focused": ""
-  },
+      "format": "{name} {windows}",
+      "format-window-separator": " ",
+      "window-rewrite-default": "",
+      "window-rewrite": {
+        "class<kitty>": "",
+        "class<foot>": "",
+        "class<firefox>": "󰈹",
+        "class<Firefox>": "󰈹",
+        "class<signal>": "󰭹",
+        "class<Signal>": "󰭹",
+        "class<vlc>": "󰕼",
+        "class<easyeffects>": "󰓃",
+        "class<com.github.wwmm.easyeffects>": "󰓃",
+        "class<code>": "󰨞",
+        "class<Code>": "󰨞",
+        "class<thunar>": "",
+        "class<Thunar>": "",
+        "class<discord>": "󰙯",
+        "class<Discord>": "󰙯"
+      }
+    },
 
   "custom/nix": {
     "format": " ",

@@ -32,6 +32,10 @@ in {
     localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
   };
   environment.systemPackages = with pkgs; [
+    fwupd
+    stress
+    phoronix-test-suite
+
     yggdrasil
     python314
     postgresql_17
@@ -84,29 +88,6 @@ in {
     enable = true;
     wrapperFeatures.gtk = true;
   };
-
-  # Enable keyd for Mac-like keyboard shortcuts (Command+C/V/X/A)
-  # services.keyd = {
-  #   enable = true;
-  #   keyboards = {
-  #     default = {
-  #       ids = ["*"];
-  #       settings = {
-  #         main = {
-  #           # Map Super (Command) + common shortcuts to Ctrl equivalents
-  #           # This makes Linux behave like macOS for copy/paste/cut/select all
-  #           meta = "layer(meta)";
-  #         };
-  #         meta = {
-  #           c = "C-c";     # Copy
-  #           v = "C-v";     # Paste
-  #           x = "C-x";     # Cut
-  #           a = "C-a";     # Select all
-  #         };
-  #       };
-  #     };
-  #   };
-  # };
 
   services.getty = {
     autologinUser = "nicole";
