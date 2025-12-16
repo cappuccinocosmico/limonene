@@ -3,6 +3,7 @@
 
   environment.systemPackages = with pkgs; [
     spacebar
+    rustup
   ];
   services.yabai = {
     enable = true;
@@ -34,6 +35,9 @@
     };
 
     extraConfig = ''
+      # Configure external bar (spacebar integration)
+      yabai -m config external_bar all:26:0
+
       # Scripting addition (requires SIP partially disabled)
       yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
       sudo yabai --load-sa
