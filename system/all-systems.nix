@@ -47,10 +47,14 @@ in {
     devenv
     gnome-disk-utility
     git
+    # system packages
+    gcc
+    openssl_3
   ];
   # Software for bios updates.
   services.fwupd.enable = true;
   programs.nix-ld.enable = true;
+  programs.light.enable = true;
 
   virtualisation.docker = {
     enable = true;
