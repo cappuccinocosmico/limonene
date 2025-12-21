@@ -46,7 +46,7 @@
           home-manager.useGlobalPkgs = true;
           home-manager.users.nicole = {
             imports = [
-              ./home/nicole.nix
+              ./nicole/nicole.nix
               inputs.nvf.homeManagerModules.default
             ];
           };
