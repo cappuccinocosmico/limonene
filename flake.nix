@@ -39,7 +39,6 @@
           ];
         })
         inputs.hardware.nixosModules.framework-amd-ai-300-series
-        inputs.determinate.nixosModules.default
         inputs.home-manager.nixosModules.home-manager
         {
           home-manager.useUserPackages = true;
@@ -94,7 +93,6 @@
               ];
             })
             inputs.hardware.nixosModules.framework-amd-ai-300-series
-            inputs.determinate.nixosModules.default
             # Brad's home-manager configuration
             inputs.home-manager.nixosModules.home-manager
             {
@@ -204,7 +202,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
-    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
 
     # Hyphae distributed storage system
     # hyphae.url = "path:/home/nicole/Documents/hyphae";
