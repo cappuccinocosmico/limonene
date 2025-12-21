@@ -74,6 +74,42 @@
             ++ inputs.self.lib.baseNixOSModules;
           specialArgs = {inherit inputs;};
         };
+
+        # Brad's computer - KDE Plasma desktop environment
+        mina-rau = inputs.nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./system/mina-rau-configuration.nix
+            # Include common overlays and packages
+            ({pkgs, ...}: {
+              nixpkgs.overlays = [
+                inputs.rust-overlay.overlays.default
+                inputs.nix-vscode-extensions.overlays.default
+              ];
+              environment.systemPackages = [
+                (import ./modules/regular-linux-shell.nix {inherit pkgs;})
+                pkgs.libclang
+                pkgs.pkg-config
+                pkgs.openssl
+              ];
+            })
+            inputs.hardware.nixosModules.framework-amd-ai-300-series
+            inputs.determinate.nixosModules.default
+            # Brad's home-manager configuration
+            inputs.home-manager.nixosModules.home-manager
+            {
+              home-manager.useUserPackages = true;
+              home-manager.useGlobalPkgs = true;
+              home-manager.users.brad = {
+                imports = [
+                  ./others/brad/brad.nix
+                  inputs.nvf.homeManagerModules.default
+                ];
+              };
+            }
+          ];
+          specialArgs = {inherit inputs;};
+        };
       };
 
       # macOS/Darwin configurations
