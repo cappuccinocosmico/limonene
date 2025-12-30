@@ -6,10 +6,31 @@
   ...
 }: let
   wallpaper_path = "~/Pictures/wallpaper.jpg";
+
+  caffeine-toggle = pkgs.writeShellScriptBin "caffeine-toggle" ''
+    if systemctl --user is-active --quiet swayidle; then
+      systemctl --user stop swayidle
+      echo "☕"
+    else
+      systemctl --user start swayidle
+      echo "💤"
+    fi
+  '';
+
+  caffeine-status = pkgs.writeShellScriptBin "caffeine-status" ''
+    if systemctl --user is-active --quiet swayidle; then
+      echo "💤"
+    else
+      echo "☕"
+    fi
+  '';
 in {
   # You can import other home-manager modules here
 
   home.packages = with pkgs; [
+    caffeine-toggle
+    caffeine-status
+    wlogout
     wireplumber
     # Sway DE Stuff
     wl-clipboard
@@ -27,6 +48,83 @@ in {
     foot
     pwvucontrol
   ];
+  programs.wlogout = {
+    enable = true;
+    # {
+    #   label = "lock";
+    #   action = "loginctl lock-session";
+    #   text = "Lock";
+    #   keybind = "l";
+    # }
+    # {
+    #   label = "hibernate";
+    #   action = "systemctl hibernate";
+    #   text = "Hibernate";
+    #   keybind = "h";
+    # }
+    # {
+    #   label = "logout";
+    #   action = "loginctl terminate-user $USER";
+    #   text = "Logout";
+    #   keybind = "e";
+    # }
+    # {
+    #   label = "shutdown";
+    #   action = "systemctl poweroff";
+    #   text = "Shutdown";
+    #   keybind = "s";
+    # }
+    # {
+    #   label = "suspend";
+    #   action = "systemctl suspend";
+    #   text = "Suspend";
+    #   keybind = "u";
+    # }
+    # {
+    #   label = "reboot";
+    #   action = "systemctl reboot";
+    #   text = "Reboot";
+    #   keybind = "r";
+    # }
+    layout = [
+      {
+        label = "suspend";
+        action = "systemctl suspend";
+        text = "Suspend";
+        keybind = "u";
+      }
+      {
+        label = "hibernate";
+        action = "systemctl hibernate";
+        text = "Hibernate";
+        keybind = "h";
+      }
+      {
+        label = "reboot";
+        action = "systemctl reboot";
+        text = "Reboot";
+        keybind = "r";
+      }
+      {
+        label = "lock";
+        action = "loginctl lock-session";
+        text = "Lock";
+        keybind = "l";
+      }
+      {
+        label = "shutdown";
+        action = "systemctl poweroff";
+        text = "Shutdown";
+        keybind = "s";
+      }
+      {
+        label = "logout";
+        action = "loginctl terminate-user $USER";
+        text = "Logout";
+        keybind = "e";
+      }
+    ];
+  };
   programs.fish.loginShellInit = "
   if test (tty) = '/dev/tty1'
     set -Ux XDG_CURRENT_DESKTOP sway
@@ -96,6 +194,7 @@ in {
           "${mod}+q" = "kill";
           "${mod}+Right" = "workspace next";
           "${mod}+Left" = "workspace prev";
+          "${mod}+p" = "exec wlogout";
         };
     };
     # output "*" bg  fill
@@ -149,13 +248,13 @@ in {
     "waybar/assets/nix.svg".source = waybar/nix.svg;
   };
   # programs.swaylock.settings = {};
-  # services.swayidle = {
-  #     enable= true;
-  #     timeouts= [
-  #       {
-  #         timeout = 600;
-  #         command = "${pkgs.systemd}/bin/systemctl suspend";
-  #       }
-  #     ];
-  #   };
+  services.swayidle = {
+    enable = true;
+    timeouts = [
+      {
+        timeout = 600;
+        command = "${pkgs.systemd}/bin/systemctl suspend";
+      }
+    ];
+  };
 }

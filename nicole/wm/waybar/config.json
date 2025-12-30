@@ -7,7 +7,7 @@
   "margin-left": 8,
   "modules-left": ["tray", "sway/workspaces"],
   "modules-center": ["clock"],
-  "modules-right": ["mpd", "backlight", "pulseaudio", "network", "battery"],
+  "modules-right": ["mpd", "backlight", "pulseaudio", "network", "custom/caffeine", "battery"],
   "sway/workspaces": {
       "format": "{name} {windows}",
       "format-window-separator": " ",
@@ -66,6 +66,13 @@
     "format-disconnected": ""
   },
 
+  "custom/caffeine": {
+    "format": "{}",
+    "exec": "caffeine-status",
+    "on-click": "caffeine-toggle",
+    "interval": 5
+  },
+
   "battery": {
     "format": "{capacity}% {icon}",
     "format-charging": "{capacity}% 󰂄",
@@ -74,7 +81,8 @@
     "states": {
       "warning": 40,
       "critical": 20
-    }
+    },
+    "on-click": "wlogout"
   },
   "clock": {
     "interval": 1,
