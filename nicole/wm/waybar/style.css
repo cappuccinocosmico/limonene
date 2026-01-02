@@ -93,6 +93,7 @@ window#waybar {
 #backlight,
 #pulseaudio,
 #network,
+#custom-caffeine,
 #backlight {
   background: @bg;
   color: @fg;

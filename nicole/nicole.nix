@@ -17,6 +17,7 @@
     linux/desktop-essentials.nix
     linux/gaming.nix
     linux/music.nix
+    linux/misc.nix
   ];
 
   # Linux-specific packages
