@@ -69,6 +69,10 @@ in {
   hardware.enableAllFirmware = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  # Allow non-root processes to bind to privileged ports (80, 443)
+  # Required for local development with Caddy HTTPS
+  boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 80;
+
   networking.firewall = {
     enable = false;
     allowedTCPPorts = [80 443 8080 8443]; # don’t globally allow ssh
