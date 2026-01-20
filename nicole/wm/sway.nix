@@ -10,6 +10,7 @@
   caffeine-toggle = pkgs.writeShellScriptBin "caffeine-toggle" ''
     if systemctl --user is-active --quiet swayidle; then
       systemctl --user stop swayidle
+      echo 'systemctl --user start swayidle' | at now + 2 hours
       echo "☕"
     else
       systemctl --user start swayidle

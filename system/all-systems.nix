@@ -25,6 +25,7 @@ in {
     nrb = ''nixos-rebuild build --verbose --flake /home/nicole/limonene'';
   };
   services.flatpak.enable = true;
+  services.atd.enable = true;
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
@@ -55,6 +56,12 @@ in {
   services.fwupd.enable = true;
   programs.nix-ld.enable = true;
   programs.light.enable = true;
+
+  # Disable wakeup for internal laptop keyboard (serio0)
+  # Prevents accidental wake from suspend when external keyboard rests on laptop
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="serio", KERNEL=="serio0", ATTR{power/wakeup}="disabled"
+  '';
 
   virtualisation.docker = {
     enable = true;
