@@ -82,7 +82,7 @@ in {
       harper-ls.enable = true;
       lightbulb.enable = true;
       lspSignature.enable = true;
-      lspKind.enable = true;
+      lspkind.enable = true;
       otter-nvim.enable = true;
       trouble.enable = true;
     };
