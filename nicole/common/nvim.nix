@@ -78,6 +78,13 @@ in {
     lsp = {
       enable = true;
       formatOnSave = true;
+      inlayHints.enable = true;
+      harper-ls.enable = true;
+      lightbulb.enable = true;
+      lspSignature.enable = true;
+      lspKind.enable = true;
+      otter-nvim.enable = true;
+      trouble.enable = true;
     };
 
     autocomplete = {
