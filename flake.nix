@@ -169,7 +169,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.users.nicole = {
                 imports = [
-                  ./home/nicole-darwin.nix
+                  ./nicole/nicole-darwin.nix
                   inputs.nvf.homeManagerModules.default
                 ];
               };
