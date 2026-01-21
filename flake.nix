@@ -213,6 +213,7 @@
 
     # spacebar for macOS status bar
     spacebar.url = "github:cmacrae/spacebar/v1.4.0";
-    spacebar.inputs.nixpkgs.follows = "nixpkgs";
+    # Do not have spacebar follow nixpkgs
+    # spacebar.inputs.nixpkgs.follows = "nixpkgs";
   };
 }
