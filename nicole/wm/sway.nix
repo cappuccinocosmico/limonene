@@ -46,7 +46,6 @@ in {
     bemenu # cmd bemenu-run
     fuzzel
     tofi # cmd tofi-run
-    foot
     pwvucontrol
   ];
   programs.wlogout = {

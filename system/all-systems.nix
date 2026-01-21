@@ -12,6 +12,7 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDBQresTdgx3Se26QxvwD/S9SaCRCWL8dvZwZ6IM62b2 nicole@cheddar"
   ];
 in {
+  boot.binfmt.emulatedSystems = ["aarch64-linux"];
   users.users.nicole = {
     openssh.authorizedKeys.keys = nicole_ssh_keys;
   };
@@ -51,6 +52,8 @@ in {
     # system packages
     gcc
     openssl_3
+    # Write to cpu registers:
+    msr-tools
   ];
   # Software for bios updates.
   services.fwupd.enable = true;

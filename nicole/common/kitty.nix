@@ -16,5 +16,9 @@
       background_opacity = "0.8";
       background = "#000000";
     };
+    keybindings = {
+      "super+c" = "copy_to_clipboard";
+      "super+v" = "paste_from_clipboard";
+    };
   };
 }
