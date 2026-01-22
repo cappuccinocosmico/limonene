@@ -124,8 +124,12 @@
                 inputs.spacebar.overlay.aarch64-darwin
               ];
 
-              # Basic nix-darwin configuration
               nix.enable = false;
+              # Basic nix-darwin configuration
+              # nix = {
+              #   enable = true;
+              #   linux-builder.enable = true;
+              # };
               # nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
               # System packages available to all users
