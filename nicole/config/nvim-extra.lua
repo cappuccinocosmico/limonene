@@ -137,3 +137,61 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 
 -- Set it immediately as well
 vim.api.nvim_set_hl(0, "SnacksDashboardHeader", { fg = dashboard_header_color, bold = true })
+
+-- TypeScript/JavaScript LSP configuration
+-- Configure tsserver LSP manually
+local lspconfig_ok, lspconfig = pcall(require, 'lspconfig')
+if lspconfig_ok then
+  lspconfig.ts_ls.setup({
+    capabilities = vim.lsp.protocol.make_client_capabilities(),
+    on_attach = function(client, bufnr)
+      -- Enable formatting if available
+      if client.server_capabilities.documentFormattingProvider then
+        vim.api.nvim_buf_set_option(bufnr, 'formatexpr', 'v:lua.vim.lsp.formatexpr()')
+      end
+    end,
+    settings = {
+      typescript = {
+        inlayHints = {
+          includeInlayParameterNameHints = 'all',
+          includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+          includeInlayFunctionParameterTypeHints = true,
+          includeInlayVariableTypeHints = true,
+          includeInlayPropertyDeclarationTypeHints = true,
+          includeInlayFunctionLikeReturnTypeHints = true,
+          includeInlayEnumMemberValueHints = true,
+        }
+      },
+      javascript = {
+        inlayHints = {
+          includeInlayParameterNameHints = 'all',
+          includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+          includeInlayFunctionParameterTypeHints = true,
+          includeInlayVariableTypeHints = true,
+          includeInlayPropertyDeclarationTypeHints = true,
+          includeInlayFunctionLikeReturnTypeHints = true,
+          includeInlayEnumMemberValueHints = true,
+        }
+      }
+    }
+  })
+end
+
+-- TypeScript/JavaScript Treesitter configuration
+local ts_ok, ts_configs = pcall(require, 'nvim-treesitter.configs')
+if ts_ok then
+  ts_configs.setup({
+    ensure_installed = {
+      "typescript",
+      "javascript",
+      "tsx",
+      "jsdoc"
+    },
+    highlight = {
+      enable = true,
+    },
+    indent = {
+      enable = true,
+    },
+  })
+end

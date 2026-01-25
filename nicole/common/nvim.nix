@@ -7,6 +7,17 @@
 }: let
   isLinux = pkgs.stdenv.isLinux;
   isDarwin = pkgs.stdenv.isDarwin;
+
+  # Build sops.nvim plugin
+  sops-nvim = pkgs.vimUtils.buildVimPlugin {
+    name = "sops-nvim";
+    src = pkgs.fetchFromGitHub {
+      owner = "trixnz";
+      repo = "sops.nvim";
+      rev = "main";
+      hash = "sha256-6BFgZSQwrh218genHjnldv1xnCjx4PIoXZcFYKVBlGo=";
+    };
+  };
 in {
   vim = {
     # Basic configuration
@@ -52,13 +63,6 @@ in {
         treesitter.enable = true;
         format.enable = true;
         crates.enable = true;
-      };
-
-      # TypeScript/JavaScript
-      ts = {
-        enable = true;
-        lsp.enable = true;
-        treesitter.enable = true;
       };
 
       # Nix
@@ -190,6 +194,12 @@ in {
             },
           })
         '';
+      };
+
+      # sops.nvim for transparent SOPS encryption/decryption
+      # Note: This plugin works automatically without setup
+      sops-nvim = {
+        package = sops-nvim;
       };
     };
 

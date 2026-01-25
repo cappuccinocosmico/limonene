@@ -9,6 +9,11 @@
     ripgrep
     ripgrep-all
     chafa
+    # TypeScript language server (needed for manual TS LSP config)
+    nodePackages.typescript-language-server
+    nodePackages.typescript
+    # SOPS CLI tool (required for sops.nvim)
+    sops
   ];
 
   # New nvf configuration
