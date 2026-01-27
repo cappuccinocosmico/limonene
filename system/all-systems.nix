@@ -37,6 +37,7 @@ in {
     fwupd
     stress
     phoronix-test-suite
+    lutris
 
     yggdrasil
     python314
