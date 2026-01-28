@@ -1,5 +1,7 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
+    sops
+
     jq
     nmap
     sqlite
