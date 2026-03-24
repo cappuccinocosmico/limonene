@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }: let
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
   isLinux = pkgs.stdenv.isLinux;
   isDarwin = pkgs.stdenv.isDarwin;
 
@@ -136,7 +141,7 @@ in {
               header_hl = "SnacksDashboardHeader";
             };
             sections = [
-              { section = "header"; }
+              {section = "header";}
               {
                 section = "keys";
                 gap = 0;
@@ -240,13 +245,23 @@ in {
           vim.cmd('colorscheme neopywal')
         '';
       };
+
+      # aw-watcher-nvim = {
+      #   package = pkgs.vimPlugins.aw-watcher-nvim;
+      #   setup = ''
+      #     require('aw_watcher').setup({
+      #       host = "127.0.0.1",
+      #       port = 5600,
+      #     })
+      #   '';
+      # };
     };
 
     # Autocommands
     autocmds = [
       {
-        event = [ "FocusGained" ];
-        pattern = [ "*" ];
+        event = ["FocusGained"];
+        pattern = ["*"];
         callback = lib.generators.mkLuaInline ''
           function()
             vim.cmd("colorscheme neopywal")
@@ -255,8 +270,8 @@ in {
       }
 
       {
-        event = [ "FocusGained" "BufEnter" "CursorHold" "CursorHoldI" ];
-        pattern = [ "*" ];
+        event = ["FocusGained" "BufEnter" "CursorHold" "CursorHoldI"];
+        pattern = ["*"];
         callback = lib.generators.mkLuaInline ''
           function()
             if vim.fn.mode() ~= "c" then
@@ -267,8 +282,8 @@ in {
       }
 
       {
-        event = [ "FileChangedShellPost" ];
-        pattern = [ "*" ];
+        event = ["FileChangedShellPost"];
+        pattern = ["*"];
         callback = lib.generators.mkLuaInline ''
           function()
             vim.notify("File changed on disk. Buffer reloaded.", vim.log.levels.WARN)
@@ -277,8 +292,8 @@ in {
       }
 
       {
-        event = [ "FileType" ];
-        pattern = [ "markdown" "md" ];
+        event = ["FileType"];
+        pattern = ["markdown" "md"];
         callback = lib.generators.mkLuaInline ''
           function()
             vim.opt_local.spell = true
@@ -288,8 +303,8 @@ in {
       }
 
       {
-        event = [ "ColorScheme" ];
-        pattern = [ "*" ];
+        event = ["ColorScheme"];
+        pattern = ["*"];
         callback = lib.generators.mkLuaInline ''
           function()
             vim.api.nvim_set_hl(0, "SnacksDashboardHeader", { fg = "#ec9d7a", bold = true })

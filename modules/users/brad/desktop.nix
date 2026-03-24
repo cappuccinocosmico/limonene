@@ -5,6 +5,7 @@
       desktopApps
       gaming
       music
+      firefox
     ];
 
     home.packages = with pkgs; [
@@ -63,8 +64,6 @@
         templates = null;
       };
     };
-
-    programs.firefox.enable = true;
 
     systemd.user.startServices = "sd-switch";
 

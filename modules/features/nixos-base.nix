@@ -19,6 +19,7 @@
     nixpkgs.overlays = [
       inputs.rust-overlay.overlays.default
       inputs.nix-vscode-extensions.overlays.default
+      inputs.nur.overlays.default
     ];
 
     environment.systemPackages = [

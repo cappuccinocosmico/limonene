@@ -21,7 +21,7 @@
       settings = {
         autoupdate = false;
         autoshare = false;
-        models = {
+        provider.openrouter.models = {
           "nvidia/nemotron-3-nano-30b-a3b" = {};
         };
       };

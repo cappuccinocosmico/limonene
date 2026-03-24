@@ -43,5 +43,10 @@
     spacebar.url = "github:cmacrae/spacebar/v1.4.0";
 
     import-tree.url = "github:vic/import-tree";
+
+    nur = {
+      url = "github:nix-community/nur";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 }

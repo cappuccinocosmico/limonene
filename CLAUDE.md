@@ -1,2 +1,4 @@
 - This is a repo that determines all the system configuration. For example if you are wanting to modify the system configuration for neovim, go ahead and look in "~/limonene/nicole/common/nvim.nix" not "~/.config/nvim". Simlarly window management is in "~/limonene/home/wm/sway.nix".
 - This also handles configurations for macos and linux simultaneously the folder "nicole/common" is for utilities that exist in both mac and linux, and thd folder "nicole/linux" is for linux specific packages.
+- Oftentimes if you need to look up nixos options, I would highly recommend sites like "https://mynixos.com/home-manager/options/programs.firefox" or "https://mynixos.com/nixpkgs/options/services.jellyfin" that allow you to look up the specific options
+

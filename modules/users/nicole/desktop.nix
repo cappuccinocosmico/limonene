@@ -8,12 +8,12 @@
       gaming
       music
       vscode
+      firefox
+      activitywatch
     ];
 
     home.sessionVariables = {
       TERMINAL = "kitty";
     };
-
-    programs.firefox.enable = true;
   };
 }
