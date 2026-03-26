@@ -6,5 +6,12 @@
         package = pkgs.aw-watcher-window-wayland;
       };
     };
+
+    systemd.user.services.activitywatch-watcher-aw-watcher-window-wayland = {
+      Unit = {
+        After = [ "graphical-session.target" ];
+        Wants = [ "graphical-session.target" ];
+      };
+    };
   };
 }
