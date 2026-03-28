@@ -3,20 +3,14 @@
     system = "x86_64-linux";
     modules = [
       inputs.self.modules.nixos.base
-      inputs.self.modules.nixos.bradBase
-      inputs.self.modules.nixos.gaming
+      inputs.self.modules.nixos.users.brad
       inputs.hardware.nixosModules.framework-amd-ai-300-series
       ../../hardware/mina-rau.nix
-      inputs.home-manager.nixosModules.home-manager
+      inputs.self.modules.nixos.bradBase
+      inputs.self.modules.nixos.gaming
       {
-        home-manager.useUserPackages = true;
-        home-manager.useGlobalPkgs = true;
-        home-manager.users.brad.imports = [
-          inputs.self.modules.homeManager.bradDesktop
-        ];
-      }
-      # mina-rau-specific configuration
-      {
+        limonene.machineType = "desktop";
+
         networking.hostName = "mina-rau";
 
         boot.loader.systemd-boot.enable = true;
@@ -35,20 +29,9 @@
           LC_TIME = "en_US.UTF-8";
         };
 
-        # KDE Plasma 6 desktop environment
-        services.xserver.enable = true;
-        services.displayManager.sddm.enable = true;
-        services.displayManager.sddm.wayland.enable = true;
-        services.desktopManager.plasma6.enable = true;
-
         services.xserver.xkb = {
           layout = "us";
           variant = "";
-        };
-
-        services.displayManager.autoLogin = {
-          enable = true;
-          user = "brad";
         };
 
         system.stateVersion = "25.05";

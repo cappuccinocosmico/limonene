@@ -3,21 +3,14 @@
     system = "x86_64-linux";
     modules = [
       inputs.self.modules.nixos.base
+      inputs.self.modules.nixos.users.nicole
+      inputs.self.modules.nixos.users.brad
       inputs.self.modules.nixos.mediaServer
       inputs.vpn-confinement.nixosModules.default
       ../../hardware/amon-sul.nix
-      inputs.home-manager.nixosModules.home-manager
       {
-        home-manager.useUserPackages = true;
-        home-manager.useGlobalPkgs = true;
-        home-manager.users.nicole.imports = [
-          inputs.self.modules.homeManager.nicoleLinux
-        ];
-        home-manager.users.brad.imports = [
-          inputs.self.modules.homeManager.bradCommon
-        ];
-      }
-      ({ pkgs, ... }: {
+        limonene.machineType = "server";
+
         networking.hostName = "amon-sul";
 
         boot.loader.systemd-boot.enable = true;
@@ -83,7 +76,7 @@
 
         services.transmission = {
           enable = true;
-          package = pkgs.transmission_4;
+          package = inputs.nixpkgs.legacyPackages.x86_64-linux.transmission_4;
           openRPCPort = true;
           openPeerPorts = true;
           user = "jellyfin";
@@ -100,7 +93,7 @@
         networking.firewall.allowedUDPPorts = [ 111 2049 4000 4001 4002 9091 20048 51413 ];
 
         system.stateVersion = "24.11";
-      })
+      }
     ];
     specialArgs = { inherit inputs; };
   };

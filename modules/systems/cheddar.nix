@@ -3,7 +3,8 @@
     system = "aarch64-darwin";
     modules = [
       inputs.self.modules.darwin.darwinWm
-      ({ pkgs, ... }: {
+      inputs.home-manager.darwinModules.home-manager
+      {
         nixpkgs.overlays = [
           inputs.rust-overlay.overlays.default
         ];
@@ -11,8 +12,8 @@
         nix.enable = false;
 
         environment.systemPackages = [
-          pkgs.pkg-config
-          pkgs.openssl
+          inputs.nixpkgs.legacyPackages.aarch64-darwin.pkg-config
+          inputs.nixpkgs.legacyPackages.aarch64-darwin.openssl
         ];
 
         environment.shellAliases = {
@@ -37,15 +38,50 @@
           ];
         };
 
+        home-manager.users.nicole = { pkgs, ... }: {
+          imports = [
+            inputs.self.modules.homeManager.userCommon
+            inputs.self.modules.homeManager.opencode
+          ];
+
+          home.sessionVariables = {
+            NIXPKGS_ALLOW_UNFREE = "1";
+            PNPM_HOME = "$HOME/.binaries/pnpm";
+            SHELL = "${pkgs.fish}/bin/fish";
+          };
+
+          home.sessionPath = [
+            "$HOME/.binaries/pnpm"
+          ];
+
+          programs.fish = {
+            shellInit = ''
+              fish_add_path /run/current-system/sw/bin
+              fish_add_path /nix/var/nix/profiles/default/bin
+            '';
+          };
+
+          programs.git = {
+            enable = true;
+            lfs.enable = false;
+            settings = {
+              user = {
+                name = "Nicole Venner";
+                email = "nvenner@protonmail.ch";
+              };
+              init.defaultBranch = "main";
+              pull.rebase = true;
+            };
+          };
+
+          home = {
+            username = "nicole";
+            homeDirectory = "/Users/nicole";
+            stateVersion = "25.05";
+          };
+        };
+
         system.stateVersion = 5;
-      })
-      inputs.home-manager.darwinModules.home-manager
-      {
-        home-manager.useUserPackages = true;
-        home-manager.useGlobalPkgs = true;
-        home-manager.users.nicole.imports = [
-          inputs.self.modules.homeManager.nicoleDarwin
-        ];
       }
     ];
     specialArgs = { inherit inputs; };

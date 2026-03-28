@@ -3,21 +3,12 @@
     system = "x86_64-linux";
     modules = [
       inputs.self.modules.nixos.base
-      inputs.self.modules.nixos.sway
-      inputs.self.modules.nixos.gaming
+      inputs.self.modules.nixos.users.nicole
       inputs.hardware.nixosModules.framework-amd-ai-300-series
       ../../hardware/incarnadine.nix
-      inputs.home-manager.nixosModules.home-manager
       {
-        home-manager.useUserPackages = true;
-        home-manager.useGlobalPkgs = true;
-        home-manager.users.nicole = {
-          imports = [ inputs.self.modules.homeManager.nicoleDesktop ];
-          services.swayidle.enable = lib.mkForce false;
-        };
-      }
-      # incarnadine-specific configuration
-      ({ pkgs, ... }: {
+        limonene.machineType = "desktop";
+
         networking.hostName = "incarnadine";
 
         boot.loader.systemd-boot.enable = true;
@@ -49,7 +40,7 @@
           openFirewall = true;
         };
 
-        environment.systemPackages = [ pkgs.wlr-randr ];
+        environment.systemPackages = [ inputs.nixpkgs.legacyPackages.x86_64-linux.wlr-randr ];
 
         hardware.graphics = {
           enable = true;
@@ -58,8 +49,12 @@
 
         users.users.nicole.extraGroups = [ "video" "render" ];
 
+        home-manager.users.nicole = {
+          services.swayidle.enable = lib.mkForce false;
+        };
+
         system.stateVersion = "25.05";
-      })
+      }
     ];
     specialArgs = { inherit inputs; };
   };

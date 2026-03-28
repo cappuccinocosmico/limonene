@@ -3,20 +3,13 @@
     system = "x86_64-linux";
     modules = [
       inputs.self.modules.nixos.base
-      inputs.self.modules.nixos.sway
-      inputs.self.modules.nixos.gaming
+      inputs.self.modules.nixos.users.nicole
       inputs.hardware.nixosModules.framework-amd-ai-300-series
       ../../hardware/vermissian.nix
-      inputs.home-manager.nixosModules.home-manager
       {
-        home-manager.useUserPackages = true;
-        home-manager.useGlobalPkgs = true;
-        home-manager.users.nicole.imports = [
-          inputs.self.modules.homeManager.nicoleDesktop
-        ];
-      }
-      # vermissian-specific configuration
-      {
+        limonene.machineType = "desktop";
+        limonene.autologinUser = "nicole";
+
         networking.hostName = "vermissian";
 
         boot.loader.systemd-boot.enable = true;

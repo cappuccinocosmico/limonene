@@ -3,17 +3,7 @@
 
   systems = [ "x86_64-linux" "aarch64-darwin" "x86_64-darwin" ];
 
-  flake.modules.nixos.base = { config, pkgs, ... }: let
-    nicole_ssh_keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINBfMZjr6H4oK3qSBTxjZrMZptWXdzYC6QV4bdS892Ls nicole@vermissian"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN1tyFv2UbkAJMx2U6bp8OwRx5wMpK7/DxSslcPS0sWY nicole@incarnadine"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDBQresTdgx3Se26QxvwD/S9SaCRCWL8dvZwZ6IM62b2 nicole@cheddar"
-    ];
-    brad_ssh_keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaOgK4fO5gTB79Infge2b+31VzXnC23lqV7m5NA+xuz bvenner@proton.me"
-    ];
-  in {
-    # Copy flake configuration to /etc/nixos/limonene
+  flake.modules.nixos.base = { config, pkgs, ... }: {
     environment.etc."nixos/limonene".source = ../..;
 
     nixpkgs.overlays = [
@@ -51,22 +41,6 @@
 
     boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
     boot.binfmt.registrations."aarch64-linux".fixBinary = true;
-
-    users.users.nicole = {
-      isNormalUser = true;
-      description = "Nicole";
-      extraGroups = [ "networkmanager" "wheel" "docker" ];
-      shell = pkgs.fish;
-      openssh.authorizedKeys.keys = nicole_ssh_keys;
-    };
-
-    users.users.brad = {
-      isNormalUser = true;
-      description = "Brad";
-      extraGroups = [ "networkmanager" "wheel" "docker" ];
-      shell = pkgs.fish;
-      openssh.authorizedKeys.keys = brad_ssh_keys;
-    };
 
     services.throttled.enable = true;
 
@@ -125,7 +99,7 @@
     nixpkgs.config.allowUnfree = true;
 
     nix = {
-      settings.trusted-users = [ "root" "nicole" "brad" ];
+      settings.trusted-users = [ "root" ];
       extraOptions = ''
         experimental-features = nix-command flakes
         extra-substituters = https://devenv.cachix.org
