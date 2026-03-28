@@ -1,6 +1,4 @@
 { inputs, ... }: {
-  imports = [ inputs.flake-parts.flakeModules.modules ];
-
   flake.modules.homeManager.sway = { lib, pkgs, ... }: {
     home.packages = with pkgs; [
       wlogout

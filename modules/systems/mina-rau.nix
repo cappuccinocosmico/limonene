@@ -3,13 +3,23 @@
     system = "x86_64-linux";
     modules = [
       inputs.self.modules.nixos.base
-      inputs.self.modules.nixos.users.brad
+      inputs.self.modules.nixos.common
+      inputs.home-manager.nixosModules.home-manager
+      {
+        home-manager.useUserPackages = true;
+        home-manager.useGlobalPkgs = true;
+      }
+      inputs.self.modules.nixos.users-brad
+      inputs.self.modules.nixos.plasma
+      inputs.self.modules.nixos.display-ly
       inputs.hardware.nixosModules.framework-amd-ai-300-series
       ../../hardware/mina-rau.nix
       inputs.self.modules.nixos.bradBase
       inputs.self.modules.nixos.gaming
       {
         limonene.machineType = "desktop";
+
+        home-manager.users.brad.imports = [ inputs.self.modules.homeManager.brad-desktop ];
 
         networking.hostName = "mina-rau";
 
@@ -29,10 +39,7 @@
           LC_TIME = "en_US.UTF-8";
         };
 
-        services.xserver.xkb = {
-          layout = "us";
-          variant = "";
-        };
+        services.xserver.xkb = { layout = "us"; variant = ""; };
 
         system.stateVersion = "25.05";
       }

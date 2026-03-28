@@ -1,6 +1,4 @@
 { inputs, ... }: {
-  imports = [ inputs.flake-parts.flakeModules.modules ];
-
   flake.modules.nixos.plasma = { ... }: {
     services.xserver.enable = true;
     services.displayManager.sddm = {

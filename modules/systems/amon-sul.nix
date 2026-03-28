@@ -3,8 +3,14 @@
     system = "x86_64-linux";
     modules = [
       inputs.self.modules.nixos.base
-      inputs.self.modules.nixos.users.nicole
-      inputs.self.modules.nixos.users.brad
+      inputs.self.modules.nixos.common
+      inputs.home-manager.nixosModules.home-manager
+      {
+        home-manager.useUserPackages = true;
+        home-manager.useGlobalPkgs = true;
+      }
+      inputs.self.modules.nixos.users-nicole
+      inputs.self.modules.nixos.users-brad
       inputs.self.modules.nixos.mediaServer
       inputs.vpn-confinement.nixosModules.default
       ../../hardware/amon-sul.nix
@@ -56,17 +62,9 @@
         vpnNamespaces.wg = {
           enable = true;
           wireguardConfigFile = "/etc/nixos/secrets/privado.den-017.conf";
-          accessibleFrom = [
-            "127.0.0.1"
-            "192.168.0.0/16"
-          ];
-          portMappings = [
-            { from = 9091; to = 9091; }
-          ];
-          openVPNPorts = [{
-            port = 51413;
-            protocol = "both";
-          }];
+          accessibleFrom = [ "127.0.0.1" "192.168.0.0/16" ];
+          portMappings = [{ from = 9091; to = 9091; }];
+          openVPNPorts = [{ port = 51413; protocol = "both"; }];
         };
 
         systemd.services.transmission.vpnConfinement = {

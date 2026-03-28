@@ -1,6 +1,4 @@
 { inputs, ... }: {
-  imports = [ inputs.flake-parts.flakeModules.modules ];
-
   flake.modules.homeManager.nicoleSway = { lib, pkgs, config, ... }: let
     caffeine-toggle = pkgs.writeShellScriptBin "caffeine-toggle" ''
       if systemctl --user is-active --quiet swayidle; then
