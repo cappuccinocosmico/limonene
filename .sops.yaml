@@ -1,8 +1,10 @@
 keys:
   - &nicole age1m2w4k4rgnzdynx0s9xqvx7k66dfa4jv5q20hgxp6dcjjwz09mdlqqzgves
+  - &brad age1kaqf5j6qvy8d2eakv0mwcrvqwvne684pp580u3ppfhcv7emkuewqhsc8ss
 
 creation_rules:
   - path_regex: secrets/.*\.yaml$
     key_groups:
       - age:
           - *nicole
+          - *brad
