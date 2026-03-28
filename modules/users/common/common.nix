@@ -1,6 +1,7 @@
-{ inputs, ... }: {
+{inputs, ...}: {
   flake.modules.homeManager.userCommon = {
     imports = with inputs.self.modules.homeManager; [
+      nodejs-slim
       shells
       cliTools
       languages
