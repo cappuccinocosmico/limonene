@@ -1,13 +1,8 @@
 { inputs, ... }: {
   flake.modules.homeManager.nicoleCommon = {
-    imports = with inputs.self.modules.homeManager; [
-      shells
-      cliTools
-      languages
-      kitty
-      fonts
-      neovim
-      opencode
+    imports = [
+      inputs.self.modules.homeManager.userCommon
+      inputs.self.modules.homeManager.opencode
     ];
 
     programs.git = {
@@ -22,13 +17,5 @@
         pull.rebase = true;
       };
     };
-
-    home.sessionPath = [
-      "$HOME/.local/bin"
-      "$HOME/.cargo/bin"
-      "$HOME/go/bin"
-    ];
-
-    programs.home-manager.enable = true;
   };
 }
