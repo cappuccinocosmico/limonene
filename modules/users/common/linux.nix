@@ -1,8 +1,13 @@
-{ inputs, ... }: {
-  flake.modules.homeManager.linuxCommon = { pkgs, config, ... }: {
-    imports = [ inputs.self.modules.homeManager.userCommon ];
+{inputs, ...}: {
+  flake.modules.homeManager.linuxCommon = {
+    pkgs,
+    config,
+    ...
+  }: {
+    imports = [inputs.self.modules.homeManager.userCommon];
 
     home.packages = with pkgs; [
+      nodejs-slim
       nix-ld
       dconf
       mesa
@@ -37,7 +42,7 @@
     ];
 
     xdg = {
-      systemDirs.data = [ "${pkgs.gsettings-desktop-schemas}/share" ];
+      systemDirs.data = ["${pkgs.gsettings-desktop-schemas}/share"];
       userDirs = {
         enable = true;
         createDirectories = true;

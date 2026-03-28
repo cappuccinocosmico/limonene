@@ -1,9 +1,12 @@
-{ inputs, ... }: {
-  flake.modules.homeManager.nicoleLinux = { pkgs, config, ... }: {
-    imports = [ inputs.self.modules.homeManager.linuxCommon ];
+{inputs, ...}: {
+  flake.modules.homeManager.nicoleLinux = {
+    pkgs,
+    config,
+    ...
+  }: {
+    imports = [inputs.self.modules.homeManager.linuxCommon];
 
     home.packages = with pkgs; [
-      nodejs-slim
       mkp224o
     ];
 
