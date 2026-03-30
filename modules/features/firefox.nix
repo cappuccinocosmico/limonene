@@ -11,7 +11,7 @@
           sponsorblock
           aw-watcher-web
           dearrow
-          noscript
+          leechblock-ng
           react-devtools
           tabliss
           onetab

@@ -13,7 +13,7 @@
         Wants = [ "graphical-session.target" ];
       };
       Service = {
-        ExecStart = lib.mkForce "${pkgs.bash}/bin/sh -c 'sleep 15 && exec ${pkgs.aw-watcher-window-wayland}/bin/aw-watcher-window-wayland'";
+        ExecStart = lib.mkForce "${pkgs.bash}/bin/sh -c '${pkgs.coreutils}/bin/sleep 15 && exec ${pkgs.aw-watcher-window-wayland}/bin/aw-watcher-window-wayland'";
       };
     };
   };
