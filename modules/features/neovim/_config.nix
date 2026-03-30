@@ -119,6 +119,7 @@ in {
       expandtab = true;
       autoread = true;
       exrc = true;
+      foldlevelstart = 99;
     };
 
     # Treesitter
