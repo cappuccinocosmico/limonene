@@ -11,7 +11,7 @@
       }
       inputs.self.modules.nixos.users-nicole
       inputs.self.modules.nixos.sway
-      inputs.self.modules.nixos.display-ly
+      inputs.self.modules.nixos.display-greetd
       inputs.hardware.nixosModules.framework-amd-ai-300-series
       ../../hardware/vermissian.nix
       {

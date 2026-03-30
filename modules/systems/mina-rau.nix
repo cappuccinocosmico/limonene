@@ -11,7 +11,7 @@
       }
       inputs.self.modules.nixos.users-brad
       inputs.self.modules.nixos.plasma
-      inputs.self.modules.nixos.display-ly
+      inputs.self.modules.nixos.display-greetd
       inputs.hardware.nixosModules.framework-amd-ai-300-series
       ../../hardware/mina-rau.nix
       inputs.self.modules.nixos.bradBase
