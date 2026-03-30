@@ -1,4 +1,4 @@
-{ inputs, ... }: {
+{inputs, ...}: {
   flake.nixosConfigurations.vermissian = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     modules = [
@@ -17,8 +17,9 @@
       {
         limonene.machineType = "desktop";
         limonene.autologinUser = "nicole";
+        limonene.defaultSession = "sway";
 
-        home-manager.users.nicole.imports = [ inputs.self.modules.homeManager.nicole-desktop ];
+        home-manager.users.nicole.imports = [inputs.self.modules.homeManager.nicole-desktop];
 
         networking.hostName = "vermissian";
 
@@ -39,11 +40,14 @@
           LC_TIME = "en_US.UTF-8";
         };
 
-        services.xserver.xkb = { layout = "us"; variant = ""; };
+        services.xserver.xkb = {
+          layout = "us";
+          variant = "";
+        };
 
         system.stateVersion = "25.05";
       }
     ];
-    specialArgs = { inherit inputs; };
+    specialArgs = {inherit inputs;};
   };
 }

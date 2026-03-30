@@ -1,5 +1,10 @@
-{ inputs, ... }: {
-  flake.modules.nixos.display-ly = { config, lib, ... }: {
+{inputs, ...}: {
+  flake.modules.nixos.display-ly = {
+    config,
+    lib,
+    ...
+  }: {
+    security.pam.services.ly.startSession = true;
     services.displayManager.ly = {
       enable = true;
       settings = lib.mkIf (config.limonene.autologinUser != null && config.limonene.defaultSession != null) {
