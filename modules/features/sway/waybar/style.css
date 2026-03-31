@@ -95,6 +95,48 @@ window#waybar {
   padding: 4px 14px;
 }
 
+/* ── Goals ────────────────────────────────────────────────────────── */
+
+#custom-goals {
+  background: @bg;
+  color: @color2;
+  border-radius: 42px;
+  margin: 6px 2px;
+  padding: 4px 14px;
+}
+
+#custom-goals.none {
+  color: @color9;
+}
+
+#custom-goals.done {
+  color: @color2;
+}
+
+/* ── Pomodoro ────────────────────────────────────────────────────── */
+
+#custom-pomodoro {
+  border-radius: 42px;
+  margin: 6px 2px;
+  padding: 4px 14px;
+}
+
+#custom-pomodoro.idle {
+  opacity: 0;
+  padding: 0;
+  margin: 0;
+}
+
+#custom-pomodoro.negative {
+  background: @color1;
+  color: @bg;
+}
+
+#custom-pomodoro.work {
+  background: @color2;
+  color: @bg;
+}
+
 /* ── Battery ──────────────────────────────────────────────────────── */
 
 #battery {

@@ -7,7 +7,7 @@
   "margin-left": 8,
   "modules-left": ["tray", "sway/workspaces"],
   "modules-center": ["clock"],
-  "modules-right": ["mpd", "backlight", "pulseaudio", "network", "custom/caffeine", "battery"],
+  "modules-right": ["mpd", "custom/pomodoro", "custom/goals", "backlight", "pulseaudio", "network", "custom/caffeine", "battery"],
   "sway/workspaces": {
       "format": "{name} {windows}",
       "format-window-separator": " ",
@@ -64,6 +64,22 @@
     "format-wifi": "{essid} ",
     "format-ethernet": "",
     "format-disconnected": ""
+  },
+
+  "custom/goals": {
+    "format": "{}",
+    "exec": "daily-goals waybar",
+    "on-click": "daily-goals toggle",
+    "interval": 10,
+    "return-type": "json"
+  },
+
+  "custom/pomodoro": {
+    "format": "{}",
+    "exec": "negative-pomodoro waybar",
+    "on-click": "kitty --class pomodoro-panel -e negative-pomodoro panel",
+    "interval": 1,
+    "return-type": "json"
   },
 
   "custom/caffeine": {

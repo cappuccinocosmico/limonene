@@ -51,6 +51,7 @@
           eDP-1 = {};
         };
         startup = [
+          { command = "daily-ritual --gate"; }
           { command = "${pkgs.wl-clipboard-x11}/bin/wl-clipboard-x11"; }
           { command = "swaymsg 'workspace 1; exec kitty --single-instance'"; }
           { command = "swaymsg 'workspace 5; exec firefox'"; }
@@ -58,6 +59,21 @@
           { command = "swaymsg 'workspace 10; exec signal-desktop'"; }
           { command = "swaymsg 'workspace 10; exec vlc'"; }
         ];
+        modes = {
+          negative = {
+            "XF86AudioPlay" = "exec mpc toggle -q";
+            "XF86AudioRaiseVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+ --limit 1.0";
+            "XF86AudioLowerVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-";
+            "XF86AudioMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+            "XF86AudioNext" = "exec mpc -q seek +5% && mpc toggle -q && mpc toggle -q";
+            "XF86AudioPrev" = "exec mpc -q seek -5% && mpc toggle -q && mpc toggle -q";
+            "Mod1+n" = "exec kitty --class pomodoro-panel -e negative-pomodoro panel";
+            "Mod1+Shift+Escape" = "mode default, exec negative-pomodoro cancel";
+          };
+          ritual = {
+            "Mod1+Shift+Escape" = "mode default, exec daily-ritual --skip";
+          };
+        };
         modifier = "Mod1";
         terminal = "kitty --single-instance";
         menu = "fuzzel";
@@ -85,6 +101,9 @@
             "${mod}+Left" = "workspace prev";
             "${mod}+p" = "exec wlogout";
             "Ctrl+Shift+${mod}+v" = "exec clipboard-type";
+            "${mod}+g" = "exec daily-goals toggle";
+            "${mod}+Shift+g" = "exec kitty --class daily-goals-add -e daily-goals-add-popup";
+            "${mod}+n" = "exec kitty --class pomodoro-panel -e negative-pomodoro panel";
           };
       };
       extraConfig = ''
@@ -101,6 +120,9 @@
         }
         seat seat0 xcursor_theme default 48
         output eDP-1 scale 1
+        for_window [app_id="daily-ritual"] fullscreen enable
+        for_window [app_id="daily-goals-add"] floating enable, resize set 800 100
+        for_window [app_id="pomodoro-panel"] floating enable, resize set 500 200
         exec mako
         exec random-wallpaper
 
@@ -117,7 +139,7 @@
     };
 
     services.swayidle.events = {
-      "after-resume" = "random-wallpaper";
+      "after-resume" = "random-wallpaper && daily-ritual --gate";
     };
   };
 }

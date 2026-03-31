@@ -8,7 +8,7 @@
       inputs.self.modules.homeManager.music
       inputs.self.modules.homeManager.vscode
       inputs.self.modules.homeManager.firefox
-      inputs.self.modules.homeManager.activitywatch
+      inputs.self.modules.homeManager.productivity
     ];
 
     home.sessionVariables.TERMINAL = "kitty";
