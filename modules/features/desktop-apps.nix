@@ -1,5 +1,5 @@
-{ ... }: {
-  flake.modules.homeManager.desktopApps = { pkgs, ... }: {
+{...}: {
+  flake.modules.homeManager.desktopApps = {pkgs, ...}: {
     services.kdeconnect.enable = true;
 
     home.packages = with pkgs; [
@@ -18,8 +18,6 @@
       duplicati
       # ----------
       # Experiments
-      vlc
-      mpv
       transmission_4-gtk
       zotero
       ungoogled-chromium
@@ -28,6 +26,8 @@
       vscodium-fhs
       nautilus
       # Audio
+      vlc
+      mpv
       easyeffects
       # Recording
       obs-studio
@@ -40,15 +40,15 @@
       # Networking Stuff
       syncthing
       warp
-      baobab # disk usage analyzer
       # Clipboard tools for Wine/Wayland integration
       wl-clipboard-x11 # provides xclip compatibility for Wine apps
-      koreader # Another Ebook Reader, mostly for embedded
+      # Gnome apps
+      baobab # disk usage analyzer
+      komikku # ebook reader
       gnome-font-viewer
       gnome-terminal
       gnome-text-editor
       gimp
-      postman
     ];
   };
 }

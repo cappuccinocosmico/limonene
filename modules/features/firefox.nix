@@ -5,16 +5,22 @@
       profiles.default = {
         isDefault = true;
         extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
-          youtube-recommended-videos
+          # Adblockers/Enhancers
           ublock-origin
-          bitwarden
           sponsorblock
+          bitwarden
+          return-youtube-dislikes
+          # Misc Productivity
           aw-watcher-web
+          clearurls
+          react-devtools
+          onetab
+          # Anti-Addiction Tools
+          youtube-recommended-videos
           dearrow
           leechblock-ng
-          react-devtools
+          # monochromate
           tabliss
-          onetab
         ];
         settings = {
           "extensions.autoDisableScopes" = 0;
