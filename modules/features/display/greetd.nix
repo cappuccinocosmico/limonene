@@ -6,8 +6,6 @@
     ...
   }: {
     services.displayManager.sddm.enable = lib.mkForce false;
-    security.pam.services.greetd.startSession = true;
-
     environment.pathsToLink = [ "/share/wayland-sessions" ];
 
     services.greetd = {

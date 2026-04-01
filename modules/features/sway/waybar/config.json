@@ -6,8 +6,8 @@
   "margin-right": 8,
   "margin-left": 8,
   "modules-left": ["tray", "sway/workspaces"],
-  "modules-center": ["clock"],
-  "modules-right": ["mpd", "custom/pomodoro", "custom/goals", "backlight", "pulseaudio", "network", "custom/caffeine", "battery"],
+  "modules-center": ["clock", "custom/pomodoro", "custom/goals"],
+  "modules-right": [ "backlight", "pulseaudio", "network", "custom/caffeine", "battery"],
   "sway/workspaces": {
       "format": "{name} {windows}",
       "format-window-separator": " ",

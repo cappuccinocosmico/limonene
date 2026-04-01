@@ -26,18 +26,17 @@
         # Skip mode: create minimal file, kill ritual window, exit
         if [ "''${1:-}" = "--skip" ]; then
           mkdir -p "$GOALS_DIR"
-          cat > "$TODAY_FILE" << 'SKIPEOF'
-        ---
-        date: "DATEPLACEHOLDER"
-        skipped_ritual: true
-        negative_pomodoro_sessions: 0
-        goals: []
-        yesterday_review: ""
-        ---
+          cat > "$TODAY_FILE" << SKIPEOF
+---
+date: "$TODAY"
+skipped_ritual: true
+negative_pomodoro_sessions: 0
+goals: []
+yesterday_review: ""
+---
 
-        # Notes
-        SKIPEOF
-          ${pkgs.gnused}/bin/sed -i "s/DATEPLACEHOLDER/$TODAY/" "$TODAY_FILE"
+# Notes
+SKIPEOF
           ${pkgs.sway}/bin/swaymsg '[app_id="daily-ritual"] kill' 2>/dev/null || true
           exit 0
         fi
@@ -540,10 +539,12 @@ ADJEOF
       systemd.user.services.activitywatch-watcher-aw-watcher-window-wayland = {
         Unit = {
           After = [ "graphical-session.target" ];
-          Wants = [ "graphical-session.target" ];
+        };
+        Install = {
+          WantedBy = lib.mkForce [ "graphical-session.target" ];
         };
         Service = {
-          ExecStart = lib.mkForce "${pkgs.bash}/bin/sh -c '${pkgs.coreutils}/bin/sleep 15 && exec ${pkgs.aw-watcher-window-wayland}/bin/aw-watcher-window-wayland'";
+          ExecStart = lib.mkForce "${pkgs.aw-watcher-window-wayland}/bin/aw-watcher-window-wayland";
         };
       };
 

@@ -107,9 +107,6 @@
           };
       };
       extraConfig = ''
-        exec "systemctl --user import-environment {,WAYLAND_}DISPLAY SWAYSOCK; systemctl --user start sway-session.target"
-        exec swaymsg -t subscribe '["shutdown"]' && systemctl --user stop sway-session.target
-
         input "1267:13037:ELAN0130:00_04F3:32ED_Touchpad" {
           dwt enabled
           tap enabled
