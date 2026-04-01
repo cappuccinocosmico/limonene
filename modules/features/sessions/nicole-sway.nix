@@ -192,7 +192,7 @@
 
         backlight = {
           format = "{percent}% {icon}";
-          "format-icons" = ["󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂"];
+          "format-icons" = ["" "" "" "" "" "" "" "" "" "" "" "" "" ""];
         };
 
         pulseaudio = {
