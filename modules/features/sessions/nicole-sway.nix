@@ -198,19 +198,13 @@
         pulseaudio = {
           format = "{volume}% {icon}";
           "format-muted" = "🔇";
-          "format-icons" = {default = ["" "" ""];};
+          "format-icons" = {default = ["󰕿" "󰖀" "󰕾"];};
           "ignored-sinks" = ["Easy Effects Sink"];
         };
 
         mpd = {
           format = "▶ : {album} - {title}";
           "format-paused" = "⏸ : {album} - {title}";
-        };
-
-        network = {
-          "format-wifi" = "{essid} ";
-          "format-ethernet" = "";
-          "format-disconnected" = "";
         };
 
         "custom/goals" = {
@@ -236,11 +230,19 @@
           interval = 5;
         };
 
+        network = {
+          "format-wifi" = "{essid} {icon}";
+          "format-icons" = ["󰤟" "󰤢" "󰤥" "󰤨"];
+          "format-ethernet" = "󰈀";
+          "format-disconnected" = "";
+        };
         battery = {
           format = "{capacity}% {icon}";
+          "format-full" = "{capacity}% 󱟢";
           "format-charging" = "{capacity}% 󰂄";
-          "format-plugged" = "{capacity}% 󰂃";
-          "format-icons" = ["󰁺" "󰁻" "" "" "" "" "󰂀" "󰂁" "󰂂" ""];
+          "format-plugged" = "{capacity}% 󰂃"; # plugged, charging or below full-at threshold
+          "format-icons" = ["󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂"];
+          "full-at" = 90; # treat ≥90% as "full" — triggers format-full when plugged & not actively charging
           states = {
             warning = 40;
             critical = 20;
