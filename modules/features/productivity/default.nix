@@ -528,36 +528,71 @@ ADJEOF
       '';
     in
     {
-      # ActivityWatch (moved from activitywatch.nix)
-      services.activitywatch = {
-        enable = true;
-        watchers.aw-watcher-window-wayland = {
-          package = pkgs.aw-watcher-window-wayland;
-        };
+      options.limonene.productivity = {
+        dailyGoals = lib.mkOption { type = lib.types.package; default = daily-goals; };
+        negativePomodoro = lib.mkOption { type = lib.types.package; default = negative-pomodoro; };
+        dailyRitual = lib.mkOption { type = lib.types.package; default = daily-ritual; };
       };
 
-      systemd.user.services.activitywatch-watcher-aw-watcher-window-wayland = {
-        Unit = {
-          After = [ "graphical-session.target" ];
+      config = {
+        # ActivityWatch (moved from activitywatch.nix)
+        services.activitywatch = {
+          enable = true;
+          watchers.aw-watcher-window-wayland = {
+            package = pkgs.aw-watcher-window-wayland;
+          };
         };
-        Install = {
-          WantedBy = lib.mkForce [ "graphical-session.target" ];
-        };
-        Service = {
-          ExecStart = lib.mkForce "${pkgs.aw-watcher-window-wayland}/bin/aw-watcher-window-wayland";
-        };
-      };
 
-      # Packages
-      home.packages = [
-        daily-ritual
-        daily-goals
-        daily-goals-add-popup
-        negative-pomodoro
-        pkgs.gum
-        pkgs.yq-go
-        pkgs.jq
-        pkgs.libnotify
-      ];
+        systemd.user.services.daily-ritual-resume = {
+          Unit = {
+            Description = "Run daily-ritual gate after system resume";
+            After = [ "graphical-session.target" ];
+            PartOf = [ "graphical-session.target" ];
+          };
+          Service = {
+            Type = "simple";
+            Restart = "on-failure";
+            ExecStart = "${pkgs.writeShellScript "daily-ritual-resume" ''
+              exec ${pkgs.dbus}/bin/dbus-monitor --system \
+                "type='signal',sender='org.freedesktop.login1',interface='org.freedesktop.login1.Manager',member='PrepareForSleep'" \
+              | while IFS= read -r line; do
+                case "$line" in
+                  *"boolean false"*)
+                    sleep 2
+                    ${daily-ritual}/bin/daily-ritual --gate
+                    ;;
+                esac
+              done
+            ''}";
+          };
+          Install = {
+            WantedBy = [ "graphical-session.target" ];
+          };
+        };
+
+        systemd.user.services.activitywatch-watcher-aw-watcher-window-wayland = {
+          Unit = {
+            After = [ "graphical-session.target" ];
+          };
+          Install = {
+            WantedBy = lib.mkForce [ "graphical-session.target" ];
+          };
+          Service = {
+            ExecStart = lib.mkForce "${pkgs.aw-watcher-window-wayland}/bin/aw-watcher-window-wayland";
+          };
+        };
+
+        # Packages
+        home.packages = [
+          daily-ritual
+          daily-goals
+          daily-goals-add-popup
+          negative-pomodoro
+          pkgs.gum
+          pkgs.yq-go
+          pkgs.jq
+          pkgs.libnotify
+        ];
+      };
     };
 }

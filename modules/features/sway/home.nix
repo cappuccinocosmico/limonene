@@ -65,7 +65,6 @@
     };
 
     xdg.configFile = {
-      "waybar/config".source = ./waybar/config.json;
       "waybar/style.css".source = ./waybar/style.css;
       "waybar/assets/nix.svg".source = ./waybar/nix.svg;
     };

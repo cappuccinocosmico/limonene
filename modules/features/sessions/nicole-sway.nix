@@ -1,5 +1,10 @@
-{ inputs, ... }: {
-  flake.modules.homeManager.nicoleSway = { lib, pkgs, config, ... }: let
+{inputs, ...}: {
+  flake.modules.homeManager.nicoleSway = {
+    lib,
+    pkgs,
+    config,
+    ...
+  }: let
     caffeine-toggle = pkgs.writeShellScriptBin "caffeine-toggle" ''
       if systemctl --user is-active --quiet swayidle; then
         systemctl --user stop swayidle
@@ -23,9 +28,9 @@
       ${pkgs.wl-clipboard}/bin/wl-paste | ${pkgs.wtype}/bin/wtype -
     '';
   in {
-    imports = [ inputs.self.modules.homeManager.sway ];
+    imports = [inputs.self.modules.homeManager.sway];
 
-    home.packages = [ caffeine-toggle caffeine-status clipboard-type ];
+    home.packages = [caffeine-toggle caffeine-status clipboard-type];
 
     wayland.windowManager.sway = {
       enable = true;
@@ -33,31 +38,31 @@
       config = rec {
         assigns = {
           "10" = [
-            { class = "Signal"; }
-            { app_id = "signal"; }
-            { class = "vlc"; }
-            { app_id = "vlc"; }
+            {class = "Signal";}
+            {app_id = "signal";}
+            {class = "vlc";}
+            {app_id = "vlc";}
           ];
           "9" = [
-            { class = "easyeffects"; }
-            { app_id = "com.github.wwmm.easyeffects"; }
+            {class = "easyeffects";}
+            {app_id = "com.github.wwmm.easyeffects";}
           ];
           "5" = [
-            { app_id = "firefox"; }
-            { class = "firefox"; }
+            {app_id = "firefox";}
+            {class = "firefox";}
           ];
         };
         output = {
           eDP-1 = {};
         };
         startup = [
-          { command = "daily-ritual --gate"; }
-          { command = "${pkgs.wl-clipboard-x11}/bin/wl-clipboard-x11"; }
-          { command = "swaymsg 'workspace 1; exec kitty --single-instance'"; }
-          { command = "swaymsg 'workspace 5; exec firefox'"; }
-          { command = "swaymsg 'workspace 9; exec easyeffects'"; }
-          { command = "swaymsg 'workspace 10; exec signal-desktop'"; }
-          { command = "swaymsg 'workspace 10; exec vlc'"; }
+          {command = "daily-ritual --gate";}
+          {command = "${pkgs.wl-clipboard-x11}/bin/wl-clipboard-x11";}
+          {command = "swaymsg 'workspace 1; exec kitty --single-instance'";}
+          {command = "swaymsg 'workspace 5; exec firefox'";}
+          {command = "swaymsg 'workspace 9; exec easyeffects'";}
+          {command = "swaymsg 'workspace 10; exec signal-desktop'";}
+          {command = "swaymsg 'workspace 10; exec vlc'";}
         ];
         modes = {
           negative = {
@@ -135,8 +140,139 @@
       '';
     };
 
+    programs.waybar.settings = [
+      {
+        layer = "top";
+        position = "top";
+        height = 50;
+        "margin-top" = 8;
+        "margin-right" = 8;
+        "margin-left" = 8;
+        "modules-left" = ["tray" "sway/workspaces"];
+        "modules-center" = ["clock" "custom/pomodoro" "custom/goals"];
+        "modules-right" = ["backlight" "pulseaudio" "network" "custom/caffeine" "battery"];
+
+        "sway/workspaces" = {
+          format = "{name} {windows}";
+          "format-window-separator" = " ";
+          "window-rewrite-default" = "";
+          "window-rewrite" = {
+            "class<kitty>" = "";
+            "class<foot>" = "";
+            "class<firefox>" = "󰈹";
+            "class<Firefox>" = "󰈹";
+            "class<signal>" = "󰭹";
+            "class<Signal>" = "󰭹";
+            "class<vlc>" = "󰕼";
+            "class<easyeffects>" = "󰓃";
+            "class<com.github.wwmm.easyeffects>" = "󰓃";
+            "class<code>" = "󰨞";
+            "class<Code>" = "󰨞";
+            "class<thunar>" = "";
+            "class<Thunar>" = "";
+            "class<nautilus>" = "";
+            "class<Nautilus>" = "";
+            "class<discord>" = "󰙯";
+            "class<Discord>" = "󰙯";
+          };
+        };
+
+        "custom/nix" = {
+          format = " ";
+          "on-click" = "fuzzel";
+        };
+
+        "custom/song" = {
+          format = "{}";
+          exec = "playerctl metadata -f '{{markup_escape(title)}} - {{markup_escape(artist)}}' -F";
+          "on-click" = "playerctl play-pause";
+        };
+
+        tray = {};
+
+        backlight = {
+          format = "{percent}% {icon}";
+          "format-icons" = ["󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂"];
+        };
+
+        pulseaudio = {
+          format = "{volume}% {icon}";
+          "format-muted" = "🔇";
+          "format-icons" = {default = ["" "" ""];};
+          "ignored-sinks" = ["Easy Effects Sink"];
+        };
+
+        mpd = {
+          format = "▶ : {album} - {title}";
+          "format-paused" = "⏸ : {album} - {title}";
+        };
+
+        network = {
+          "format-wifi" = "{essid} ";
+          "format-ethernet" = "";
+          "format-disconnected" = "";
+        };
+
+        "custom/goals" = {
+          format = "{}";
+          exec = "${config.limonene.productivity.dailyGoals}/bin/daily-goals waybar";
+          "on-click" = "${config.limonene.productivity.dailyGoals}/bin/daily-goals toggle";
+          interval = 10;
+          "return-type" = "json";
+        };
+
+        "custom/pomodoro" = {
+          format = "{}";
+          exec = "${config.limonene.productivity.negativePomodoro}/bin/negative-pomodoro waybar";
+          "on-click" = "kitty --class pomodoro-panel -e ${config.limonene.productivity.negativePomodoro}/bin/negative-pomodoro panel";
+          interval = 1;
+          "return-type" = "json";
+        };
+
+        "custom/caffeine" = {
+          format = "{}";
+          exec = "${caffeine-status}/bin/caffeine-status";
+          "on-click" = "${caffeine-toggle}/bin/caffeine-toggle";
+          interval = 5;
+        };
+
+        battery = {
+          format = "{capacity}% {icon}";
+          "format-charging" = "{capacity}% 󰂄";
+          "format-plugged" = "{capacity}% 󰂃";
+          "format-icons" = ["󰁺" "󰁻" "" "" "" "" "󰂀" "󰂁" "󰂂" ""];
+          states = {
+            warning = 40;
+            critical = 20;
+          };
+          "on-click" = "wlogout";
+        };
+
+        clock = {
+          interval = 1;
+          format = "{:%H:%M:%S}  ";
+          "tooltip-format" = "<tt><small>{calendar}</small></tt>";
+          calendar = {
+            mode = "year";
+            "mode-mon-col" = 3;
+            "weeks-pos" = "right";
+            "on-scroll" = 1;
+            "on-click-right" = "mode";
+            format = {
+              months = "<span color='#ffead3'><b>{}</b></span>";
+              days = "<span color='#ecc6d9'><b>{}</b></span>";
+              weeks = "<span color='#99ffdd'><b>W{}</b></span>";
+              weekdays = "<span color='#ffcc66'><b>{}</b></span>";
+              today = "<span color='#ff6699'><b><u>{}</u></b></span>";
+            };
+          };
+          actions = {"on-click-right" = "mode";};
+        };
+      }
+    ];
+
     services.swayidle.events = {
-      "after-resume" = "random-wallpaper && daily-ritual --gate";
+      "after-resume" = "random-wallpaper; sleep 2; ${config.limonene.productivity.dailyRitual}/bin/daily-ritual --gate";
     };
   };
 }
