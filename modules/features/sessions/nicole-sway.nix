@@ -72,8 +72,8 @@
             "XF86AudioMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
             "XF86AudioNext" = "exec mpc -q seek +5% && mpc toggle -q && mpc toggle -q";
             "XF86AudioPrev" = "exec mpc -q seek -5% && mpc toggle -q && mpc toggle -q";
-            "Mod1+n" = "exec kitty --class pomodoro-panel -e negative-pomodoro panel";
-            "Mod1+Shift+Escape" = "mode default, exec negative-pomodoro cancel";
+            "Mod1+n" = "exec kitty --class pomodoro-panel -e pomodoro-panel";
+            "Mod1+Shift+Escape" = "mode default, exec productivity pomodoro cancel";
           };
           ritual = {
             "Mod1+Shift+Escape" = "mode default, exec daily-ritual --skip";
@@ -106,9 +106,9 @@
             "${mod}+Left" = "workspace prev";
             "${mod}+p" = "exec wlogout";
             "Ctrl+Shift+${mod}+v" = "exec clipboard-type";
-            "${mod}+g" = "exec daily-goals toggle";
-            "${mod}+Shift+g" = "exec kitty --class daily-goals-add -e daily-goals-add-popup";
-            "${mod}+n" = "exec kitty --class pomodoro-panel -e negative-pomodoro panel";
+            "${mod}+g" = "exec goals-toggle-picker";
+            "${mod}+Shift+g" = "exec kitty --class daily-goals-add -e goals-add-popup";
+            "${mod}+n" = "exec kitty --class pomodoro-panel -e pomodoro-panel";
           };
       };
       extraConfig = ''
@@ -124,7 +124,7 @@
         output eDP-1 scale 1
         for_window [app_id="daily-ritual"] fullscreen enable
         for_window [app_id="daily-goals-add"] floating enable, resize set 800 100
-        for_window [app_id="pomodoro-panel"] floating enable, resize set 500 200
+        for_window [app_id="pomodoro-panel"] floating enable, resize set 700 350
         exec mako
         exec random-wallpaper
 
@@ -209,16 +209,16 @@
 
         "custom/goals" = {
           format = "{}";
-          exec = "${config.limonene.productivity.dailyGoals}/bin/daily-goals waybar";
-          "on-click" = "${config.limonene.productivity.dailyGoals}/bin/daily-goals toggle";
+          exec = "productivity goals waybar";
+          "on-click" = "goals-toggle-picker";
           interval = 10;
           "return-type" = "json";
         };
 
         "custom/pomodoro" = {
           format = "{}";
-          exec = "${config.limonene.productivity.negativePomodoro}/bin/negative-pomodoro waybar";
-          "on-click" = "kitty --class pomodoro-panel -e ${config.limonene.productivity.negativePomodoro}/bin/negative-pomodoro panel";
+          exec = "productivity pomodoro waybar";
+          "on-click" = "kitty --class pomodoro-panel -e pomodoro-panel";
           interval = 1;
           "return-type" = "json";
         };
