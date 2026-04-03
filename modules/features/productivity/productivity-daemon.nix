@@ -9,7 +9,7 @@
       '';
 
       productivity-daemon-bin = pkgs.writeShellScriptBin "productivity-daemon" ''
-        exec ${pkgs.bun}/bin/bun run ${productivityTs} "$@"
+        exec ${pkgs.bun}/bin/bun run ${productivityTs} --daemon "$@"
       '';
 
       # Gum-based panel TUI — same as before but calls productivity CLI
@@ -44,14 +44,20 @@
               work=$(${pkgs.gum}/bin/gum input --placeholder "Work minutes" --value "20" || true)
               if [ -n "$neg" ] && [ -n "$work" ]; then
                 ${productivity-bin}/bin/productivity pomodoro start "$neg" "$work"
+              else
+                exit 0
               fi
               ;;
             *) exit 0 ;;
           esac
-          exit 0
+          # Fall through to countdown after starting
         fi
 
+        # Enter sway jail when opening the countdown (whether we just started or re-opened)
+        ${pkgs.sway}/bin/swaymsg 'mode negative'
+
         # Timer is running — live countdown
+        prev_phase=""
         while is_running; do
           status=$(${productivity-bin}/bin/productivity pomodoro status 2>/dev/null) || break
           remaining_ms=$(echo "$status" | ${pkgs.jq}/bin/jq -r '.remainingMs')
@@ -59,13 +65,23 @@
           neg_mins=$(echo "$status" | ${pkgs.jq}/bin/jq -r '.negativeMins')
           work_mins=$(echo "$status" | ${pkgs.jq}/bin/jq -r '.workMins')
 
+          # Switch sway mode on phase transitions
+          if [ "$phase" != "$prev_phase" ] && [ -n "$prev_phase" ]; then
+            if [ "$phase" = "negative" ]; then
+              ${pkgs.sway}/bin/swaymsg 'mode negative'
+            else
+              ${pkgs.sway}/bin/swaymsg 'mode default'
+            fi
+          fi
+          prev_phase="$phase"
+
           time_str=$(format_time "$remaining_ms")
           phase_upper=$(echo "$phase" | tr '[:lower:]' '[:upper:]')
 
           printf "\033[2J\033[H"
           ${pkgs.gum}/bin/gum style --border rounded --padding "0 1" --border-foreground 212 \
             "Negative Pomodoro" \
-            "s: skip  c: cancel  +/-: adjust ±5min  q: quit"
+            "s: skip  c: cancel  +/-: adjust ±5min  q: quit panel"
           echo ""
           echo "  Phase: $phase_upper"
           echo "  Remaining: $time_str"
@@ -74,14 +90,18 @@
           if read -t 1 -n 1 key 2>/dev/null; then
             case "$key" in
               s) ${productivity-bin}/bin/productivity pomodoro skip ;;
-              c) ${productivity-bin}/bin/productivity pomodoro cancel; exit 0 ;;
+              c) ${productivity-bin}/bin/productivity pomodoro cancel
+                 ${pkgs.sway}/bin/swaymsg 'mode default'
+                 exit 0 ;;
               +) ${productivity-bin}/bin/productivity pomodoro adjust 5 ;;
               -) ${productivity-bin}/bin/productivity pomodoro adjust -- -5 ;;
-              q) exit 0 ;;
+              q) exit 0 ;;  # close panel, timer and sway mode stay active
             esac
           fi
         done
 
+        # Timer ended naturally
+        ${pkgs.sway}/bin/swaymsg 'mode default'
         echo "Timer ended."
         sleep 1
       '';
@@ -111,6 +131,13 @@
       '';
     in
     {
+      options.limonene.productivity = {
+        productivityBin = lib.mkOption { type = lib.types.package; default = productivity-bin; };
+        pomodoroPanel = lib.mkOption { type = lib.types.package; default = pomodoro-panel; };
+        goalsTogglePicker = lib.mkOption { type = lib.types.package; default = goals-toggle-picker; };
+        goalsAddPopup = lib.mkOption { type = lib.types.package; default = goals-add-popup; };
+      };
+
       config = {
         home.packages = [
           productivity-bin

@@ -405,7 +405,8 @@ function formatRemaining(ms: number): string {
 }
 
 async function runCli(): Promise<void> {
-  const [, , sub, ...args] = process.argv;
+  const cliArgs = process.argv.slice(2).filter((a) => a !== "--daemon");
+  const [sub, ...args] = cliArgs;
 
   if (!sub) {
     console.error(
@@ -507,9 +508,7 @@ async function runCli(): Promise<void> {
 // Entrypoint dispatch
 // ---------------------------------------------------------------------------
 
-const entrypoint = path.basename(process.argv[1] ?? "");
-
-if (entrypoint === "productivity-daemon") {
+if (process.argv.includes("--daemon")) {
   runDaemon();
 } else {
   runCli().catch((err: Error) => {

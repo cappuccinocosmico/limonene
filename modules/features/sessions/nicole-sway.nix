@@ -72,8 +72,8 @@
             "XF86AudioMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
             "XF86AudioNext" = "exec mpc -q seek +5% && mpc toggle -q && mpc toggle -q";
             "XF86AudioPrev" = "exec mpc -q seek -5% && mpc toggle -q && mpc toggle -q";
-            "Mod1+n" = "exec kitty --class pomodoro-panel -e pomodoro-panel";
-            "Mod1+Shift+Escape" = "mode default, exec productivity pomodoro cancel";
+            "Mod1+n" = "exec kitty --class pomodoro-panel -e ${config.limonene.productivity.pomodoroPanel}/bin/pomodoro-panel";
+            "Mod1+Shift+Escape" = "mode default, exec ${config.limonene.productivity.productivityBin}/bin/productivity pomodoro cancel";
           };
           ritual = {
             "Mod1+Shift+Escape" = "mode default, exec daily-ritual --skip";
@@ -106,9 +106,9 @@
             "${mod}+Left" = "workspace prev";
             "${mod}+p" = "exec wlogout";
             "Ctrl+Shift+${mod}+v" = "exec clipboard-type";
-            "${mod}+g" = "exec goals-toggle-picker";
-            "${mod}+Shift+g" = "exec kitty --class daily-goals-add -e goals-add-popup";
-            "${mod}+n" = "exec kitty --class pomodoro-panel -e pomodoro-panel";
+            "${mod}+g" = "exec ${config.limonene.productivity.goalsTogglePicker}/bin/goals-toggle-picker";
+            "${mod}+Shift+g" = "exec kitty --class daily-goals-add -e ${config.limonene.productivity.goalsAddPopup}/bin/goals-add-popup";
+            "${mod}+n" = "exec kitty --class pomodoro-panel -e ${config.limonene.productivity.pomodoroPanel}/bin/pomodoro-panel";
           };
       };
       extraConfig = ''
@@ -209,16 +209,16 @@
 
         "custom/goals" = {
           format = "{}";
-          exec = "productivity goals waybar";
-          "on-click" = "goals-toggle-picker";
+          exec = "${config.limonene.productivity.productivityBin}/bin/productivity goals waybar";
+          "on-click" = "${config.limonene.productivity.goalsTogglePicker}/bin/goals-toggle-picker";
           interval = 10;
           "return-type" = "json";
         };
 
         "custom/pomodoro" = {
           format = "{}";
-          exec = "productivity pomodoro waybar";
-          "on-click" = "kitty --class pomodoro-panel -e pomodoro-panel";
+          exec = "${config.limonene.productivity.productivityBin}/bin/productivity pomodoro waybar";
+          "on-click" = "kitty --class pomodoro-panel -e ${config.limonene.productivity.pomodoroPanel}/bin/pomodoro-panel";
           interval = 1;
           "return-type" = "json";
         };
