@@ -65,7 +65,10 @@ in {
 
       rust = {
         enable = true;
-        lsp.enable = true;
+        lsp = {
+          enable = true;
+          package = ["rust-analyzer"];
+        };
         treesitter.enable = true;
         format.enable = true;
         extensions.crates-nvim.enable = true;
