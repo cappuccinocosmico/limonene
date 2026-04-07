@@ -41,7 +41,14 @@ function spawnTool(bin: string, args: string[], stdin?: string): string {
 function setSway(mode: string): void {
   if (!SWAYMSG) return;
   try {
-    Bun.spawnSync([SWAYMSG, "mode", mode], { stdout: "ignore", stderr: "ignore" });
+    Bun.spawnSync([SWAYMSG, "mode", mode], {
+      stderr: "ignore",
+    });
+    if (mode === "negative") {
+      Bun.spawnSync([SWAYMSG, "workspace", "10"], {
+        stderr: "ignore",
+      });
+    }
   } catch {}
 }
 
@@ -93,7 +100,7 @@ interface Response {
 const GOALS_DIR = path.join(os.homedir(), ".local/share/daily-goals");
 const SOCKET_PATH = path.join(
   process.env.XDG_RUNTIME_DIR ?? `/run/user/${process.getuid!()}`,
-  "productivity.sock"
+  "productivity.sock",
 );
 
 function todayStr(): string {
@@ -169,11 +176,12 @@ function clearPomodoro(): void {
 function startPhase(
   phase: PomodoroPhase,
   negativeMins: number,
-  workMins: number
+  workMins: number,
 ): void {
   if (state.pomodoro?.timer) clearTimeout(state.pomodoro.timer);
 
-  const durationMs = (phase === "negative" ? negativeMins : workMins) * 60 * 1000;
+  const durationMs =
+    (phase === "negative" ? negativeMins : workMins) * 60 * 1000;
   const endTime = Date.now() + durationMs;
 
   const timer = setTimeout(() => {
@@ -217,7 +225,11 @@ function handlePomodoro(req: Request): Response {
     case "pomodoro.skip": {
       if (!state.pomodoro) return { ok: false, error: "not running" };
       const { negativeMins, workMins, phase } = state.pomodoro;
-      startPhase(phase === "negative" ? "work" : "negative", negativeMins, workMins);
+      startPhase(
+        phase === "negative" ? "work" : "negative",
+        negativeMins,
+        workMins,
+      );
       return { ok: true };
     }
     case "pomodoro.adjust": {
@@ -229,7 +241,11 @@ function handlePomodoro(req: Request): Response {
       const remaining = state.pomodoro.endTime - Date.now();
       const { phase, negativeMins, workMins } = state.pomodoro;
       const timer = setTimeout(() => {
-        startPhase(phase === "negative" ? "work" : "negative", negativeMins, workMins);
+        startPhase(
+          phase === "negative" ? "work" : "negative",
+          negativeMins,
+          workMins,
+        );
       }, remaining);
       if (timer.unref) timer.unref();
       state.pomodoro.timer = timer;
@@ -311,7 +327,9 @@ function dispatch(req: Request): Response {
 
 function runDaemon(): void {
   if (fs.existsSync(SOCKET_PATH)) {
-    try { fs.unlinkSync(SOCKET_PATH); } catch {}
+    try {
+      fs.unlinkSync(SOCKET_PATH);
+    } catch {}
   }
 
   const server = net.createServer((socket) => {
@@ -326,7 +344,9 @@ function runDaemon(): void {
         try {
           req = JSON.parse(line) as Request;
         } catch {
-          socket.write(JSON.stringify({ ok: false, error: "invalid JSON" }) + "\n");
+          socket.write(
+            JSON.stringify({ ok: false, error: "invalid JSON" }) + "\n",
+          );
           continue;
         }
         socket.write(JSON.stringify(dispatch(req)) + "\n");
@@ -348,7 +368,9 @@ function runDaemon(): void {
   const shutdown = () => {
     clearPomodoro(); // resets sway mode if a session was active
     server.close();
-    try { fs.unlinkSync(SOCKET_PATH); } catch {}
+    try {
+      fs.unlinkSync(SOCKET_PATH);
+    } catch {}
     process.exit(0);
   };
   process.on("SIGTERM", shutdown);
@@ -402,10 +424,10 @@ const ESC = "\x1b";
 const CLR = `${ESC}[2J${ESC}[H`;
 
 const c = {
-  bold:   (s: string) => `${ESC}[1m${s}${ESC}[0m`,
-  dim:    (s: string) => `${ESC}[2m${s}${ESC}[0m`,
-  red:    (s: string) => `${ESC}[31m${s}${ESC}[0m`,
-  green:  (s: string) => `${ESC}[32m${s}${ESC}[0m`,
+  bold: (s: string) => `${ESC}[1m${s}${ESC}[0m`,
+  dim: (s: string) => `${ESC}[2m${s}${ESC}[0m`,
+  red: (s: string) => `${ESC}[31m${s}${ESC}[0m`,
+  green: (s: string) => `${ESC}[32m${s}${ESC}[0m`,
   yellow: (s: string) => `${ESC}[33m${s}${ESC}[0m`,
 };
 
@@ -413,7 +435,9 @@ function setupRawTerminal(): () => void {
   process.stdin.setRawMode(true);
   process.stdin.resume();
   const restore = () => {
-    try { process.stdin.setRawMode(false); } catch {}
+    try {
+      process.stdin.setRawMode(false);
+    } catch {}
   };
   process.once("exit", restore);
   return restore;
@@ -469,20 +493,23 @@ function renderCountdown(
   phase: string,
   remainingMs: number,
   negMins: number,
-  workMins: number
+  workMins: number,
 ): void {
-  const phaseLabel = phase === "negative"
-    ? c.red(c.bold("NOTHING"))
-    : c.green(c.bold("WORK"));
+  const phaseLabel =
+    phase === "negative" ? c.red(c.bold("NOTHING")) : c.green(c.bold("WORK"));
   const timeStr = formatRemaining(remainingMs);
   const timeColored =
-    remainingMs < 60_000     ? c.red(c.bold(timeStr))  :
-    remainingMs < 3 * 60_000 ? c.yellow(timeStr)        :
-                                c.bold(timeStr);
+    remainingMs < 60_000
+      ? c.red(c.bold(timeStr))
+      : remainingMs < 3 * 60_000
+        ? c.yellow(timeStr)
+        : c.bold(timeStr);
 
   process.stdout.write(CLR);
   process.stdout.write(c.bold("  Negative Pomodoro") + "\n");
-  process.stdout.write(c.dim("  s:skip  c:cancel  +:+5min  -:-5min  q:quit panel") + "\n\n");
+  process.stdout.write(
+    c.dim("  s:skip  c:cancel  +:+5min  -:-5min  q:quit panel") + "\n\n",
+  );
   process.stdout.write(`  Phase:     ${phaseLabel}\n`);
   process.stdout.write(`  Remaining: ${timeColored}\n`);
   process.stdout.write(`  Cycle:     ${negMins}min / ${workMins}min\n`);
@@ -502,18 +529,22 @@ async function showStartMenu(): Promise<boolean> {
     if (key >= "1" && key <= "3") {
       const ch = MENU_CHOICES[parseInt(key) - 1];
       restore();
-      await sendRequest({ cmd: "pomodoro.start", negativeMins: ch.neg, workMins: ch.work });
+      await sendRequest({
+        cmd: "pomodoro.start",
+        negativeMins: ch.neg,
+        workMins: ch.work,
+      });
       return true;
     }
     if (key === "c") {
       restore();
       process.stdout.write(CLR);
-      const negStr  = await promptLine("  Nothing minutes", "10");
-      const workStr = await promptLine("  Work minutes",    "20");
+      const negStr = await promptLine("  Nothing minutes", "10");
+      const workStr = await promptLine("  Work minutes", "20");
       await sendRequest({
         cmd: "pomodoro.start",
-        negativeMins: Math.max(1, parseInt(negStr)  || 10),
-        workMins:     Math.max(1, parseInt(workStr) || 20),
+        negativeMins: Math.max(1, parseInt(negStr) || 10),
+        workMins: Math.max(1, parseInt(workStr) || 20),
       });
       return true;
     }
@@ -536,16 +567,22 @@ async function showCountdown(): Promise<void> {
         res.phase as string,
         res.remainingMs as number,
         res.negativeMins as number,
-        res.workMins as number
+        res.workMins as number,
       );
 
       const key = await readKey(1000);
       if (!key) continue;
 
       switch (key) {
-        case "s": await sendRequest({ cmd: "pomodoro.skip" });            break;
-        case "+": await sendRequest({ cmd: "pomodoro.adjust", deltaMins:  5 }); break;
-        case "-": await sendRequest({ cmd: "pomodoro.adjust", deltaMins: -5 }); break;
+        case "s":
+          await sendRequest({ cmd: "pomodoro.skip" });
+          break;
+        case "+":
+          await sendRequest({ cmd: "pomodoro.adjust", deltaMins: 5 });
+          break;
+        case "-":
+          await sendRequest({ cmd: "pomodoro.adjust", deltaMins: -5 });
+          break;
         case "c":
           await sendRequest({ cmd: "pomodoro.cancel" });
           restore();
@@ -588,7 +625,9 @@ async function runPanel(): Promise<void> {
 
 async function goalsToggleInteractive(): Promise<void> {
   if (!FUZZEL) {
-    console.error("FUZZEL env var not set — are you running via the Nix wrapper?");
+    console.error(
+      "FUZZEL env var not set — are you running via the Nix wrapper?",
+    );
     process.exit(1);
   }
 
@@ -602,12 +641,17 @@ async function goalsToggleInteractive(): Promise<void> {
 
   const goals = res.goals as Goal[];
   if (goals.length === 0) {
-    if (NOTIFY_SEND) spawnTool(NOTIFY_SEND, ["No goals", "No goals to toggle today"]);
+    if (NOTIFY_SEND)
+      spawnTool(NOTIFY_SEND, ["No goals", "No goals to toggle today"]);
     return;
   }
 
   const menu = goals.map((g) => `${g.done ? "✅" : "⬜"} ${g.text}`).join("\n");
-  const selected = spawnTool(FUZZEL, ["--dmenu", "--prompt", "Toggle goal: "], menu + "\n");
+  const selected = spawnTool(
+    FUZZEL,
+    ["--dmenu", "--prompt", "Toggle goal: "],
+    menu + "\n",
+  );
   if (!selected) return;
 
   const text = selected.replace(/^[✅⬜]\s*/, "").trim();
@@ -629,36 +673,59 @@ async function handlePomodoroCmd(args: string[]): Promise<void> {
       const res = await sendRequest({
         cmd: "pomodoro.start",
         negativeMins: Number(args[1] ?? 10),
-        workMins:     Number(args[2] ?? 10),
+        workMins: Number(args[2] ?? 10),
       });
-      if (!res.ok) { console.error(res.error); process.exit(1); }
+      if (!res.ok) {
+        console.error(res.error);
+        process.exit(1);
+      }
       break;
     }
-    case "cancel": await sendRequest({ cmd: "pomodoro.cancel" }); break;
-    case "skip":   await sendRequest({ cmd: "pomodoro.skip"   }); break;
+    case "cancel":
+      await sendRequest({ cmd: "pomodoro.cancel" });
+      break;
+    case "skip":
+      await sendRequest({ cmd: "pomodoro.skip" });
+      break;
     case "adjust": {
-      await sendRequest({ cmd: "pomodoro.adjust", deltaMins: Number(args[1] ?? 0) });
+      await sendRequest({
+        cmd: "pomodoro.adjust",
+        deltaMins: Number(args[1] ?? 0),
+      });
       break;
     }
     case "waybar": {
       let res: Response;
-      try { res = await sendRequest({ cmd: "pomodoro.status" }); }
-      catch { console.log(JSON.stringify({ text: "", class: "idle" })); return; }
-      if (!res.running) { console.log(JSON.stringify({ text: "", class: "idle" })); return; }
-      const time  = formatRemaining(res.remainingMs as number);
+      try {
+        res = await sendRequest({ cmd: "pomodoro.status" });
+      } catch {
+        console.log(JSON.stringify({ text: "", class: "idle" }));
+        return;
+      }
+      if (!res.running) {
+        console.log(JSON.stringify({ text: "", class: "idle" }));
+        return;
+      }
+      const time = formatRemaining(res.remainingMs as number);
       const phase = res.phase as string;
-      console.log(JSON.stringify({
-        text:  phase === "negative" ? `NOTHING ${time}` : `WORK ${time}`,
-        class: phase === "negative" ? "negative" : "work",
-      }));
+      console.log(
+        JSON.stringify({
+          text: phase === "negative" ? `NOTHING ${time}` : `WORK ${time}`,
+          class: phase === "negative" ? "negative" : "work",
+        }),
+      );
       break;
     }
     case "status": {
-      console.log(JSON.stringify(await sendRequest({ cmd: "pomodoro.status" }), null, 2));
+      console.log(
+        JSON.stringify(await sendRequest({ cmd: "pomodoro.status" }), null, 2),
+      );
       break;
     }
     default:
-      console.error("Usage: productivity pomodoro {start|cancel|skip|adjust|waybar|status}");
+      console.error(
+        "Usage: productivity pomodoro {start|cancel|skip|adjust|waybar|status}",
+      );
       process.exit(1);
   }
 }
@@ -667,44 +734,70 @@ async function handleGoalsCmd(args: string[]): Promise<void> {
   switch (args[0]) {
     case "list": {
       const goals = (await sendRequest({ cmd: "goals.list" })).goals as Goal[];
-      if (!goals.length) { console.log("No goals set for today."); return; }
+      if (!goals.length) {
+        console.log("No goals set for today.");
+        return;
+      }
       for (const g of goals) console.log(`${g.done ? "✅" : "⬜"} ${g.text}`);
       break;
     }
     case "add": {
       const text = args.slice(1).join(" ");
-      if (!text) { console.error("Usage: productivity goals add <text>"); process.exit(1); }
+      if (!text) {
+        console.error("Usage: productivity goals add <text>");
+        process.exit(1);
+      }
       await sendRequest({ cmd: "goals.add", text });
       break;
     }
-    case "add-interactive":    await goalsAddInteractive();    break;
+    case "add-interactive":
+      await goalsAddInteractive();
+      break;
     case "toggle": {
       const text = args.slice(1).join(" ");
-      if (!text) { console.error("Usage: productivity goals toggle <text>"); process.exit(1); }
+      if (!text) {
+        console.error("Usage: productivity goals toggle <text>");
+        process.exit(1);
+      }
       await sendRequest({ cmd: "goals.toggle", text });
       break;
     }
-    case "toggle-interactive": await goalsToggleInteractive(); break;
+    case "toggle-interactive":
+      await goalsToggleInteractive();
+      break;
     case "waybar": {
       let res: Response;
-      try { res = await sendRequest({ cmd: "goals.status" }); }
-      catch {
-        console.log(JSON.stringify({ text: "no goals", tooltip: "Daemon not running", class: "none" }));
+      try {
+        res = await sendRequest({ cmd: "goals.status" });
+      } catch {
+        console.log(
+          JSON.stringify({
+            text: "no goals",
+            tooltip: "Daemon not running",
+            class: "none",
+          }),
+        );
         return;
       }
       const total = res.total as number;
-      const done  = res.done  as number;
+      const done = res.done as number;
       const goals = res.goals as Goal[];
-      const tooltip = goals.map((g) => `${g.done ? "✅" : "⬜"} ${g.text}`).join("\n");
-      console.log(JSON.stringify({
-        text:    `[${done}/${total}]`,
-        tooltip,
-        class: total === 0 ? "none" : done === total ? "done" : "active",
-      }));
+      const tooltip = goals
+        .map((g) => `${g.done ? "✅" : "⬜"} ${g.text}`)
+        .join("\n");
+      console.log(
+        JSON.stringify({
+          text: `[${done}/${total}]`,
+          tooltip,
+          class: total === 0 ? "none" : done === total ? "done" : "active",
+        }),
+      );
       break;
     }
     default:
-      console.error("Usage: productivity goals {list|add|add-interactive|toggle|toggle-interactive|waybar}");
+      console.error(
+        "Usage: productivity goals {list|add|add-interactive|toggle|toggle-interactive|waybar}",
+      );
       process.exit(1);
   }
 }
@@ -713,13 +806,24 @@ async function runCli(): Promise<void> {
   const [sub, ...args] = process.argv.slice(2).filter((a) => a !== "--daemon");
 
   if (!sub) {
-    console.error("Usage: productivity <panel|pomodoro|goals> [subcommand] [args]");
+    console.error(
+      "Usage: productivity <panel|pomodoro|goals> [subcommand] [args]",
+    );
     process.exit(1);
   }
 
-  if (sub === "panel")    { await runPanel();                  return; }
-  if (sub === "pomodoro") { await handlePomodoroCmd(args);     return; }
-  if (sub === "goals")    { await handleGoalsCmd(args);        return; }
+  if (sub === "panel") {
+    await runPanel();
+    return;
+  }
+  if (sub === "pomodoro") {
+    await handlePomodoroCmd(args);
+    return;
+  }
+  if (sub === "goals") {
+    await handleGoalsCmd(args);
+    return;
+  }
 
   console.error(`Unknown subcommand: ${sub}`);
   process.exit(1);

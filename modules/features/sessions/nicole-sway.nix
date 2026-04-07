@@ -154,6 +154,7 @@
 
         "sway/workspaces" = {
           format = "{name} {windows}";
+          "disable-click" = true;
           "format-window-separator" = " ";
           "window-rewrite-default" = "";
           "window-rewrite" = {
