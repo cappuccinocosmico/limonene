@@ -49,7 +49,7 @@ function setSway(mode: string): void {
         stderr: "ignore",
       });
     }
-    Bun.spawnSync(["printf", `"\a"`]);
+    process.stdout.write("\u0007");
   } catch {}
 }
 

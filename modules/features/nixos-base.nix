@@ -3,7 +3,7 @@
 
   systems = [ "x86_64-linux" "aarch64-darwin" "x86_64-darwin" ];
 
-  flake.modules.nixos.base = { config, pkgs, ... }: {
+  flake.modules.nixos.base = { config, pkgs, lib, ... }: {
     environment.etc."nixos/limonene".source = ../..;
 
     nixpkgs.overlays = [

@@ -7,6 +7,7 @@
       kitty
       fonts
       neovim
+      rustDev
     ];
 
     home.sessionPath = [
