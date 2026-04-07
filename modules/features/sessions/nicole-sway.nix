@@ -38,12 +38,14 @@
       config = rec {
         assigns = {
           "10" = [
-            {class = "Signal";}
-            {app_id = "signal";}
             {class = "vlc";}
             {app_id = "vlc";}
           ];
           "9" = [
+            {class = "Signal";}
+            {app_id = "signal";}
+          ];
+          "8" = [
             {class = "easyeffects";}
             {app_id = "com.github.wwmm.easyeffects";}
           ];

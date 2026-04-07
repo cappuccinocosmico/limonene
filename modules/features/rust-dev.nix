@@ -1,27 +1,39 @@
-{ inputs, lib, ... }: {
+{ inputs, lib, ... }:
+
+let
+  rustEnv = pkgs: {
+    PKG_CONFIG_PATH = lib.makeSearchPathOutput "dev" "lib/pkgconfig" (with pkgs; [
+      openssl
+      zlib
+      fontconfig
+      freetype
+      expat
+    ]);
+    OPENSSL_DIR = "${pkgs.openssl.dev}";
+    OPENSSL_LIB_DIR = "${pkgs.openssl.out}/lib";
+  };
+in {
   # System-level native library deps so -sys crates can find headers/pkg-config
   # from any terminal without a per-project dev shell.
   flake.modules.nixos.rustDev = { pkgs, ... }: {
     environment.systemPackages = with pkgs; [
       openssl.dev
       zlib.dev
+      fontconfig.dev
+      freetype.dev
+      expat.dev
       pkg-config
     ];
 
-    environment.variables = {
-      PKG_CONFIG_PATH = lib.makeSearchPathOutput "dev" "lib/pkgconfig" (with pkgs; [
-        openssl
-        zlib
-      ]);
-      # openssl-sys respects these even when pkg-config is unavailable
-      OPENSSL_DIR = "${pkgs.openssl.dev}";
-      OPENSSL_LIB_DIR = "${pkgs.openssl.out}/lib";
-    };
+    environment.variables = rustEnv pkgs;
 
     # Make openssl/zlib available for pre-built binaries (cargo binstall targets etc.)
     programs.nix-ld.libraries = with pkgs; [
       openssl
       zlib
+      fontconfig
+      freetype
+      expat
     ];
   };
 
@@ -37,5 +49,7 @@
       })
       pkgs.cargo-binstall
     ];
+
+    home.sessionVariables = rustEnv pkgs;
   };
 }

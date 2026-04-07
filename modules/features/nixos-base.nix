@@ -1,9 +1,18 @@
-{ inputs, ... }: {
-  imports = [ inputs.flake-parts.flakeModules.modules ];
+{inputs, ...}: {
+  imports = [inputs.flake-parts.flakeModules.modules];
 
-  systems = [ "x86_64-linux" "aarch64-darwin" "x86_64-darwin" ];
+  systems = ["x86_64-linux" "aarch64-darwin" "x86_64-darwin"];
 
-  flake.modules.nixos.base = { config, pkgs, lib, ... }: {
+  flake.modules.nixos.base = {
+    inputs,
+    config,
+    pkgs,
+    lib,
+    ...
+  }: {
+    imports = with inputs.self.modules.nixos; [
+      rustDev
+    ];
     environment.etc."nixos/limonene".source = ../..;
 
     nixpkgs.overlays = [
@@ -13,7 +22,7 @@
     ];
 
     environment.systemPackages = [
-      (import ../../helpers/regular-linux-shell.nix { inherit pkgs; })
+      (import ../../helpers/regular-linux-shell.nix {inherit pkgs;})
       pkgs.libclang
       pkgs.pkg-config
       pkgs.openssl
@@ -39,7 +48,7 @@
       pkgs.parted
     ];
 
-    boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+    boot.binfmt.emulatedSystems = ["aarch64-linux"];
     boot.binfmt.registrations."aarch64-linux".fixBinary = true;
 
     services.throttled.enable = true;
@@ -68,7 +77,7 @@
 
     networking.firewall = {
       enable = false;
-      allowedTCPPorts = [ 80 443 8080 8443 ];
+      allowedTCPPorts = [80 443 8080 8443];
       extraCommands = ''
         iptables -A INPUT -p tcp --dport 22 -s 192.168.0.0/16 -j ACCEPT
         iptables -A INPUT -p tcp --dport 22 -s 10.0.0.0/8 -j ACCEPT
@@ -99,7 +108,7 @@
     nixpkgs.config.allowUnfree = true;
 
     nix = {
-      settings.trusted-users = [ "root" ];
+      settings.trusted-users = ["root"];
       extraOptions = ''
         experimental-features = nix-command flakes
         extra-substituters = https://devenv.cachix.org

@@ -1,4 +1,4 @@
-{ inputs, ... }: {
+{inputs, ...}: {
   flake.modules.homeManager.userCommon = {
     imports = with inputs.self.modules.homeManager; [
       shells
@@ -8,6 +8,7 @@
       fonts
       neovim
       rustDev
+      thunderbird
     ];
 
     home.sessionPath = [

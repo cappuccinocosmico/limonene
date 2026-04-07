@@ -1,12 +1,17 @@
-{ inputs, ... }: {
-  flake.modules.nixos.users-nicole = { lib, config, pkgs, ... }: {
+{inputs, ...}: {
+  flake.modules.nixos.users-nicole = {
+    lib,
+    config,
+    pkgs,
+    ...
+  }: {
     limonene.defaultSession = lib.mkDefault "sway";
-    nix.settings.trusted-users = [ "nicole" ];
+    nix.settings.trusted-users = ["nicole"];
 
     users.users.nicole = {
       isNormalUser = true;
       description = "Nicole";
-      extraGroups = [ "networkmanager" "wheel" "docker" ];
+      extraGroups = ["networkmanager" "wheel" "docker"];
       shell = pkgs.fish;
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINBfMZjr6H4oK3qSBTxjZrMZptWXdzYC6QV4bdS892Ls nicole@vermissian"
@@ -15,17 +20,32 @@
       ];
     };
 
-    home-manager.users.nicole = { config, ... }: {
+    home-manager.users.nicole = {config, ...}: {
       imports = [
         inputs.self.modules.homeManager.userCommon
         inputs.self.modules.homeManager.opencode
       ];
 
       home.packages = with pkgs; [
-        nodejs-slim nix-ld dconf mesa libdrm
-        otel-desktop-viewer otel-cli imv libsixel
-        pciutils parted exfat pavucontrol xterm
-        networkmanager nettools steam-run dbeaver-bin mkp224o
+        nodejs-slim
+        nix-ld
+        dconf
+        mesa
+        libdrm
+        otel-desktop-viewer
+        otel-cli
+        imv
+        libsixel
+        pciutils
+        parted
+        exfat
+        pavucontrol
+        xterm
+        networkmanager
+        nettools
+        steam-run
+        dbeaver-bin
+        mkp224o
       ];
 
       programs.git = {
@@ -55,10 +75,10 @@
         PNPM_HOME = "$HOME/.binaries/pnpm";
       };
 
-      home.sessionPath = [ "$HOME/.binaries/pnpm" ];
+      home.sessionPath = ["$HOME/.binaries/pnpm"];
 
       xdg = {
-        systemDirs.data = [ "${pkgs.gsettings-desktop-schemas}/share" ];
+        systemDirs.data = ["${pkgs.gsettings-desktop-schemas}/share"];
         userDirs = {
           enable = true;
           createDirectories = true;
