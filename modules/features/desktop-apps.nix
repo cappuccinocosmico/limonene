@@ -7,7 +7,7 @@
       stellarium
 
       # Local AI Stuff:
-      ollama
+      ollama-vulkan
 
       # Acounting
       gnucash
