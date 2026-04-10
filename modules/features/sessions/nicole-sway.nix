@@ -62,8 +62,9 @@
           {command = "${pkgs.wl-clipboard-x11}/bin/wl-clipboard-x11";}
           {command = "swaymsg 'workspace 1; exec kitty --single-instance'";}
           {command = "swaymsg 'workspace 5; exec firefox'";}
+          {command = "swaymsg 'workspace 8; exec signal-desktop'";}
+          {command = "swaymsg 'workspace 8; exec thunderbird'";}
           {command = "swaymsg 'workspace 9; exec easyeffects'";}
-          {command = "swaymsg 'workspace 10; exec signal-desktop'";}
           {command = "swaymsg 'workspace 10; exec vlc'";}
         ];
         modes = {

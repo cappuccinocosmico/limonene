@@ -6,6 +6,9 @@
       # Star shit
       stellarium
 
+      # Local AI Stuff:
+      ollama
+
       # Acounting
       gnucash
 
