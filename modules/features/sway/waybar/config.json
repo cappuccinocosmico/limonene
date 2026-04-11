@@ -15,8 +15,10 @@
       "window-rewrite": {
         "class<kitty>": "",
         "class<foot>": "",
-        "class<firefox>": "󰈹",
-        "class<Firefox>": "󰈹",
+        "class<firefox>": "",
+        "class<Firefox>": "",
+        "class<thunderbird>": "󰈹",
+        "class<Thunderbird>": "󰈹",
         "class<signal>": "󰭹",
         "class<Signal>": "󰭹",
         "class<vlc>": "󰕼",
