@@ -12,7 +12,7 @@
       inputs.self.modules.nixos.users-nicole
       inputs.self.modules.nixos.sway
       inputs.self.modules.nixos.display-greetd
-      inputs.hardware.nixosModules.framework-amd-ai-300-series
+      inputs.hardware.nixosModules.framework-12th-gen-intel
       ../../hardware/vermissian.nix
       {
         limonene.machineType = "desktop";

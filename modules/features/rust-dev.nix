@@ -1,6 +1,8 @@
-{ inputs, lib, ... }:
-
-let
+{
+  inputs,
+  lib,
+  ...
+}: let
   rustEnv = pkgs: {
     PKG_CONFIG_PATH = lib.makeSearchPathOutput "dev" "lib/pkgconfig" (with pkgs; [
       openssl
@@ -15,7 +17,7 @@ let
 in {
   # System-level native library deps so -sys crates can find headers/pkg-config
   # from any terminal without a per-project dev shell.
-  flake.modules.nixos.rustDev = { pkgs, ... }: {
+  flake.modules.nixos.rustDev = {pkgs, ...}: {
     environment.systemPackages = with pkgs; [
       openssl.dev
       zlib.dev
@@ -42,10 +44,11 @@ in {
   # picks it up automatically in devShells. To switch this global install to
   # nightly, replace rust-bin.stable.latest.default with
   # pkgs.rust-bin.nightly.latest.default below.
-  flake.modules.homeManager.rustDev = { pkgs, ... }: {
+  flake.modules.homeManager.rustDev = {pkgs, ...}: {
     home.packages = [
       (pkgs.rust-bin.stable.latest.default.override {
-        extensions = [ "rust-src" "rust-analyzer" "clippy" "rustfmt" ];
+        targets = ["wasm32-unknown-unknown"];
+        extensions = ["rust-src" "rust-analyzer" "clippy" "rustfmt"];
       })
       pkgs.cargo-binstall
     ];
