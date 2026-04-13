@@ -66,7 +66,8 @@
       ACTION=="add", SUBSYSTEM=="serio", KERNEL=="serio0", ATTR{power/wakeup}="disabled"
     '';
 
-    virtualisation.docker.enable = true;
+    # virtualisation.docker.enable = true;
+    virtualisation.waydroid.enable = true;
     services.tailscale.enable = true;
 
     networking.networkmanager.enable = true;
@@ -88,7 +89,21 @@
 
     time.timeZone = "America/Denver";
     services.gnome.gnome-keyring.enable = true;
-    services.printing.enable = true;
+
+    # Autodiscover printers
+    services.avahi = {
+      enable = true;
+      nssmdns4 = true;
+      openFirewall = true;
+    };
+
+    services.printing = {
+      enable = true;
+      drivers = with pkgs; [
+        cups-filters
+        cups-browsed
+      ];
+    };
 
     services.pulseaudio.enable = false;
     security.rtkit.enable = true;
