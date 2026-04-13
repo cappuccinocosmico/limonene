@@ -28,7 +28,6 @@
 
       home.packages = with pkgs; [
         nodejs-slim
-        nix-ld
         dconf
         mesa
         libdrm

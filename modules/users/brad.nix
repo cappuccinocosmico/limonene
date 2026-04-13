@@ -1,27 +1,46 @@
-{ inputs, ... }: {
-  flake.modules.nixos.users-brad = { lib, config, pkgs, ... }: {
+{inputs, ...}: {
+  flake.modules.nixos.users-brad = {
+    lib,
+    config,
+    pkgs,
+    ...
+  }: {
     limonene.defaultSession = lib.mkDefault "plasma";
-    nix.settings.trusted-users = [ "brad" ];
+    nix.settings.trusted-users = ["brad"];
 
     users.users.brad = {
       isNormalUser = true;
       description = "Brad";
-      extraGroups = [ "networkmanager" "wheel" "docker" ];
+      extraGroups = ["networkmanager" "wheel" "docker"];
       shell = pkgs.fish;
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaOgK4fO5gTB79Infge2b+31VzXnC23lqV7m5NA+xuz bvenner@proton.me"
       ];
     };
 
-    home-manager.users.brad = { config, ... }: {
-      imports = [ inputs.self.modules.homeManager.userCommon ];
+    home-manager.users.brad = {config, ...}: {
+      imports = [inputs.self.modules.homeManager.userCommon];
 
       home.packages = with pkgs; [
-        nix-ld dconf mesa libdrm
-        otel-desktop-viewer otel-cli imv libsixel
-        pciutils parted exfat pavucontrol xterm
-        networkmanager nettools steam-run dbeaver-bin
-        zed-editor gnucash octaveFull
+        dconf
+        mesa
+        libdrm
+        otel-desktop-viewer
+        otel-cli
+        imv
+        libsixel
+        pciutils
+        parted
+        exfat
+        pavucontrol
+        xterm
+        networkmanager
+        nettools
+        steam-run
+        dbeaver-bin
+        zed-editor
+        gnucash
+        octaveFull
       ];
 
       programs.git = {
@@ -49,10 +68,10 @@
         PNPM_HOME = "$HOME/.binaries/pnpm";
       };
 
-      home.sessionPath = [ "$HOME/.binaries/pnpm" ];
+      home.sessionPath = ["$HOME/.binaries/pnpm"];
 
       xdg = {
-        systemDirs.data = [ "${pkgs.gsettings-desktop-schemas}/share" ];
+        systemDirs.data = ["${pkgs.gsettings-desktop-schemas}/share"];
         userDirs = {
           enable = true;
           createDirectories = true;
