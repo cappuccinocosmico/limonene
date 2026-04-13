@@ -12,6 +12,7 @@
   }: {
     imports = with inputs.self.modules.nixos; [
       rustDev
+      nixld
     ];
     environment.etc."nixos/limonene".source = ../..;
 
@@ -60,7 +61,6 @@
 
     services.atd.enable = true;
     services.fwupd.enable = true;
-    programs.nix-ld.enable = true;
 
     services.udev.extraRules = ''
       ACTION=="add", SUBSYSTEM=="serio", KERNEL=="serio0", ATTR{power/wakeup}="disabled"
