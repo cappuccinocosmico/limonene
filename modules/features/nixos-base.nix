@@ -47,7 +47,17 @@
       pkgs.openssl_3
       pkgs.msr-tools
       pkgs.parted
+      pkgs.emissary
+      pkgs.nix-update
+      pkgs.nixpkgs-review
     ];
+    services.i2pd = {
+      enable = true;
+      bandwidth = 4096; # increase bandwidth limit to 4Mb/s instead of 32kb/s
+      proto.httpProxy.enable = true;
+      proto.http.enable = true;
+      proto.socksProxy.enable = true;
+    };
 
     boot.binfmt.emulatedSystems = ["aarch64-linux"];
     boot.binfmt.registrations."aarch64-linux".fixBinary = true;

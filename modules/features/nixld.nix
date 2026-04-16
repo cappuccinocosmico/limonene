@@ -3,6 +3,9 @@
     programs.nix-ld = {
       enable = true;
       libraries = with pkgs; [
+        # My personal custom stuff:
+        wayland
+
         # My own additions
         xorg.libXcomposite
         xorg.libXtst

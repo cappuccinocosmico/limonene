@@ -23,6 +23,7 @@
           tabliss
         ];
         settings = {
+          "xpinstall.signatures.required" = false;
           "dom.webgpu.enabled" = true;
           "extensions.autoDisableScopes" = 0;
           "extensions.activeThemeID" = "firefox-compact-dark@mozilla.org";
