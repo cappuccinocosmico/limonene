@@ -22,34 +22,34 @@
       inputs.nur.overlays.default
     ];
 
-    environment.systemPackages = [
+    environment.systemPackages = with pkgs; [
       (import ../../helpers/regular-linux-shell.nix {inherit pkgs;})
-      pkgs.libclang
-      pkgs.pkg-config
-      pkgs.openssl
-      pkgs.brightnessctl
-      pkgs.fwupd
-      pkgs.stress
-      pkgs.phoronix-test-suite
-      pkgs.lutris
-      pkgs.winetricks
-      pkgs.wineWow64Packages.stable
-      pkgs.yggdrasil
-      pkgs.python314
-      pkgs.postgresql_17
-      pkgs.nix-ld
-      pkgs.heroic
-      pkgs.feather
-      pkgs.devenv
-      pkgs.gnome-disk-utility
-      pkgs.git
-      pkgs.gcc
-      pkgs.openssl_3
-      pkgs.msr-tools
-      pkgs.parted
-      pkgs.emissary
-      pkgs.nix-update
-      pkgs.nixpkgs-review
+      libclang
+      pkg-config
+      openssl
+      brightnessctl
+      fwupd
+      stress
+      phoronix-test-suite
+      lutris
+      winetricks
+      wineWow64Packages.stable
+      yggdrasil
+      python314
+      postgresql_17
+      nix-ld
+      heroic
+      feather
+      devenv
+      gnome-disk-utility
+      git
+      gcc
+      openssl_3
+      msr-tools
+      parted
+      emissary
+      nix-update
+      nixpkgs-review
     ];
     services.i2pd = {
       enable = true;
