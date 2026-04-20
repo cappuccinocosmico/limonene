@@ -3,6 +3,8 @@
     services.kdeconnect.enable = true;
 
     home.packages = with pkgs; [
+      # Android debugger:
+      android-tools
       # Star shit
       stellarium
 
