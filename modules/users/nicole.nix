@@ -66,7 +66,10 @@
         ziina-sshget = ''set -x XDG_RUNTIME_DIR /run/user/1000 && set -x WAYLAND_DISPLAY wayland-1 && echo "ssh -p 2222 $ZELLIJ_SESSION_NAME@apiarist" | tee /dev/tty | wl-copy'';
       };
 
+      sops.defaultSopsFile = ./secrets/nicole-secrets.yaml;
+      sops.age.keyFile = "/home/nicole/.config/sops/age/keys.txt";
       home.sessionVariables = {
+        # OPENROUTER_API_KEY = config.sops.secrets.openrouter_api_key;
         NIXPKGS_ALLOW_UNFREE = "1";
         SHELL = "${pkgs.fish}/bin/fish";
         GTK_THEME = "Arc-Dark";
