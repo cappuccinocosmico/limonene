@@ -16,8 +16,12 @@
       mode = "0600";
     };
 
+    # Since new OSS models are coming out so frequently I am going to switch over to a regular install for this.
+    home.sessionPath = [
+      "$HOME/.opencode/bin"
+    ];
     programs.opencode = {
-      enable = true;
+      enable = false;
       settings = {
         autoupdate = false;
         autoshare = false;
