@@ -87,7 +87,7 @@ in {
         treesitter.enable = true;
       };
 
-      ts = {
+      typescript = {
         enable = true;
         lsp.enable = true;
         treesitter.enable = true;
@@ -100,7 +100,7 @@ in {
       enable = true;
       formatOnSave = true;
       inlayHints.enable = true;
-      harper-ls.enable = true;
+      presets.harper.enable = true;
       lightbulb.enable = true;
       lspSignature.enable = true;
       lspkind.enable = true;

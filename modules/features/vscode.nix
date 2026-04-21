@@ -2,11 +2,11 @@
   flake.modules.homeManager.vscode = { pkgs, ... }: {
     programs.vscode = {
       enable = true;
-      userSettings = {
+      profiles.default.userSettings = {
         "editor.formatOnSave" = false;
         "workbench.colorTheme" = "Dracula Theme";
       };
-      extensions = with pkgs.vscode-marketplace; [
+      profiles.default.extensions = with pkgs.vscode-marketplace; [
         dracula-theme.theme-dracula
         jnoortheen.nix-ide
         mechatroner.rainbow-csv

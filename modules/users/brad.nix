@@ -74,6 +74,7 @@
         systemDirs.data = ["${pkgs.gsettings-desktop-schemas}/share"];
         userDirs = {
           enable = true;
+          setSessionVariables = true;
           createDirectories = true;
           music = "${config.home.homeDirectory}/Music";
           download = "${config.home.homeDirectory}/Downloads";
