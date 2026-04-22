@@ -65,11 +65,6 @@
           end
         '';
       };
-      interactiveShellInit = ''
-        if test -f "$HOME/.config/sops-nix/secrets/openrouter_api_key"
-          set -gx OPENROUTER_API_KEY (cat "$HOME/.config/sops-nix/secrets/openrouter_api_key")
-        end
-      '';
     };
   };
 }
