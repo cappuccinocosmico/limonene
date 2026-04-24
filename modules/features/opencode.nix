@@ -33,15 +33,16 @@
     home.sessionPath = [
       "$HOME/.opencode/bin"
     ];
-    programs.opencode = {
-      enable = false;
-      settings = {
-        autoupdate = false;
-        autoshare = false;
-        provider.openrouter.models = {
-          "nvidia/nemotron-3-nano-30b-a3b" = {};
-        };
-      };
-    };
+
+    # programs.opencode = {
+    #   enable = false;
+    #   settings = {
+    #     autoupdate = false;
+    #     autoshare = false;
+    #     provider.openrouter.models = {
+    #       "nvidia/nemotron-3-nano-30b-a3b" = {};
+    #     };
+    #   };
+    # };
   };
 }
