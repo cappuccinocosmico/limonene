@@ -14,10 +14,17 @@
       inputs.self.modules.nixos.mediaServer
       inputs.vpn-confinement.nixosModules.default
       ../../hardware/amon-sul.nix
-      {
+      ({ pkgs, ... }: {
         limonene.machineType = "server";
 
         networking.hostName = "amon-sul";
+
+        networking.interfaces.enp11s0.useDHCP = false;
+        networking.interfaces.enp11s0.ipv4.addresses = [
+          { address = "192.168.0.7"; prefixLength = 24; }
+        ];
+        networking.defaultGateway = "192.168.0.1";
+        networking.nameservers = [ "8.8.8.8" "1.1.1.1" ];
 
         boot.loader.systemd-boot.enable = true;
         boot.loader.efi.canTouchEfiVariables = true;
@@ -35,7 +42,12 @@
           LC_TIME = "en_US.UTF-8";
         };
 
+        users.groups.brad = {};
+        users.users.brad.group = "brad";
         users.users.nicole.extraGroups = [ "jellyfin" ];
+        users.users.nicole.openssh.authorizedKeys.keys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKdPzSlJ3TCzPy7R2s2OOBJbBb+U5NY8dwMlGH9wm4Ot nicole@apiarist"
+        ];
         users.users.brad.extraGroups = [ "jellyfin" ];
 
         fileSystems."/backup" = {
@@ -52,6 +64,7 @@
 
         fileSystems."/export/media" = {
           device = "/media";
+          fsType = "none";
           options = [ "bind" ];
         };
 
@@ -90,8 +103,21 @@
         networking.firewall.allowedTCPPorts = [ 111 2049 4000 4001 4002 9091 20048 51413 ];
         networking.firewall.allowedUDPPorts = [ 111 2049 4000 4001 4002 9091 20048 51413 ];
 
+        services.xserver.enable = true;
+        services.resolved.enable = true;
+
+        environment.variables.EDITOR = "nvim";
+        environment.systemPackages = with pkgs; [
+          zellij
+          tmux
+          neovim
+          wget
+          btop
+          ripgrep-all
+        ];
+
         system.stateVersion = "24.11";
-      }
+      })
     ];
     specialArgs = { inherit inputs; };
   };
