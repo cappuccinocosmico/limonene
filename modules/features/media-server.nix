@@ -1,6 +1,7 @@
 {
   inputs,
   lib,
+  config,
   ...
 }: {
   flake.modules.nixos.mediaServer = {pkgs, ...}: {
