@@ -1,10 +1,11 @@
-{
-  inputs,
-  lib,
-  config,
-  ...
-}: {
-  flake.modules.nixos.mediaServer = {pkgs, ...}: {
+{...}: {
+  flake.modules.nixos.mediaServer = {
+    pkgs,
+    config,
+    inputs,
+    lib,
+    ...
+  }: {
     virtualisation.docker.enable = lib.mkForce false;
 
     services.jellyfin = {
