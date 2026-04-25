@@ -77,13 +77,13 @@
         auto_https off
       '';
       virtualHosts = {
-        "jellyfin.amon-sul.internal".extraConfig = ''
+        "http://jellyfin.amon-sul.internal".extraConfig = ''
           reverse_proxy localhost:8096
         '';
-        "cryptpad.amon-sul.internal".extraConfig = ''
+        "http://cryptpad.amon-sul.internal".extraConfig = ''
           reverse_proxy localhost:9000
         '';
-        "transmission.amon-sul.internal".extraConfig = ''
+        "http://transmission.amon-sul.internal".extraConfig = ''
           reverse_proxy localhost:9091
         '';
       };
