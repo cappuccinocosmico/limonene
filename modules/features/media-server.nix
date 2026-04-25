@@ -73,23 +73,20 @@
 
     services.caddy = {
       enable = true;
-      extraConfig = ''
-        {
-          auto_https off
-        }
-
-        jellyfin.amon-sul.internal {
-          reverse_proxy localhost:8096
-        }
-
-        cryptpad.amon-sul.internal {
-          reverse_proxy localhost:9000
-        }
-
-        transmission.amon-sul.internal {
-          reverse_proxy localhost:9091
-        }
+      globalConfig = ''
+        auto_https off
       '';
+      virtualHosts = {
+        "jellyfin.amon-sul.internal".extraConfig = ''
+          reverse_proxy localhost:8096
+        '';
+        "cryptpad.amon-sul.internal".extraConfig = ''
+          reverse_proxy localhost:9000
+        '';
+        "transmission.amon-sul.internal".extraConfig = ''
+          reverse_proxy localhost:9091
+        '';
+      };
     };
 
     networking.firewall.allowedTCPPorts = [53 80 111 2049 4000 4001 4002 443 20048 51413];
