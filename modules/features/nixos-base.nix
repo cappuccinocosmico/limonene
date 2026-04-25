@@ -62,8 +62,6 @@
     boot.binfmt.emulatedSystems = ["aarch64-linux"];
     boot.binfmt.registrations."aarch64-linux".fixBinary = true;
 
-    services.throttled.enable = true;
-
     services.openssh = {
       enable = true;
       settings.PasswordAuthentication = false;

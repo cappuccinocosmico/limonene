@@ -21,6 +21,8 @@
 
         home-manager.users.nicole.imports = [inputs.self.modules.homeManager.nicole-desktop];
 
+        # Prevent overheating on framework
+        services.throttled.enable = true;
         networking.hostName = "vermissian";
 
         boot.loader.systemd-boot.enable = true;
