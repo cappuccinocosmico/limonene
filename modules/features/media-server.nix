@@ -10,22 +10,23 @@
 
     services.jellyfin = {
       enable = true;
-      openFirewall = true;
+      openFirewall = false;
       user = "jellyfin";
     };
     services.cryptpad = {
       enable = true;
       settings = {
         httpPort = 9000;
-        httpAddress = "0.0.0.0";
+        httpAddress = "127.0.0.1";
         httpUnsafeOrigin = "http://localhost:${toString config.services.cryptpad.settings.httpPort}";
         httpSafeOrigin = "http://localhost:${toString config.services.cryptpad.settings.httpPort}";
       };
     };
+
     vpnNamespaces.wg = {
       enable = true;
       wireguardConfigFile = "/etc/nixos/secrets/privado.den-017.conf";
-      accessibleFrom = ["127.0.0.1" "192.168.0.0/16"];
+      accessibleFrom = ["127.0.0.1"];
       portMappings = [
         {
           from = 9091;
@@ -48,20 +49,51 @@
     services.transmission = {
       enable = true;
       package = inputs.nixpkgs.legacyPackages.x86_64-linux.transmission_4;
-      openRPCPort = true;
+      openRPCPort = false;
       openPeerPorts = true;
       user = "jellyfin";
       group = "jellyfin";
       settings = {
         rpc-bind-address = "192.168.15.1";
-        rpc-whitelist = "192.168.15.5,127.0.0.1,192.168.0.*,192.168.68.*";
+        rpc-whitelist = "127.0.0.1";
         peer-port = 51413;
         download-dir = "/media/entertain";
       };
     };
 
-    networking.firewall.allowedTCPPorts = [111 2049 4000 4001 4002 9091 20048 51413 9000];
-    networking.firewall.allowedUDPPorts = [111 2049 4000 4001 4002 9091 20048 51413 9000];
+    services.dnsmasq = {
+      enable = true;
+      settings = {
+        interface = "enp11s0";
+        bind-interfaces = true;
+        server = ["8.8.8.8" "1.1.1.1"];
+        address = "/amon-sul.internal/192.168.0.7";
+      };
+    };
+
+    services.caddy = {
+      enable = true;
+      extraConfig = ''
+        {
+          auto_https off
+        }
+
+        jellyfin.amon-sul.internal {
+          reverse_proxy localhost:8096
+        }
+
+        cryptpad.amon-sul.internal {
+          reverse_proxy localhost:9000
+        }
+
+        transmission.amon-sul.internal {
+          reverse_proxy localhost:9091
+        }
+      '';
+    };
+
+    networking.firewall.allowedTCPPorts = [53 80 111 2049 4000 4001 4002 443 20048 51413];
+    networking.firewall.allowedUDPPorts = [53 80 111 2049 4000 4001 4002 443 20048 51413];
     users.groups.jellyfin = {};
     users.users.jellyfin = {
       isSystemUser = true;

@@ -76,7 +76,6 @@
         '';
 
         services.xserver.enable = true;
-        services.resolved.enable = true;
 
         environment.variables.EDITOR = "nvim";
         environment.systemPackages = with pkgs; [
