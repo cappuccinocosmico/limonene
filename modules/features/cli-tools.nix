@@ -1,5 +1,5 @@
-{ ... }: {
-  flake.modules.homeManager.cliTools = { pkgs, ... }: {
+{...}: {
+  flake.modules.homeManager.cliTools = {pkgs, ...}: {
     home.packages = with pkgs; [
       moonlight-qt
       sops
@@ -39,7 +39,6 @@
       git-crypt
 
       # Server web browser
-      elinks
       git
       dig
       hugo

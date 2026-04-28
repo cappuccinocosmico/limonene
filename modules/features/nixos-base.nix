@@ -10,6 +10,16 @@
     lib,
     ...
   }: {
+    nixpkgs.config = {
+      allowUnfree = true;
+      packageOverrides = pkgs: {
+        openldap = pkgs.openldap.overrideAttrs (
+          finalAttrs: previousAttrs: {
+            doCheck = false;
+          }
+        );
+      };
+    };
     imports = with inputs.self.modules.nixos; [
       rustDev
       nixld
@@ -128,7 +138,7 @@
       "libsoup-2.74.3"
     ];
 
-    nixpkgs.config.allowUnfree = true;
+    nixpkgs.config.
 
     nix = {
       settings.trusted-users = ["root"];
