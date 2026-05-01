@@ -10,15 +10,19 @@
     lib,
     ...
   }: {
-    nixpkgs.config = {
-      allowUnfree = true;
-      packageOverrides = pkgs: {
-        # Disable since it was triggering a fuckton of rebuilds.
-        # openldap = pkgs.openldap.overrideAttrs (
-        #   finalAttrs: previousAttrs: {
-        #     doCheck = false;
-        #   }
-        # );
+    nixpkgs = {
+      overlays = [
+        inputs.rust-overlay.overlays.default
+        inputs.nix-vscode-extensions.overlays.default
+        inputs.nur.overlays.default
+        (_: prev: {
+          openldap = prev.openldap.overrideAttrs {
+            doCheck = !prev.stdenv.hostPlatform.isi686;
+          };
+        })
+      ];
+      config = {
+        allowUnfree = true;
       };
     };
     imports = with inputs.self.modules.nixos; [
@@ -26,12 +30,6 @@
       nixld
     ];
     environment.etc."nixos/limonene".source = ../..;
-
-    nixpkgs.overlays = [
-      inputs.rust-overlay.overlays.default
-      inputs.nix-vscode-extensions.overlays.default
-      inputs.nur.overlays.default
-    ];
 
     environment.systemPackages = with pkgs; [
       (import ../../helpers/regular-linux-shell.nix {inherit pkgs;})
@@ -86,7 +84,7 @@
     '';
 
     # virtualisation.docker.enable = true;
-    virtualisation.waydroid.enable = true;
+    # virtualisation.waydroid.enable = true;
     services.tailscale.enable = true;
 
     networking.networkmanager.enable = true;
