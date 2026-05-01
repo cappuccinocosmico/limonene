@@ -13,11 +13,12 @@
     nixpkgs.config = {
       allowUnfree = true;
       packageOverrides = pkgs: {
-        openldap = pkgs.openldap.overrideAttrs (
-          finalAttrs: previousAttrs: {
-            doCheck = false;
-          }
-        );
+        # Disable since it was triggering a fuckton of rebuilds.
+        # openldap = pkgs.openldap.overrideAttrs (
+        #   finalAttrs: previousAttrs: {
+        #     doCheck = false;
+        #   }
+        # );
       };
     };
     imports = with inputs.self.modules.nixos; [
