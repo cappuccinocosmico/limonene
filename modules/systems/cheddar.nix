@@ -1,4 +1,4 @@
-{ inputs, ... }: {
+{inputs, ...}: {
   flake.darwinConfigurations.cheddar = inputs.nix-darwin.lib.darwinSystem {
     system = "aarch64-darwin";
     modules = [
@@ -29,16 +29,7 @@
 
         system.primaryUser = "nicole";
 
-        nix.settings = {
-          extra-substituters = [
-            "https://devenv.cachix.org"
-          ];
-          extra-trusted-public-keys = [
-            "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
-          ];
-        };
-
-        home-manager.users.nicole = { pkgs, ... }: {
+        home-manager.users.nicole = {pkgs, ...}: {
           imports = [
             inputs.self.modules.homeManager.userCommon
             inputs.self.modules.homeManager.opencode
@@ -84,6 +75,6 @@
         system.stateVersion = 5;
       }
     ];
-    specialArgs = { inherit inputs; };
+    specialArgs = {inherit inputs;};
   };
 }

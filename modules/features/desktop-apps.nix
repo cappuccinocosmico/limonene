@@ -32,7 +32,6 @@
       nautilus
       # Audio
       vlc
-      mpv
       easyeffects
       # Recording
       obs-studio

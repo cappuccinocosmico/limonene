@@ -10,6 +10,14 @@
     lib,
     ...
   }: {
+    nix.settings = {
+      extra-substituters = [
+        "https://devenv.cachix.org"
+      ];
+      extra-trusted-public-keys = [
+        "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
+      ];
+    };
     nixpkgs = {
       overlays = [
         inputs.rust-overlay.overlays.default
@@ -28,6 +36,7 @@
     imports = with inputs.self.modules.nixos; [
       rustDev
       nixld
+      inputs.nix-index-database.nixosModules.default
     ];
     environment.etc."nixos/limonene".source = ../..;
 
@@ -121,7 +130,7 @@
         cups-browsed
       ];
     };
-
+    services.upower.enable = true;
     services.pulseaudio.enable = false;
     security.rtkit.enable = true;
     services.pipewire = {
@@ -133,11 +142,11 @@
 
     programs.fish.enable = true;
 
+    programs.nix-index-database.comma.enable = true;
+
     nixpkgs.config.permittedInsecurePackages = [
       "libsoup-2.74.3"
     ];
-
-    nixpkgs.config.
 
     nix = {
       settings.trusted-users = ["root"];
