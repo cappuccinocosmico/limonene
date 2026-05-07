@@ -3,6 +3,8 @@
     services.kdeconnect.enable = true;
 
     home.packages = with pkgs; [
+      # 3d Printing
+      orca-slicer
       # Android debugger:
       android-tools
       # Star shit
