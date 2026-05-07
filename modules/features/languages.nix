@@ -1,9 +1,12 @@
-{ ... }: {
-  flake.modules.homeManager.languages = { pkgs, ... }: {
+{...}: {
+  flake.modules.homeManager.languages = {pkgs, ...}: {
     home.packages = with pkgs; [
       # JavaScript/TypeScript
       tailwindcss
       pnpm
+
+      # Julia
+      julia
 
       # Python
       uv
