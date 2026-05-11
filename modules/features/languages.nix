@@ -1,6 +1,9 @@
 {...}: {
   flake.modules.homeManager.languages = {pkgs, ...}: {
     home.packages = with pkgs; [
+      # nix language development stuff:
+      mcp-nixos
+
       # JavaScript/TypeScript
       tailwindcss
       pnpm

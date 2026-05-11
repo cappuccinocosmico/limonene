@@ -46,7 +46,7 @@ in {
   # pkgs.rust-bin.nightly.latest.default below.
   flake.modules.homeManager.rustDev = {pkgs, ...}: {
     home.packages = [
-      (pkgs.rust-bin.stable.latest.default.override {
+      (pkgs.rust-bin.nightly.latest.default.override {
         targets = ["wasm32-unknown-unknown"];
         extensions = ["rust-src" "rust-analyzer" "clippy" "rustfmt"];
       })

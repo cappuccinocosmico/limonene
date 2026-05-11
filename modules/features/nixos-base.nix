@@ -87,6 +87,8 @@
 
     services.atd.enable = true;
     services.fwupd.enable = true;
+    # services.mainsail.enable = true;
+    # services.moonraker.enable = true;
 
     services.udev.extraRules = ''
       ACTION=="add", SUBSYSTEM=="serio", KERNEL=="serio0", ATTR{power/wakeup}="disabled"

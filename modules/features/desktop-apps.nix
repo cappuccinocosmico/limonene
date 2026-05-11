@@ -42,7 +42,9 @@
       signal-desktop
       slack
       zoom-us
-      fractal # matrix client
+      fractal # matrix
+      element-desktop # Even more matrix
+      cinny-desktop # Even Even More Matrix
       # Networking Stuff
       syncthing
       warp
