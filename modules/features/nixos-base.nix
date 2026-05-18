@@ -115,6 +115,7 @@
       '';
     };
 
+    # time.timeZone = "America/Los_Angeles";
     time.timeZone = "America/Denver";
     services.gnome.gnome-keyring.enable = true;
 

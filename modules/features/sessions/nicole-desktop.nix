@@ -9,6 +9,7 @@
       inputs.self.modules.homeManager.vscode
       inputs.self.modules.homeManager.firefox
       inputs.self.modules.homeManager.productivity
+      inputs.self.modules.homeManager.githubNotifications
     ];
 
     home.sessionVariables.TERMINAL = "kitty";
