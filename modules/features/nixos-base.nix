@@ -23,11 +23,11 @@
         inputs.rust-overlay.overlays.default
         inputs.nix-vscode-extensions.overlays.default
         inputs.nur.overlays.default
-        # (_: prev: {
-        #   openldap = prev.openldap.overrideAttrs {
-        #     doCheck = !prev.stdenv.hostPlatform.isi686;
-        #   };
-        # })
+        (_: prev: {
+          openldap = prev.openldap.overrideAttrs {
+            doCheck = !prev.stdenv.hostPlatform.isi686;
+          };
+        })
       ];
       config = {
         allowUnfree = true;
@@ -105,7 +105,7 @@
 
     services.resolved = {
       enable = true;
-      settings.Resolve.DNS = ["1.1.1.1" "1.0.0.1"];
+      settings.Resolve.DNS = [ "1.1.1.1" "1.0.0.1" ];
     };
 
     hardware.enableAllFirmware = true;
