@@ -48,6 +48,7 @@
             {app_id = "thunderbird";}
           ];
           "8" = [
+            {class = "element-desktop";}
             {class = "easyeffects";}
             {app_id = "com.github.wwmm.easyeffects";}
           ];
@@ -64,9 +65,10 @@
           {command = "${pkgs.wl-clipboard-x11}/bin/wl-clipboard-x11";}
           {command = "swaymsg 'workspace 1; exec kitty --single-instance'";}
           {command = "swaymsg 'workspace 5; exec firefox'";}
+          {command = "swaymsg 'workspace 8; exec easyeffects'";}
+          {command = "swaymsg 'workspace 8; exec element-desktop'";}
           {command = "swaymsg 'workspace 9; exec signal-desktop'";}
           {command = "swaymsg 'workspace 9; exec thunderbird'";}
-          {command = "swaymsg 'workspace 9; exec easyeffects'";}
           {command = "swaymsg 'workspace 10; exec vlc'";}
         ];
         modes = {
@@ -165,6 +167,10 @@
           "window-rewrite" = {
             "class<kitty>" = "";
             "class<foot>" = "";
+            "class<element>" = "󰘨";
+            "class<Element>" = "󰘨";
+            "class<thunderbird>" = "";
+            "class<Thunderbird>" = "";
             "class<firefox>" = "󰈹";
             "class<Firefox>" = "󰈹";
             "class<signal>" = "󰭹";

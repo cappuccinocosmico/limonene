@@ -24,7 +24,7 @@
 
       # Terminal Utils
       gh # Github CLI
-      # yt-dlp
+      yt-dlp
       age
       btop
       zip
