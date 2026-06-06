@@ -40,6 +40,8 @@
           "10" = [
             {class = "vlc";}
             {app_id = "vlc";}
+            {class = "electron";}
+            {app_id = "electron";}
           ];
           "9" = [
             {class = "Signal";}
@@ -48,7 +50,6 @@
             {app_id = "thunderbird";}
           ];
           "8" = [
-            {class = "element-desktop";}
             {class = "easyeffects";}
             {app_id = "com.github.wwmm.easyeffects";}
           ];
@@ -66,9 +67,9 @@
           {command = "swaymsg 'workspace 1; exec kitty --single-instance'";}
           {command = "swaymsg 'workspace 5; exec firefox'";}
           {command = "swaymsg 'workspace 8; exec easyeffects'";}
-          {command = "swaymsg 'workspace 8; exec element-desktop'";}
-          {command = "swaymsg 'workspace 9; exec signal-desktop'";}
+          {command = "swaymsg 'workspace 9; exec element-desktop'";}
           {command = "swaymsg 'workspace 9; exec thunderbird'";}
+          {command = "swaymsg 'workspace 10; exec signal-desktop'";}
           {command = "swaymsg 'workspace 10; exec vlc'";}
         ];
         modes = {
@@ -112,6 +113,7 @@
             "${mod}+Right" = "workspace next";
             "${mod}+Left" = "workspace prev";
             "${mod}+p" = "exec wlogout";
+            "${mod}+Shift+p" = "exec systemctl suspend";
             "Ctrl+Shift+${mod}+v" = "exec clipboard-type";
             "${mod}+g" = "exec ${config.limonene.productivity.productivityBin}/bin/productivity goals toggle-interactive";
             "${mod}+Shift+g" = "exec kitty --class daily-goals-add -e ${config.limonene.productivity.productivityBin}/bin/productivity goals add-interactive";
@@ -132,6 +134,8 @@
         for_window [app_id="daily-ritual"] fullscreen enable
         for_window [app_id="daily-goals-add"] floating enable, resize set 800 100
         for_window [app_id="pomodoro-panel"] floating enable, resize set 700 350
+        exec ${pkgs.dbus}/bin/dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
+        exec ${pkgs.gnome-keyring}/bin/gnome-keyring-daemon --start --components=secrets
         exec mako
         exec random-wallpaper
 
@@ -167,8 +171,14 @@
           "window-rewrite" = {
             "class<kitty>" = "";
             "class<foot>" = "";
-            "class<element>" = "󰘨";
+            "class<element-desktop>" = "󰘨";
+            "class<Element Desktop>" = "󰘨";
             "class<Element>" = "󰘨";
+            "class<element>" = "󰘨";
+            "class<electron>" = "󰘨";
+            "class<minecraft>" = "󰍳";
+            "class<java>" = "󰍳";
+            "class<Minecraft>" = "󰍳";
             "class<thunderbird>" = "";
             "class<Thunderbird>" = "";
             "class<firefox>" = "󰈹";

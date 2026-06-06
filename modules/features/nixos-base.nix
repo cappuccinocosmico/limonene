@@ -126,6 +126,7 @@
 
     # time.timeZone = "America/Los_Angeles";
     time.timeZone = "America/Denver";
+    programs.dconf.enable = true;
     services.gnome.gnome-keyring.enable = true;
 
     # Autodiscover printers

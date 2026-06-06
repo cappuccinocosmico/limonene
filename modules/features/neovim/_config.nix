@@ -29,6 +29,17 @@
       hash = "sha256-RLwxyGRmU1B8r6xO1YObF8qlNEj7qitNUArUlw092V8=";
     };
   };
+
+  # Build wpm.nvim — typing speed feedback while writing
+  wpm-nvim = pkgs.vimUtils.buildVimPlugin {
+    name = "wpm-nvim";
+    src = pkgs.fetchFromGitHub {
+      owner = "shasherazi";
+      repo = "wpm-nvim";
+      rev = "main";
+      hash = "sha256-di235c3d1P2p2wEdLnf0KbSGfLceljKDoCQekzkR9aA=";
+    };
+  };
 in {
   vim = {
     # Basic configuration
@@ -247,6 +258,13 @@ in {
             transparent_background = true,
           })
           vim.cmd('colorscheme neopywal')
+        '';
+      };
+
+      wpm = {
+        package = wpm-nvim;
+        setup = ''
+          require('wpm').setup()
         '';
       };
 

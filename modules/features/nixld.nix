@@ -121,6 +121,7 @@
         # for blender
         libxkbcommon
 
+        libsecret # For Electron apps (Element, etc.)
         libxcrypt-legacy # For natron
         libGLU # For natron
 

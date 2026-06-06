@@ -8,6 +8,8 @@
     services.displayManager.sddm.enable = lib.mkForce false;
     environment.pathsToLink = [ "/share/wayland-sessions" ];
 
+    security.pam.services.greetd.enableGnomeKeyring = true;
+
     services.greetd = {
       enable = true;
       settings =
