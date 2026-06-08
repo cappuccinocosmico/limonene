@@ -114,6 +114,7 @@
             "${mod}+Left" = "workspace prev";
             "${mod}+p" = "exec wlogout";
             "${mod}+Shift+p" = "exec systemctl suspend";
+            "${mod}+Shift+h" = "exec systemctl hibernate";
             "Ctrl+Shift+${mod}+v" = "exec clipboard-type";
             "${mod}+g" = "exec ${config.limonene.productivity.productivityBin}/bin/productivity goals toggle-interactive";
             "${mod}+Shift+g" = "exec kitty --class daily-goals-add -e ${config.limonene.productivity.productivityBin}/bin/productivity goals add-interactive";
