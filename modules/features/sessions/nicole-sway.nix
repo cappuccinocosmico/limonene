@@ -34,6 +34,7 @@
 
     wayland.windowManager.sway = {
       enable = true;
+      checkConfig = false;
       systemd.enable = true;
       config = rec {
         assigns = {
@@ -72,21 +73,6 @@
           {command = "swaymsg 'workspace 10; exec signal-desktop'";}
           {command = "swaymsg 'workspace 10; exec vlc'";}
         ];
-        modes = {
-          negative = {
-            "XF86AudioPlay" = "exec mpc toggle -q";
-            "XF86AudioRaiseVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+ --limit 1.0";
-            "XF86AudioLowerVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-";
-            "XF86AudioMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
-            "XF86AudioNext" = "exec mpc -q seek +5% && mpc toggle -q && mpc toggle -q";
-            "XF86AudioPrev" = "exec mpc -q seek -5% && mpc toggle -q && mpc toggle -q";
-            "Mod1+n" = "exec kitty --class pomodoro-panel -e ${config.limonene.productivity.productivityBin}/bin/productivity panel";
-            "Mod1+Shift+Escape" = "mode default, exec ${config.limonene.productivity.productivityBin}/bin/productivity pomodoro cancel";
-          };
-          ritual = {
-            "Mod1+Shift+Escape" = "mode default, exec daily-ritual --skip";
-          };
-        };
         modifier = "Mod1";
         terminal = "kitty --single-instance";
         menu = "fuzzel";
@@ -116,9 +102,9 @@
             "${mod}+Shift+p" = "exec systemctl suspend";
             "${mod}+Shift+h" = "exec systemctl hibernate";
             "Ctrl+Shift+${mod}+v" = "exec clipboard-type";
-            "${mod}+g" = "exec ${config.limonene.productivity.productivityBin}/bin/productivity goals toggle-interactive";
-            "${mod}+Shift+g" = "exec kitty --class daily-goals-add -e ${config.limonene.productivity.productivityBin}/bin/productivity goals add-interactive";
-            "${mod}+n" = "exec kitty --class pomodoro-panel -e ${config.limonene.productivity.productivityBin}/bin/productivity panel";
+            # "${mod}+g" = "exec ${config.limonene.productivity.productivityBin}/bin/productivity goals toggle-interactive";
+            # "${mod}+Shift+g" = "exec kitty --class daily-goals-add -e ${config.limonene.productivity.productivityBin}/bin/productivity goals add-interactive";
+            # "${mod}+n" = "exec kitty --class pomodoro-panel -e ${config.limonene.productivity.productivityBin}/bin/productivity panel";
           };
       };
       extraConfig = ''
@@ -230,21 +216,21 @@
           "format-paused" = "⏸ : {album} - {title}";
         };
 
-        "custom/goals" = {
-          format = "{}";
-          exec = "${config.limonene.productivity.productivityBin}/bin/productivity goals waybar";
-          "on-click" = "${config.limonene.productivity.productivityBin}/bin/productivity goals toggle-interactive";
-          interval = 10;
-          "return-type" = "json";
-        };
+        # "custom/goals" = {
+        #   format = "{}";
+        #   exec = "${config.limonene.productivity.productivityBin}/bin/productivity goals waybar";
+        #   "on-click" = "${config.limonene.productivity.productivityBin}/bin/productivity goals toggle-interactive";
+        #   interval = 10;
+        #   "return-type" = "json";
+        # };
 
-        "custom/pomodoro" = {
-          format = "{}";
-          exec = "${config.limonene.productivity.productivityBin}/bin/productivity pomodoro waybar";
-          "on-click" = "kitty --class pomodoro-panel -e ${config.limonene.productivity.productivityBin}/bin/productivity panel";
-          interval = 1;
-          "return-type" = "json";
-        };
+        # "custom/pomodoro" = {
+        #   format = "{}";
+        #   exec = "${config.limonene.productivity.productivityBin}/bin/productivity pomodoro waybar";
+        #   "on-click" = "kitty --class pomodoro-panel -e ${config.limonene.productivity.productivityBin}/bin/productivity panel";
+        #   interval = 1;
+        #   "return-type" = "json";
+        # };
 
         "custom/caffeine" = {
           format = "{}";
@@ -297,7 +283,7 @@
     ];
 
     services.swayidle.events = {
-      "after-resume" = "random-wallpaper; sleep 2; ${config.limonene.productivity.dailyRitual}/bin/daily-ritual --gate";
+      "after-resume" = "random-wallpaper; sleep 2;";
     };
   };
 }

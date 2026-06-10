@@ -13,7 +13,6 @@
 
       # Python
       uv
-      pipx
       black
       prettierd
       pyright

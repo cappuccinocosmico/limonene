@@ -25,7 +25,7 @@
           dearrow
           leechblock-ng
           # monochromate
-          tabliss
+          # tabliss
         ];
         settings = {
           "xpinstall.signatures.required" = false;
