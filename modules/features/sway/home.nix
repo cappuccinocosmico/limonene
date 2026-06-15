@@ -79,6 +79,8 @@
       ];
     };
 
+    services.polkit-gnome.enable = true;
+
     systemd.user.targets.sway-session = {
       Unit = {
         Description = "sway compositor session";

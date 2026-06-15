@@ -98,6 +98,11 @@ in {
         treesitter.enable = true;
       };
 
+      openscad = {
+        enable = true;
+        lsp.enable = true;
+      };
+
       typescript = {
         enable = true;
         lsp.enable = true;
@@ -140,6 +145,7 @@ in {
     treesitter = {
       enable = true;
       fold = true;
+      grammars = [pkgs.tree-sitter-grammars.tree-sitter-openscad];
     };
 
     # Snacks.nvim utilities including file explorer

@@ -3,6 +3,8 @@
     services.kdeconnect.enable = true;
 
     home.packages = with pkgs; [
+      popsicle
+      impression
       # 3d Printing & CAD
       orca-slicer
       freecad
@@ -53,6 +55,7 @@
       # Clipboard tools for Wine/Wayland integration
       wl-clipboard-x11 # provides xclip compatibility for Wine apps
       # Gnome apps
+      gnome-sudoku
       baobab # disk usage analyzer
       komikku # ebook reader
       gnome-font-viewer
