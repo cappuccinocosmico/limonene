@@ -32,5 +32,17 @@
     home.sessionPath = [
       "$HOME/.opencode/bin"
     ];
+
+    # Trial-and-error opencode provider config.
+    xdg.configFile."opencode/opencode.json".text = builtins.toJSON {
+      "$schema" = "https://opencode.ai/config.json";
+      provider = {
+        go = {
+          options = {
+            apiKey = "{env:OPENCODE_ZEN_API_KEY}";
+          };
+        };
+      };
+    };
   };
 }
