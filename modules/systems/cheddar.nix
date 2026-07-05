@@ -37,6 +37,7 @@
         system.primaryUser = "nicole";
 
         home-manager.useGlobalPkgs = true;
+        home-manager.backupFileExtension = "backup";
 
         home-manager.users.nicole = {pkgs, ...}: {
           imports = [
