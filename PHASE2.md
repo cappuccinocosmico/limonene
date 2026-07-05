@@ -4,11 +4,31 @@ This document describes the steps to finish the brad multi-user setup after
 Phase 1 has been built and activated. Phase 1 installs `sops` (via
 `cliTools`) so that you can create the encrypted secrets file.
 
-> **Note:** As of the latest commit on the `add-brad-to-cheddar` branch,
-> `modules/features/opencode-brad.nix` is already created and
-> `modules/users/brad-darwin.nix` already imports it. `secrets/brad-secrets.yaml`
-> also exists with a placeholder value. You only need to replace the placeholder
-> with your real secret (Step 1) and rebuild (Step 4).
+## Current status
+
+On branch `add-brad-to-cheddar`, the following are already done:
+
+- `modules/features/opencode-brad.nix` exists and defines `OPENCODE_ZEN_API_KEY`
+  plus `~/.config/opencode/opencode.json` with the `go` provider (trial-and-error).
+- `modules/users/brad-darwin.nix` imports `opencode-brad`.
+- `secrets/brad-secrets.yaml` exists and is encrypted, but contains the
+  placeholder value `REPLACE_ME`.
+
+The remaining work is:
+
+1. Replace `REPLACE_ME` with the real `OPENCODE_ZEN_API_KEY`.
+2. Run `darwin-rebuild switch --flake ~/limonene#cheddar`.
+3. Test `opencode go`.
+4. If `go` is not the correct provider name, edit the provider key in
+   `modules/features/opencode-brad.nix` and rebuild.
+
+## Key model
+
+The repo uses a **one-key-per-user** model. `.sops.yaml` encrypts all
+`secrets/*.yaml` files for both nicole's and brad's age public keys. Each user
+keeps their private key on their own machines; no private keys need to be moved
+between machines. If you later want per-machine keys, update `.sops.yaml` with
+machine-specific recipients.
 
 ## Prerequisites
 
@@ -50,10 +70,11 @@ sops secrets/brad-secrets.yaml
 `sops` will open the file in your editor. Save and quit; the file is now
 encrypted for the age recipients listed in `.sops.yaml`.
 
-## Step 2: Create `modules/features/opencode-brad.nix`
+## Step 2: Create `modules/features/opencode-brad.nix` (already done)
 
-Create the file `modules/features/opencode-brad.nix` with the following
-content. Adjust `secretEnvVars` to match exactly the keys you put in
+The file already exists on `add-brad-to-cheddar`. Reference content:
+
+Adjust `secretEnvVars` to match exactly the keys you put in
 `secrets/brad-secrets.yaml`:
 
 ```nix
@@ -93,11 +114,9 @@ content. Adjust `secretEnvVars` to match exactly the keys you put in
 }
 ```
 
-## Step 3: Import `opencode-brad` in brad’s darwin user module
+## Step 3: Import `opencode-brad` in brad’s darwin user module (already done)
 
-Edit `modules/users/brad-darwin.nix` and add
-`inputs.self.modules.homeManager.opencode-brad` to brad’s home-manager
-imports:
+`modules/users/brad-darwin.nix` already imports `opencode-brad`:
 
 ```nix
 home-manager.users.brad = {config, ...}: {
@@ -110,7 +129,27 @@ home-manager.users.brad = {config, ...}: {
 };
 ```
 
-## Step 4: Validate and rebuild
+## Step 4: `~/.config/opencode/opencode.json` (already done)
+
+The module generates this file with the `go` provider as a trial:
+
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "go": {
+      "options": {
+        "apiKey": "{env:OPENCODE_ZEN_API_KEY}"
+      }
+    }
+  }
+}
+```
+
+If `go` is not the correct provider name, change `"go"` in
+`modules/features/opencode-brad.nix` and rebuild.
+
+## Step 5: Validate and rebuild
 
 Run a dry-run build first:
 
@@ -127,18 +166,20 @@ darwin-rebuild switch --flake ~/limonene#cheddar
 Activation must be run locally in a graphical session (not over SSH) because
 home-manager changes for a user may require full disk access.
 
-## Step 5: Verify opencode secrets load
+## Step 6: Verify opencode works
 
-Open a new fish shell as brad and check that the environment variables are
-set:
+Open a new fish shell as brad and check:
 
 ```bash
 echo $OPENCODE_ZEN_API_KEY
+cat ~/.config/opencode/opencode.json
+which opencode
+opencode go
 ```
 
-If the variable is empty, check the sops-nix logs in the home-manager
-activation output and ensure `~brad/.config/sops/age/keys.txt` exists and is
-readable.
+If the environment variable is empty, check the sops-nix logs in the
+home-manager activation output and ensure `~brad/.config/sops/age/keys.txt`
+exists and is readable.
 
 ## Troubleshooting
 
