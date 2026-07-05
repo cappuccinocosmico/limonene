@@ -9,6 +9,11 @@
       {
         nixpkgs.overlays = [
           inputs.rust-overlay.overlays.default
+          (final: prev: {
+            mcp-nixos = prev.mcp-nixos.overridePythonAttrs (old: {
+              doCheck = false;
+            });
+          })
         ];
 
         nix.enable = false;
