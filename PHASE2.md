@@ -4,6 +4,12 @@ This document describes the steps to finish the brad multi-user setup after
 Phase 1 has been built and activated. Phase 1 installs `sops` (via
 `cliTools`) so that you can create the encrypted secrets file.
 
+> **Note:** As of the latest commit on the `add-brad-to-cheddar` branch,
+> `modules/features/opencode-brad.nix` is already created and
+> `modules/users/brad-darwin.nix` already imports it. `secrets/brad-secrets.yaml`
+> also exists with a placeholder value. You only need to replace the placeholder
+> with your real secret (Step 1) and rebuild (Step 4).
+
 ## Prerequisites
 
 Phase 1 must already be active on `cheddar`:

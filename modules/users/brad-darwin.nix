@@ -22,6 +22,7 @@
       imports = [
         inputs.self.modules.homeManager.userCommon
         inputs.self.modules.homeManager.brad-darwin-desktop
+        inputs.self.modules.homeManager.opencode-brad
       ];
 
       programs.git = {
