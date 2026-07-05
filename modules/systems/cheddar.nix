@@ -4,6 +4,8 @@
     modules = [
       inputs.self.modules.darwin.darwinWm
       inputs.home-manager.darwinModules.home-manager
+      inputs.self.modules.darwin.users-brad
+      inputs.self.modules.darwin.homebrew
       {
         nixpkgs.overlays = [
           inputs.rust-overlay.overlays.default
