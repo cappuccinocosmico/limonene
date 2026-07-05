@@ -36,6 +36,8 @@
 
         system.primaryUser = "nicole";
 
+        home-manager.useGlobalPkgs = true;
+
         home-manager.users.nicole = {pkgs, ...}: {
           imports = [
             inputs.self.modules.homeManager.userCommon
