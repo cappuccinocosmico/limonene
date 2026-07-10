@@ -1,5 +1,9 @@
-{ ... }: {
-  flake.modules.homeManager.kitty = { pkgs, config, ... }: {
+{...}: {
+  flake.modules.homeManager.kitty = {
+    pkgs,
+    config,
+    ...
+  }: {
     programs.kitty = {
       enable = true;
       shellIntegration.enableFishIntegration = true;
@@ -8,7 +12,7 @@
         confirm_os_window_close = 0;
         font_family = "VictorMono Nerd Font";
         font_size = 22;
-        background_opacity = "0.7";
+        background_opacity = "0.8";
         allow_remote_control = "yes";
       };
       keybindings = {

@@ -1,12 +1,17 @@
-{...}: {
+{inputs, ...}: {
   flake.modules.homeManager.desktopApps = {pkgs, ...}: {
     services.kdeconnect.enable = true;
 
     home.packages = with pkgs; [
+      # E Readers
+      thorium-reader
+      # USB Bootstick Makers
       popsicle
       impression
       # 3d Printing & CAD
+      prusa-slicer
       orca-slicer
+      # (inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.orca-slicer)
       freecad
       openscad
       # Android debugger:
