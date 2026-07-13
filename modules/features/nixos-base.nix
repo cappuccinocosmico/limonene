@@ -105,7 +105,7 @@
 
     services.resolved = {
       enable = true;
-      settings.Resolve.DNS = [ "1.1.1.1" "1.0.0.1" ];
+      settings.Resolve.DNS = ["1.1.1.1" "1.0.0.1"];
     };
 
     hardware.enableAllFirmware = true;
