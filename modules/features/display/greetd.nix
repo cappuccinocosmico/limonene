@@ -6,7 +6,6 @@
     ...
   }: {
     services.displayManager.sddm.enable = lib.mkForce false;
-    environment.pathsToLink = [ "/share/wayland-sessions" ];
 
     security.pam.services.greetd.enableGnomeKeyring = true;
 
@@ -15,7 +14,7 @@
       settings =
         {
           default_session = {
-            command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --sessions /run/current-system/sw/share/wayland-sessions";
+            command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --sessions ${config.services.displayManager.sessionData.desktops}/share/wayland-sessions";
           };
         }
         // lib.optionalAttrs (config.limonene.autologinUser != null && config.limonene.defaultSession != null) {
