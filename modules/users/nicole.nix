@@ -60,69 +60,6 @@
         };
       };
 
-      # Per-host SSH client config. The cococoir-v2-jellyfin dev
-      # VM is a throwaway: fresh host key on every boot, no SSH
-      # key on the server, only password auth. Two independent
-      # problems to fix:
-      #   1. SSH tries your private key against a server that has
-      #      no matching authorized_keys entry — `PubkeyAuthentication no`
-      #      + `PreferredAuthentications password` skip that and
-      #      go straight to password.
-      #   2. SSH rejects / re-prompts for the host fingerprint
-      #      every boot (which is what made you nuke .known_hosts)
-      #      — `StrictHostKeyChecking no` + `UserKnownHostsFile /dev/null`
-      #      fixes that.
-      # Per-host SSH client config. The cococoir-v2-jellyfin dev
-      # VM is a throwaway: fresh host key on every boot, no SSH
-      # key on the server, only password auth. Two independent
-      # problems to fix:
-      #   1. SSH tries your private key against a server that has
-      #      no matching authorized_keys entry — `PubkeyAuthentication no`
-      #      + `PreferredAuthentications password` skip that and
-      #      go straight to password.
-      #   2. SSH rejects / re-prompts for the host fingerprint
-      #      every boot (which is what made you nuke .known_hosts)
-      #      — `StrictHostKeyChecking no` + `UserKnownHostsFile /dev/null`
-      #      fixes that.
-      # SSH matches `Host` patterns against the *literal hostname
-      # you type*, not the resolved IP — so `localhost` and
-      # `127.0.0.1` are different patterns. Both are listed to
-      # cover `ssh -p 2222 root@localhost` and `ssh -p 2222
-      # root@127.0.0.1`. The `host:port` form is supported since
-      # OpenSSH 7.5. Port 2222 keeps this scoped so it doesn't
-      # affect anything else on the host.
-      programs.ssh = {
-        enable = true;
-        # home-manager's implicit defaults are deprecated and
-        # will be removed. Suppress the implicit generation and
-        # set the equivalents via `settings."*"`. The values
-        # below are the same as the home-manager 26.05 defaults
-        # (see `modules/programs/ssh.nix` in home-manager).
-        enableDefaultConfig = false;
-        settings."*" = {
-          AddKeysToAgent = "no";
-          Compression = false;
-          ControlMaster = "no";
-          ControlPath = "~/.ssh/master-%r@%n:%p";
-          ControlPersist = "no";
-          ForwardAgent = false;
-          HashKnownHosts = false;
-          ServerAliveCountMax = 3;
-          ServerAliveInterval = 0;
-          UserKnownHostsFile = "~/.ssh/known_hosts";
-        };
-        extraConfig = ''
-          Host 127.0.0.1:2222,localhost:2222
-            HostName 127.0.0.1
-            Port 2222
-            User root
-            PubkeyAuthentication no
-            PreferredAuthentications password
-            StrictHostKeyChecking no
-            UserKnownHostsFile /dev/null
-        '';
-      };
-
       home.shellAliases = {
         nrs = "sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/limonene";
         nrb = "nixos-rebuild build --verbose --flake ${config.home.homeDirectory}/limonene";
