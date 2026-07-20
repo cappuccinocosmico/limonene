@@ -1,4 +1,4 @@
-{...}: {
+{inputs, ...}: {
   flake.modules.nixos.gaming = {
     programs.steam = {
       enable = true;
@@ -15,6 +15,8 @@
       gnome-mines
       gnome-sudoku
       prismlauncher
+
+      (inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.xmage)
     ];
   };
 }
