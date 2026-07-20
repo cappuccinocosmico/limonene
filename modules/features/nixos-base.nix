@@ -85,6 +85,10 @@
       settings.PasswordAuthentication = false;
     };
 
+    networking.hosts."127.0.0.1" = [
+      "jellyfin.vmtest.local"
+    ];
+
     services.atd.enable = true;
     services.fwupd.enable = true;
     # services.mainsail.enable = true;

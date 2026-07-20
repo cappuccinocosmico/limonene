@@ -12,7 +12,10 @@
       inputs.self.modules.nixos.users-nicole
       inputs.self.modules.nixos.sway
       inputs.self.modules.nixos.display-greetd
-      inputs.hardware.nixosModules.framework-12th-gen-intel
+      inputs.hardware.nixosModules.common-cpu-amd
+      inputs.hardware.nixosModules.common-cpu-amd-pstate
+      inputs.hardware.nixosModules.common-gpu-amd
+      inputs.hardware.nixosModules.common-pc-ssd
       ../../hardware/vermissian.nix
       {
         limonene.machineType = "desktop";
@@ -25,7 +28,7 @@
 
         boot.loader.systemd-boot.enable = true;
         boot.loader.efi.canTouchEfiVariables = true;
-        boot.initrd.luks.devices."luks-ff4e0550-7152-4404-8b86-f76ad713b49e".device = "/dev/disk/by-uuid/ff4e0550-7152-4404-8b86-f76ad713b49e";
+        boot.initrd.luks.devices."luks-1b5555a7-d2e4-4cf2-9654-f19eb0dfc349".device = "/dev/disk/by-uuid/1b5555a7-d2e4-4cf2-9654-f19eb0dfc349";
 
         i18n.defaultLocale = "en_US.UTF-8";
         i18n.extraLocaleSettings = {

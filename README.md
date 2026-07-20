@@ -153,7 +153,7 @@ sudo nixos-rebuild switch --flake ~/limonene#<hostname>
 
 Available configurations:
 - `incarnadine` - Framework laptop
-- `vermissian` - Server
+- `vermissian` - AMD desktop
 
 ## Notes
 
