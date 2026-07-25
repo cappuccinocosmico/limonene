@@ -11,6 +11,7 @@
       }
       inputs.self.modules.nixos.users-nicole
       inputs.self.modules.nixos.sway
+      inputs.self.modules.nixos.gaming
       inputs.self.modules.nixos.display-greetd
       inputs.hardware.nixosModules.common-cpu-amd
       inputs.hardware.nixosModules.common-cpu-amd-pstate

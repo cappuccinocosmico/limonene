@@ -87,7 +87,15 @@
 
     networking.hosts."127.0.0.1" = [
       "jellyfin.vmtest.local"
+      "pocketid.vmtest.local"
     ];
+    programs.ssh.extraConfig = ''
+      Host testvm
+        Hostname 127.0.0.1
+        Port 2222
+        StrictHostKeyChecking no
+        UserKnownHostsFile /dev/null
+    '';
 
     services.atd.enable = true;
     services.fwupd.enable = true;
