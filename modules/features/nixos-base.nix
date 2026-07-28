@@ -11,6 +11,8 @@
     ...
   }: {
     nix.settings = {
+      keep-derivations = false;
+      auto-optimise-store = true;
       extra-substituters = [
         "https://devenv.cachix.org"
       ];
@@ -87,7 +89,9 @@
 
     networking.hosts."127.0.0.1" = [
       "jellyfin.vmtest.local"
-      "pocketid.vmtest.local"
+      "auth.vmtest.local"
+      "cryptpad.vmtest.local"
+      "*.vmtest.local"
     ];
     programs.ssh.extraConfig = ''
       Host testvm

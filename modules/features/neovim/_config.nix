@@ -78,7 +78,7 @@ in {
         enable = true;
         lsp = {
           enable = true;
-          package = ["rust-analyzer"];
+          # package = ["rust-analyzer"];
         };
         treesitter.enable = true;
         format.enable = true;
