@@ -20,6 +20,14 @@
         "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
       ];
     };
+
+    nix.gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d";
+    };
+
+    nix.optimise.automatic = true;
     nixpkgs = {
       overlays = [
         inputs.rust-overlay.overlays.default
