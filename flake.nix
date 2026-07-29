@@ -12,7 +12,10 @@
       url = "github:nixos/nixpkgs/nixos-unstable";
     };
 
-    flake-parts.url = "github:hercules-ci/flake-parts";
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
@@ -46,9 +49,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    spacebar.url = "github:cmacrae/spacebar/v1.4.0";
+    spacebar = {
+      url = "github:cmacrae/spacebar/v1.4.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    import-tree.url = "github:vic/import-tree";
+    import-tree = {
+      url = "github:vic/import-tree";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nur = {
       url = "github:nix-community/nur";
