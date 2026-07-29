@@ -10,6 +10,8 @@
     lib,
     ...
   }: {
+    fonts.fontconfig.enable = true;
+
     nix.settings = {
       keep-derivations = false;
       auto-optimise-store = true;

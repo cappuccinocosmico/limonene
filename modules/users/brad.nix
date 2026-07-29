@@ -63,7 +63,6 @@
       home.sessionVariables = {
         NIXPKGS_ALLOW_UNFREE = "1";
         SHELL = "${pkgs.fish}/bin/fish";
-        GTK_THEME = "Arc-Dark";
         BROWSER = "firefox";
         PNPM_HOME = "$HOME/.binaries/pnpm";
       };
