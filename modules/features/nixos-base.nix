@@ -54,6 +54,7 @@
 
     environment.systemPackages = with pkgs; [
       (import ../../helpers/regular-linux-shell.nix {inherit pkgs;})
+      sshpass
       libclang
       pkg-config
       openssl

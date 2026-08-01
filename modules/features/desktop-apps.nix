@@ -19,8 +19,6 @@
       # Star shit
       stellarium
 
-      # Local AI Stuff:
-      ollama-cpu
 
       # Acounting
       gnucash
