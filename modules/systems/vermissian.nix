@@ -13,6 +13,7 @@
       inputs.self.modules.nixos.sway
       inputs.self.modules.nixos.gaming
       inputs.self.modules.nixos.display-greetd
+      inputs.self.modules.nixos.ollama
       inputs.hardware.nixosModules.common-cpu-amd
       inputs.hardware.nixosModules.common-cpu-amd-pstate
       inputs.hardware.nixosModules.common-gpu-amd

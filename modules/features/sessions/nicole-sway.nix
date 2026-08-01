@@ -81,8 +81,12 @@
         bars = [];
         keybindings = let
           mod = config.wayland.windowManager.sway.config.modifier;
+          suspendBindings = lib.optionalAttrs (!config.limonene.isDesktop) {
+            "${mod}+Shift+p" = "exec systemctl suspend";
+            "${mod}+Shift+h" = "exec systemctl hibernate";
+          };
         in
-          lib.mkOptionDefault {
+          lib.mkOptionDefault (suspendBindings // {
             "XF86AudioRaiseVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+ --limit 1.0";
             "XF86AudioLowerVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-";
             "${mod}+equal" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+ --limit 1.0";
@@ -99,13 +103,11 @@
             "${mod}+Right" = "workspace next";
             "${mod}+Left" = "workspace prev";
             "${mod}+p" = "exec wlogout";
-            "${mod}+Shift+p" = "exec systemctl suspend";
-            "${mod}+Shift+h" = "exec systemctl hibernate";
             "Ctrl+Shift+${mod}+v" = "exec clipboard-type";
             # "${mod}+g" = "exec ${config.limonene.productivity.productivityBin}/bin/productivity goals toggle-interactive";
             # "${mod}+Shift+g" = "exec kitty --class daily-goals-add -e ${config.limonene.productivity.productivityBin}/bin/productivity goals add-interactive";
             # "${mod}+n" = "exec kitty --class pomodoro-panel -e ${config.limonene.productivity.productivityBin}/bin/productivity panel";
-          };
+          });
       };
       extraConfig = ''
         input "1267:13037:ELAN0130:00_04F3:32ED_Touchpad" {
@@ -274,14 +276,14 @@
               weeks = "<span color='#99ffdd'><b>W{}</b></span>";
               weekdays = "<span color='#ffcc66'><b>{}</b></span>";
               today = "<span color='#ff6699'><b><u>{}</u></b></span>";
-            };
+          };
           };
           actions = {"on-click-right" = "mode";};
         };
       }
     ];
 
-    services.swayidle.events = {
+    services.swayidle.events = lib.mkIf (!config.limonene.isDesktop) {
       "after-resume" = "random-wallpaper; sleep 2;";
     };
   };

@@ -12,6 +12,7 @@
       inputs.self.modules.nixos.users-nicole
       inputs.self.modules.nixos.sway
       inputs.self.modules.nixos.display-greetd
+      inputs.self.modules.nixos.ollama
       inputs.hardware.nixosModules.framework-amd-ai-300-series
       ../../hardware/incarnadine.nix
       {
@@ -53,7 +54,7 @@
 
         users.users.nicole.extraGroups = [ "video" "render" ];
 
-        home-manager.users.nicole.services.swayidle.enable = lib.mkForce false;
+        home-manager.users.nicole.limonene.isDesktop = true;
 
         system.stateVersion = "25.05";
       }
