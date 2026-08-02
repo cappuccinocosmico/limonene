@@ -63,7 +63,7 @@
           eDP-1 = {};
         };
         startup = [
-          {command = "daily-ritual --gate";}
+          {command = "ensure-wallust-colors";}
           {command = "${pkgs.wl-clipboard-x11}/bin/wl-clipboard-x11";}
           {command = "swaymsg 'workspace 1; exec kitty --single-instance'";}
           {command = "swaymsg 'workspace 5; exec firefox'";}
@@ -86,28 +86,29 @@
             "${mod}+Shift+h" = "exec systemctl hibernate";
           };
         in
-          lib.mkOptionDefault (suspendBindings // {
-            "XF86AudioRaiseVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+ --limit 1.0";
-            "XF86AudioLowerVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-";
-            "${mod}+equal" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+ --limit 1.0";
-            "${mod}+minus" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-";
-            "XF86AudioMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
-            "XF86MonBrightnessDown" = "exec brightnessctl -n 1 set 5%-";
-            "XF86MonBrightnessUp" = "exec brightnessctl set 5%+";
-            "XF86AudioPlay" = "exec mpc toggle -q";
-            "XF86AudioNext" = "exec mpc -q seek +5% && mpc toggle -q && mpc toggle -q";
-            "XF86AudioPrev" = "exec mpc -q seek -5% && mpc toggle -q && mpc toggle -q";
-            "Print" = "exec grimshot savecopy area";
-            "Ctrl+Print" = "exec grimshot savecopy active";
-            "${mod}+q" = "kill";
-            "${mod}+Right" = "workspace next";
-            "${mod}+Left" = "workspace prev";
-            "${mod}+p" = "exec wlogout";
-            "Ctrl+Shift+${mod}+v" = "exec clipboard-type";
-            # "${mod}+g" = "exec ${config.limonene.productivity.productivityBin}/bin/productivity goals toggle-interactive";
-            # "${mod}+Shift+g" = "exec kitty --class daily-goals-add -e ${config.limonene.productivity.productivityBin}/bin/productivity goals add-interactive";
-            # "${mod}+n" = "exec kitty --class pomodoro-panel -e ${config.limonene.productivity.productivityBin}/bin/productivity panel";
-          });
+          lib.mkOptionDefault (suspendBindings
+            // {
+              "XF86AudioRaiseVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+ --limit 1.0";
+              "XF86AudioLowerVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-";
+              "${mod}+equal" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+ --limit 1.0";
+              "${mod}+minus" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-";
+              "XF86AudioMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+              "XF86MonBrightnessDown" = "exec brightnessctl -n 1 set 5%-";
+              "XF86MonBrightnessUp" = "exec brightnessctl set 5%+";
+              "XF86AudioPlay" = "exec mpc toggle -q";
+              "XF86AudioNext" = "exec mpc -q seek +5% && mpc toggle -q && mpc toggle -q";
+              "XF86AudioPrev" = "exec mpc -q seek -5% && mpc toggle -q && mpc toggle -q";
+              "Print" = "exec grimshot savecopy area";
+              "Ctrl+Print" = "exec grimshot savecopy active";
+              "${mod}+q" = "kill";
+              "${mod}+Right" = "workspace next";
+              "${mod}+Left" = "workspace prev";
+              "${mod}+p" = "exec wlogout";
+              "Ctrl+Shift+${mod}+v" = "exec clipboard-type";
+              # "${mod}+g" = "exec ${config.limonene.productivity.productivityBin}/bin/productivity goals toggle-interactive";
+              # "${mod}+Shift+g" = "exec kitty --class daily-goals-add -e ${config.limonene.productivity.productivityBin}/bin/productivity goals add-interactive";
+              # "${mod}+n" = "exec kitty --class pomodoro-panel -e ${config.limonene.productivity.productivityBin}/bin/productivity panel";
+            });
       };
       extraConfig = ''
         input "1267:13037:ELAN0130:00_04F3:32ED_Touchpad" {
@@ -120,6 +121,7 @@
         }
         seat seat0 xcursor_theme default 48
         output eDP-1 scale 1
+        output * background #1e1e2e solid_color
         for_window [app_id="daily-ritual"] fullscreen enable
         for_window [app_id="daily-goals-add"] floating enable, resize set 800 100
         for_window [app_id="pomodoro-panel"] floating enable, resize set 700 350
@@ -276,7 +278,7 @@
               weeks = "<span color='#99ffdd'><b>W{}</b></span>";
               weekdays = "<span color='#ffcc66'><b>{}</b></span>";
               today = "<span color='#ff6699'><b><u>{}</u></b></span>";
-          };
+            };
           };
           actions = {"on-click-right" = "mode";};
         };

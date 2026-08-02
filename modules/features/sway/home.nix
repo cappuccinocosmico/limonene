@@ -74,6 +74,13 @@
         systemd.enable = true;
       };
 
+      # Waybar's style.css @imports the wallust-generated colors file; make sure
+      # it exists (using the fallback when no wallpaper has been applied yet) so
+      # waybar never fails to start on a fresh machine.
+      systemd.user.services.waybar = lib.mkIf (config.limonene.wallust.ensureColorsBin != null) {
+        Service.ExecStartPre = [config.limonene.wallust.ensureColorsBin];
+      };
+
       xdg.configFile = {
         "waybar/style.css".source = ./waybar/style.css;
         "waybar/assets/nix.svg".source = ./waybar/nix.svg;
