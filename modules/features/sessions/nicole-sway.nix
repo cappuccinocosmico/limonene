@@ -152,7 +152,7 @@
         "margin-left" = 8;
         "modules-left" = ["tray" "sway/workspaces"];
         "modules-center" = ["clock" "custom/pomodoro" "custom/goals"];
-        "modules-right" = ["backlight" "pulseaudio" "network" "custom/caffeine" "battery"];
+        "modules-right" = ["backlight" "pulseaudio" "network" "custom/caffeine" "battery" "disk" "cpu" "memory"];
 
         "sway/workspaces" = {
           format = "{name} {windows}";
@@ -205,6 +205,22 @@
         backlight = {
           format = "{percent}% {icon}";
           "format-icons" = ["" "" "" "" "" "" "" "" "" "" "" "" "" ""];
+        };
+
+        memory = {
+          format = "󰍛 {percentage}%";
+          interval = 5;
+        };
+
+        cpu = {
+          format = "󰍟 {usage}%";
+          interval = 5;
+        };
+
+        disk = {
+          format = "󰋊 {percentage_used}%";
+          interval = 60;
+          path = "/";
         };
 
         pulseaudio = {
