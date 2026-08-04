@@ -208,18 +208,18 @@
         };
 
         memory = {
-          format = "󰍛 {percentage}%";
+          format = " {percentage}%";
           interval = 5;
         };
 
         cpu = {
-          format = "󰍟 {usage}%";
+          format = " {usage}%";
           interval = 5;
         };
 
         disk = {
           format = "󰋊 {percentage_used}%";
-          interval = 60;
+          interval = 300;
           path = "/";
         };
 
