@@ -27,6 +27,7 @@
     clipboard-type = pkgs.writeShellScriptBin "clipboard-type" ''
       ${pkgs.wl-clipboard}/bin/wl-paste | ${pkgs.wtype}/bin/wtype -
     '';
+
   in {
     imports = [inputs.self.modules.homeManager.sway];
 
@@ -152,7 +153,7 @@
         "margin-left" = 8;
         "modules-left" = ["tray" "sway/workspaces"];
         "modules-center" = ["clock" "custom/pomodoro" "custom/goals"];
-        "modules-right" = ["backlight" "pulseaudio" "network" "custom/caffeine" "battery" "disk" "cpu" "memory"];
+        "modules-right" = ["backlight" "pulseaudio" "network" "custom/caffeine" "battery" "memory" "cpu" "disk"];
 
         "sway/workspaces" = {
           format = "{name} {windows}";
@@ -235,22 +236,6 @@
           "format-paused" = "⏸ : {album} - {title}";
         };
 
-        # "custom/goals" = {
-        #   format = "{}";
-        #   exec = "${config.limonene.productivity.productivityBin}/bin/productivity goals waybar";
-        #   "on-click" = "${config.limonene.productivity.productivityBin}/bin/productivity goals toggle-interactive";
-        #   interval = 10;
-        #   "return-type" = "json";
-        # };
-
-        # "custom/pomodoro" = {
-        #   format = "{}";
-        #   exec = "${config.limonene.productivity.productivityBin}/bin/productivity pomodoro waybar";
-        #   "on-click" = "kitty --class pomodoro-panel -e ${config.limonene.productivity.productivityBin}/bin/productivity panel";
-        #   interval = 1;
-        #   "return-type" = "json";
-        # };
-
         "custom/caffeine" = {
           format = "{}";
           exec = "${caffeine-status}/bin/caffeine-status";
@@ -280,7 +265,7 @@
 
         clock = {
           interval = 1;
-          format = "{:%H:%M:%S}  ";
+          format = "{:%H:%M:%S}";
           "tooltip-format" = "<tt><small>{calendar}</small></tt>";
           calendar = {
             mode = "year";
