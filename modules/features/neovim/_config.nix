@@ -109,6 +109,13 @@ in {
         treesitter.enable = true;
         format.enable = true;
       };
+
+      typst = {
+        enable = true;
+        lsp.enable = true;
+        treesitter.enable = true;
+        format.enable = true;
+      };
     };
 
     # LSP and completion
