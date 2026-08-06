@@ -1,4 +1,4 @@
-{...}: {
+{inputs, ...}: {
   flake.modules.homeManager.cliTools = {pkgs, ...}: {
     home.packages = with pkgs; [
       moonlight-qt
@@ -12,7 +12,8 @@
       dua # disk usage but actually useful
       xh # better curl
       hyperfine
-      devenv
+      # devenv
+      (inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.devenv)
 
       just
 
