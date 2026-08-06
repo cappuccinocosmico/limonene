@@ -1,17 +1,19 @@
 { inputs, ... }: {
-  flake.modules.homeManager.easyeffects = { lib, ... }: {
+  flake.modules.homeManager.easyeffects = { lib, ... }: let
+    outputPreset = file: (builtins.fromJSON (builtins.readFile file)).output;
+  in {
     services.easyeffects = {
       enable = true;
       preset = "Hifiman Aryas";
       extraPresets = {
         "Hifiman Aryas" = {
-          output = builtins.fromJSON (builtins.readFile ./presets/hifiman-aryas.json);
+          output = outputPreset ./presets/hifiman-aryas.json;
         };
         "Truthear Gates" = {
-          output = builtins.fromJSON (builtins.readFile ./presets/truthear-gates.json);
+          output = outputPreset ./presets/truthear-gates.json;
         };
         "No Eq" = {
-          output = builtins.fromJSON (builtins.readFile ./presets/no-eq.json);
+          output = outputPreset ./presets/no-eq.json;
         };
       };
     };
