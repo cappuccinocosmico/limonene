@@ -21,6 +21,7 @@
       ../../hardware/vermissian.nix
       {
         limonene.machineType = "desktop";
+        limonene.machineBehaviors.disableSleep.enable = true;
         limonene.autologinUser = "nicole";
         limonene.defaultSession = "sway";
 

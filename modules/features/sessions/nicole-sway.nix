@@ -82,7 +82,7 @@
         bars = [];
         keybindings = let
           mod = config.wayland.windowManager.sway.config.modifier;
-          suspendBindings = lib.optionalAttrs (!config.limonene.isDesktop) {
+          suspendBindings = lib.optionalAttrs (!config.limonene.machineBehaviors.disableSleep.enable) {
             "${mod}+Shift+p" = "exec systemctl suspend";
             "${mod}+Shift+h" = "exec systemctl hibernate";
           };
@@ -286,7 +286,7 @@
       }
     ];
 
-    services.swayidle.events = lib.mkIf (!config.limonene.isDesktop) {
+    services.swayidle.events = lib.mkIf (!config.limonene.machineBehaviors.disableSleep.enable) {
       "after-resume" = "random-wallpaper; sleep 2;";
     };
   };

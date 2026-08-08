@@ -1,11 +1,5 @@
 { inputs, ... }: {
   flake.modules.homeManager.sway = { lib, pkgs, config, ... }: {
-    options.limonene.isDesktop = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = "Whether this machine is a desktop that should never suspend";
-    };
-
     config = {
       home.packages = with pkgs; [
         wlogout
@@ -27,7 +21,7 @@
       programs.wlogout = {
         enable = true;
         layout =
-          (lib.optionals (!config.limonene.isDesktop) [
+          (lib.optionals (!config.limonene.machineBehaviors.disableSleep.enable) [
             {
               label = "suspend";
               action = "systemctl suspend";
@@ -87,7 +81,7 @@
       };
 
       services.swayidle = {
-        enable = !config.limonene.isDesktop;
+        enable = !config.limonene.machineBehaviors.disableSleep.enable;
         timeouts = [
           {
             timeout = 600;

@@ -17,6 +17,7 @@
       ../../hardware/incarnadine.nix
       {
         limonene.machineType = "desktop";
+        limonene.machineBehaviors.disableSleep.enable = true;
 
         home-manager.users.nicole.imports = [ inputs.self.modules.homeManager.nicole-desktop ];
 
@@ -53,8 +54,6 @@
         hardware.graphics = { enable = true; enable32Bit = true; };
 
         users.users.nicole.extraGroups = [ "video" "render" ];
-
-        home-manager.users.nicole.limonene.isDesktop = true;
 
         system.stateVersion = "25.05";
       }

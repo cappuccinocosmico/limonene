@@ -1,5 +1,16 @@
 {inputs, ...}: {
-  flake.modules.homeManager.userCommon = {
+  flake.modules.homeManager.userCommon = {lib, ...}: {
+    options.limonene.machineBehaviors.disableSleep = lib.mkOption {
+      type = lib.types.submodule {
+        options.enable = lib.mkOption {
+          type = lib.types.bool;
+          default = false;
+          description = "Whether this machine should never suspend or sleep";
+        };
+      };
+      default = {};
+    };
+
     imports = with inputs.self.modules.homeManager; [
       shells
       cliTools
@@ -11,12 +22,14 @@
       thunderbird
     ];
 
-    home.sessionPath = [
-      "$HOME/.local/bin"
-      "$HOME/.cargo/bin"
-      "$HOME/go/bin"
-    ];
+    config = {
+      home.sessionPath = [
+        "$HOME/.local/bin"
+        "$HOME/.cargo/bin"
+        "$HOME/go/bin"
+      ];
 
-    programs.home-manager.enable = true;
+      programs.home-manager.enable = true;
+    };
   };
 }
