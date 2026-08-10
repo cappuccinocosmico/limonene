@@ -28,6 +28,13 @@
 
         networking.hostName = "idol";
 
+        systemd.oomd = {
+          enableRootSlice = true;
+          enableUserSlices = true;
+        };
+        zramSwap.enable = true;
+        boot.kernel.sysctl."vm.swappiness" = 10;
+
         boot.loader.systemd-boot.enable = true;
         boot.loader.efi.canTouchEfiVariables = true;
         boot.initrd.luks.devices."luks-099e44df-0372-4808-bf9a-74f2dba56f71".device = "/dev/disk/by-uuid/099e44df-0372-4808-bf9a-74f2dba56f71";

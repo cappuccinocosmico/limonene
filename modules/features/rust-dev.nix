@@ -73,11 +73,12 @@ in {
   #     doesn't affect this global install.
   flake.modules.homeManager.rustDev = {pkgs, ...}: {
     home.packages = [
-      # (pkgs.rust-bin.stable."1.95.0".default.override {
-      #   targets = ["wasm32-unknown-unknown"];
-      #   extensions = ["rust-src" "rust-analyzer" "clippy" "rustfmt"];
-      # })
+      (pkgs.rust-bin.stable."1.97.1".default.override {
+        targets = ["wasm32-unknown-unknown"];
+        extensions = ["rust-src" "rust-analyzer" "clippy" "rustfmt"];
+      })
       pkgs.cargo-binstall
+      pkgs.bacon
     ];
 
     home.sessionVariables = rustEnv pkgs;

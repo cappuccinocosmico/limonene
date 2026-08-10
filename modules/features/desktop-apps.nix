@@ -19,7 +19,6 @@
       # Star shit
       stellarium
 
-
       # Acounting
       gnucash
 
@@ -42,6 +41,7 @@
       # Audio
       vlc
       easyeffects
+      mpv
       # Recording
       obs-studio
       audacity
