@@ -11,6 +11,17 @@
       default = {};
     };
 
+    options.limonene.machineBehaviors.turnOffDisplay = lib.mkOption {
+      type = lib.types.submodule {
+        options.enable = lib.mkOption {
+          type = lib.types.bool;
+          default = false;
+          description = "Whether to turn off the display after inactivity to save power";
+        };
+      };
+      default = {};
+    };
+
     imports = with inputs.self.modules.homeManager; [
       shells
       cliTools

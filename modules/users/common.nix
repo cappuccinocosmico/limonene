@@ -22,6 +22,13 @@
               description = "Whether the machine should never suspend or sleep";
             };
           };
+          options.turnOffDisplay = {
+            enable = lib.mkOption {
+              type = lib.types.bool;
+              default = false;
+              description = "Whether to turn off the display after inactivity to save power";
+            };
+          };
         };
         default = {};
       };
@@ -41,6 +48,13 @@
         home-manager.sharedModules = [
           {
             limonene.machineBehaviors.disableSleep.enable = true;
+          }
+        ];
+      })
+      (lib.mkIf config.limonene.machineBehaviors.turnOffDisplay.enable {
+        home-manager.sharedModules = [
+          {
+            limonene.machineBehaviors.turnOffDisplay.enable = true;
           }
         ];
       })

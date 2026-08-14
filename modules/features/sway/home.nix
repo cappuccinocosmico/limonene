@@ -81,13 +81,22 @@
       };
 
       services.swayidle = {
-        enable = !config.limonene.machineBehaviors.disableSleep.enable;
-        timeouts = [
-          {
-            timeout = 600;
-            command = "${pkgs.systemd}/bin/systemctl suspend";
-          }
-        ];
+        enable = !config.limonene.machineBehaviors.disableSleep.enable
+          || config.limonene.machineBehaviors.turnOffDisplay.enable;
+        timeouts =
+          (lib.optionals config.limonene.machineBehaviors.turnOffDisplay.enable [
+            {
+              timeout = 300;
+              command = "${pkgs.sway}/bin/swaymsg 'output * dpms off'";
+              resumeCommand = "${pkgs.sway}/bin/swaymsg 'output * dpms on'";
+            }
+          ])
+          ++ (lib.optionals (!config.limonene.machineBehaviors.disableSleep.enable) [
+            {
+              timeout = 600;
+              command = "${pkgs.systemd}/bin/systemctl suspend";
+            }
+          ]);
       };
 
       services.polkit-gnome.enable = true;

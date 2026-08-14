@@ -22,6 +22,7 @@
       {
         limonene.machineType = "desktop";
         limonene.machineBehaviors.disableSleep.enable = true;
+        limonene.machineBehaviors.turnOffDisplay.enable = true;
         limonene.autologinUser = "nicole";
         limonene.defaultSession = "sway";
 

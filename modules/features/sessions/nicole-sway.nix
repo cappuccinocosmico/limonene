@@ -27,7 +27,6 @@
     clipboard-type = pkgs.writeShellScriptBin "clipboard-type" ''
       ${pkgs.wl-clipboard}/bin/wl-paste | ${pkgs.wtype}/bin/wtype -
     '';
-
   in {
     imports = [inputs.self.modules.homeManager.sway];
 
@@ -69,6 +68,7 @@
           {command = "swaymsg 'workspace 1; exec kitty --single-instance'";}
           {command = "swaymsg 'workspace 5; exec firefox'";}
           {command = "swaymsg 'workspace 8; exec easyeffects'";}
+          {command = "swaymsg 'workspace 8; exec slack'";}
           {command = "swaymsg 'workspace 9; exec element-desktop'";}
           {command = "swaymsg 'workspace 9; exec thunderbird'";}
           {command = "swaymsg 'workspace 10; exec signal-desktop'";}
