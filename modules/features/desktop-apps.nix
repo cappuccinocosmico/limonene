@@ -3,6 +3,7 @@
     services.kdeconnect.enable = true;
 
     home.packages = with pkgs; [
+      libreoffice
       # E Readers
       thorium-reader
       # USB Bootstick Makers

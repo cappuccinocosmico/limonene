@@ -74,6 +74,19 @@ in {
         format.enable = true;
       };
 
+      html = {
+        enable = true;
+        lsp.enable = true;
+        treesitter.enable = true;
+        format.enable = true;
+      };
+
+      jinja = {
+        enable = true;
+        lsp.enable = true;
+        treesitter.enable = true;
+      };
+
       rust = {
         enable = true;
         lsp = {
