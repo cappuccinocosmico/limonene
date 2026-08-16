@@ -252,7 +252,7 @@
             "link-to-input": 0.0,
             "link-to-sidechain": 0.0,
             "lookahead": 5.0,
-            "mode": "Herm Thin",
+            "mode": "Herm Duck",
             "output-gain": -20.0,
             "oversampling": "None",
             "release": 5.0,
