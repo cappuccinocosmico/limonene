@@ -62,6 +62,7 @@
 
       home.sessionVariables = {
         NIXPKGS_ALLOW_UNFREE = "1";
+        OPENCODE_ENABLE_EXA = "1";
         SHELL = "${pkgs.fish}/bin/fish";
         BROWSER = "firefox";
         PNPM_HOME = "$HOME/.binaries/pnpm";

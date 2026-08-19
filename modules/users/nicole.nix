@@ -75,6 +75,7 @@
         # OPENROUTER_API_KEY = config.sops.secrets.openrouter_api_key;
         NIXPKGS_ALLOW_UNFREE = "1";
         SHELL = "${pkgs.fish}/bin/fish";
+        OPENCODE_ENABLE_EXA = "1";
         BROWSER = "firefox";
         PNPM_HOME = "$HOME/.binaries/pnpm";
       };
