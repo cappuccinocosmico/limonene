@@ -32,6 +32,9 @@
           "dom.webgpu.enabled" = true;
           "extensions.autoDisableScopes" = 0;
           "extensions.activeThemeID" = "firefox-compact-dark@mozilla.org";
+          # Let Firefox Sync transfer extension settings (LeechBlock etc.) without
+          # letting it install/disable the home-manager-managed extensions.
+          "services.sync.engine.addons" = false;
           "datareporting.healthreport.uploadEnabled" = false;
           "datareporting.policy.dataSubmissionEnabled" = false;
           "toolkit.telemetry.enabled" = false;
