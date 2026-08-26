@@ -1,6 +1,6 @@
 {...}: {
   flake.modules.homeManager.kitty = {
-    pkgs,
+    lib,
     config,
     ...
   }: {
@@ -8,7 +8,7 @@
       enable = true;
       shellIntegration.enableFishIntegration = true;
       settings = {
-        shell = "${pkgs.fish}/bin/fish";
+        shell = lib.getExe config.limonene.defaultShell;
         confirm_os_window_close = 0;
         font_family = "VictorMono Nerd Font";
         font_size = 22;

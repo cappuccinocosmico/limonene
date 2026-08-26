@@ -29,7 +29,11 @@
 
         system.primaryUser = "nicole";
 
-        home-manager.users.nicole = {pkgs, ...}: {
+        home-manager.users.nicole = {
+          config,
+          lib,
+          ...
+        }: {
           imports = [
             inputs.self.modules.homeManager.userCommon
             inputs.self.modules.homeManager.opencode
@@ -38,7 +42,7 @@
           home.sessionVariables = {
             NIXPKGS_ALLOW_UNFREE = "1";
             PNPM_HOME = "$HOME/.binaries/pnpm";
-            SHELL = "${pkgs.fish}/bin/fish";
+            SHELL = lib.getExe config.limonene.defaultShell;
           };
 
           home.sessionPath = [

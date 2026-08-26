@@ -27,6 +27,19 @@
     clipboard-type = pkgs.writeShellScriptBin "clipboard-type" ''
       ${pkgs.wl-clipboard}/bin/wl-paste | ${pkgs.wtype}/bin/wtype -
     '';
+
+    # Under autologin (greetd initial_session) PAM never supplies a password, so
+    # the gnome-keyring login keyring would stay locked and Secret Service apps
+    # (e.g. protonmail-bridge) fail with "prompt timed out". We rely on LUKS FDE as
+    # the security boundary and instead seed the login keyring with an *empty*
+    # password, which gnome-keyring auto-unlocks on startup (see Arch wiki:
+    # "automatic unlocking with automatic login ... set a blank password").
+    # `--login` reads the password from stdin (empty here) to create/unlock the
+    # login keyring, exactly as pam_gnome_keyring does for normal logins.
+    keyring-init = pkgs.writeShellScriptBin "keyring-init" ''
+      ${pkgs.gnome-keyring}/bin/gnome-keyring-daemon --daemonize --login <<< ""
+      ${pkgs.gnome-keyring}/bin/gnome-keyring-daemon --start --components=secrets
+    '';
   in {
     imports = [inputs.self.modules.homeManager.sway];
 
@@ -127,7 +140,7 @@
         for_window [app_id="daily-goals-add"] floating enable, resize set 800 100
         for_window [app_id="pomodoro-panel"] floating enable, resize set 700 350
         exec ${pkgs.dbus}/bin/dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
-        exec ${pkgs.gnome-keyring}/bin/gnome-keyring-daemon --start --components=secrets
+        exec ${keyring-init}/bin/keyring-init
         exec mako
         exec random-wallpaper
 

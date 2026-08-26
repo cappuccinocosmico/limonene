@@ -18,7 +18,11 @@
       ];
     };
 
-    home-manager.users.brad = {config, ...}: {
+    home-manager.users.brad = {
+      config,
+      lib,
+      ...
+    }: {
       imports = [inputs.self.modules.homeManager.userCommon];
 
       home.packages = with pkgs; [
@@ -63,7 +67,7 @@
       home.sessionVariables = {
         NIXPKGS_ALLOW_UNFREE = "1";
         OPENCODE_ENABLE_EXA = "1";
-        SHELL = "${pkgs.fish}/bin/fish";
+        SHELL = lib.getExe config.limonene.defaultShell;
         BROWSER = "firefox";
         PNPM_HOME = "$HOME/.binaries/pnpm";
       };

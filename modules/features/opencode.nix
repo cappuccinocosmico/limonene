@@ -31,7 +31,7 @@
 
     # Since new OSS models are coming out so frequently I am going to switch over to a regular install for this.
     home.sessionPath = [
-      "$HOME/.opencode/bin"
+      "${config.home.homeDirectory}/.opencode/bin"
     ];
 
     # programs.opencode = {
