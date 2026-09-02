@@ -35,6 +35,11 @@
         inputs.rust-overlay.overlays.default
         inputs.nix-vscode-extensions.overlays.default
         inputs.nur.overlays.default
+        (final: prev: {
+          unstable = import inputs.nixpkgs-unstable {
+            inherit (final) system config;
+          };
+        })
         (_: prev: {
           openldap = prev.openldap.overrideAttrs {
             doCheck = !prev.stdenv.hostPlatform.isi686;
@@ -137,7 +142,7 @@
     };
 
     hardware.enableAllFirmware = true;
-    boot.kernelPackages = pkgs.linuxPackages_latest;
+    boot.kernelPackages = pkgs.unstable.linuxPackages_latest;
 
     boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 80;
 

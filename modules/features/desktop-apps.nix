@@ -1,4 +1,4 @@
-{inputs, ...}: {
+{...}: {
   flake.modules.homeManager.desktopApps = {pkgs, ...}: {
     services.kdeconnect.enable = true;
 
@@ -12,7 +12,7 @@
       # 3d Printing & CAD
       prusa-slicer
       orca-slicer
-      # (inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.orca-slicer)
+      # pkgs.unstable.orca-slicer
       freecad
       openscad
       # Android debugger:

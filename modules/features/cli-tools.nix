@@ -1,4 +1,4 @@
-{inputs, ...}: {
+{...}: {
   flake.modules.homeManager.cliTools = {pkgs, ...}: {
     home.packages = with pkgs; [
       moonlight-qt
@@ -13,7 +13,7 @@
       xh # better curl
       hyperfine
       # devenv
-      (inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.devenv)
+      pkgs.unstable.devenv
 
       just
 
