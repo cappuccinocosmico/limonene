@@ -74,7 +74,7 @@ encrypted for the age recipients listed in `.sops.yaml`.
 
 The file already exists on `add-brad-to-cheddar`. Reference content:
 
-Adjust `secretEnvVars` to match exactly the keys you put in
+Adjust `secretNames` to match exactly the keys you put in
 `secrets/brad-secrets.yaml`:
 
 ```nix
@@ -84,35 +84,40 @@ Adjust `secretEnvVars` to match exactly the keys you put in
     lib,
     ...
   }: let
-    secretEnvVars = [
+    # Add new secret names here; sops.secrets is generated automatically.
+    secretNames = [
       "OPENCODE_ZEN_API_KEY"
       # Add other provider keys here, e.g.:
       # "ANTHROPIC_API_KEY"
       # "OPENAI_API_KEY"
     ];
-
-    mkFishInit = varName: ''
-      if test -f "${config.sops.secrets.${varName}.path}"
-        set -gx ${varName} (cat "${config.sops.secrets.${varName}.path}")
-      end
-    '';
   in {
     imports = [inputs.sops-nix.homeManagerModules.sops];
 
     sops.age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
 
-    sops.secrets = lib.genAttrs secretEnvVars (_: {
+    sops.secrets = lib.genAttrs secretNames (_: {
       sopsFile = ../../secrets/brad-secrets.yaml;
     });
-
-    programs.fish.interactiveShellInit = lib.concatStringsSep "\n" (map mkFishInit secretEnvVars);
 
     home.sessionPath = [
       "$HOME/.opencode/bin"
     ];
+
+    # The API key is read directly from the sops-decrypted file at
+    # runtime, so it never enters the shell environment.
+    xdg.configFile."opencode/opencode.json".text = builtins.toJSON {
+      "$schema" = "https://opencode.ai/config.json";
+      provider.go.options.apiKey =
+        "{file:${config.sops.secrets.OPENCODE_ZEN_API_KEY.path}}";
+    };
   };
 }
 ```
+
+Secrets are decrypted by sops-nix (via a launchd agent on darwin) into
+`~/.config/sops-nix/secrets/` (mode 0400, your user only); opencode reads
+the key from that file via the `{file:...}` reference.
 
 ## Step 3: Import `opencode-brad` in brad’s darwin user module (already done)
 
@@ -139,12 +144,16 @@ The module generates this file with the `go` provider as a trial:
   "provider": {
     "go": {
       "options": {
-        "apiKey": "{env:OPENCODE_ZEN_API_KEY}"
+        "apiKey": "{file:~/.config/sops-nix/secrets/OPENCODE_ZEN_API_KEY}"
       }
     }
   }
 }
 ```
+
+The `{file:...}` path is filled in by Nix from the sops secret path, so
+opencode reads the decrypted key directly and the key never enters the
+shell environment (nothing to leak via `ps`, crash dumps, or logs).
 
 If `go` is not the correct provider name, change `"go"` in
 `modules/features/opencode-brad.nix` and rebuild.
@@ -168,18 +177,21 @@ home-manager changes for a user may require full disk access.
 
 ## Step 6: Verify opencode works
 
-Open a new fish shell as brad and check:
+Open a new fish shell as brad and check — none of these print the key
+itself:
 
 ```bash
-echo $OPENCODE_ZEN_API_KEY
 cat ~/.config/opencode/opencode.json
+ls -l ~/.config/sops-nix/secrets/
 which opencode
 opencode go
 ```
 
-If the environment variable is empty, check the sops-nix logs in the
-home-manager activation output and ensure `~brad/.config/sops/age/keys.txt`
-exists and is readable.
+`cat opencode.json` shows the `{file:...}` reference (not the key); the
+`ls` line confirms sops-nix decrypted the secret with mode 0400. If the
+secrets entry is missing, check the sops-nix logs in the home-manager
+activation output and ensure `~brad/.config/sops/age/keys.txt` exists and
+is readable.
 
 ## Troubleshooting
 
@@ -188,8 +200,11 @@ exists and is readable.
   rule.
 - **`darwin-rebuild` fails because `secrets/brad-secrets.yaml` is
   unencrypted**: run `sops secrets/brad-secrets.yaml` and rebuild.
-- **A secret key is missing at runtime**: the `secretEnvVars` list in
+- **A secret key is missing at runtime**: the `secretNames` list in
   `opencode-brad.nix` must exactly match the keys in `brad-secrets.yaml`.
+- **opencode auth fails with the key present on disk**: make sure the
+  `{file:...}` path in `~/.config/opencode/opencode.json` matches the
+  decrypted file under `~/.config/sops-nix/secrets/`.
 - **opencode binary is missing**: this setup only configures secrets and PATH.
   Install opencode itself to `~brad/.opencode/bin` separately (e.g.
   `opencode install` or by copying the binary).

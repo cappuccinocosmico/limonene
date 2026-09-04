@@ -4,29 +4,21 @@
     lib,
     ...
   }: let
-    # Add new secret env var names here; everything else is generated automatically.
-    secretEnvVars = [
+    # Add new secret names here; sops.secrets is generated automatically.
+    # Reference them in opencode.json below via {file:...} so the key never
+    # enters the shell environment.
+    secretNames = [
       "OPENCODE_ZEN_API_KEY"
     ];
-
-    # Helper to build the fish init snippet for a single secret.
-    mkFishInit = varName: ''
-      if test -f "${config.sops.secrets.${varName}.path}"
-        set -gx ${varName} (cat "${config.sops.secrets.${varName}.path}")
-      end
-    '';
   in {
     imports = [inputs.sops-nix.homeManagerModules.sops];
 
     sops.age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
 
     # Generates the sops.secrets attrset from the list of names.
-    sops.secrets = lib.genAttrs secretEnvVars (_: {
+    sops.secrets = lib.genAttrs secretNames (_: {
       sopsFile = ../../secrets/brad-secrets.yaml;
     });
-
-    # Generates the fish shell exports for all listed secrets.
-    programs.fish.interactiveShellInit = lib.concatStringsSep "\n" (map mkFishInit secretEnvVars);
 
     # Since new OSS models are coming out so frequently I am going to switch over to a regular install for this.
     home.sessionPath = [
@@ -34,12 +26,14 @@
     ];
 
     # Trial-and-error opencode provider config.
+    # The API key is read directly from the sops-decrypted file at runtime,
+    # so it never appears in the environment.
     xdg.configFile."opencode/opencode.json".text = builtins.toJSON {
       "$schema" = "https://opencode.ai/config.json";
       provider = {
         go = {
           options = {
-            apiKey = "{env:OPENCODE_ZEN_API_KEY}";
+            apiKey = "{file:${config.sops.secrets.OPENCODE_ZEN_API_KEY.path}}";
           };
         };
       };
