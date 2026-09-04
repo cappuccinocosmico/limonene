@@ -1,9 +1,11 @@
 {...}: {
-  flake.modules.homeManager.thunderbird = {pkgs, ...}: {
-    home.packages = with pkgs; [
-      protonmail-bridge
-    ];
-    services.protonmail-bridge = {
+  flake.modules.homeManager.thunderbird = {
+    lib,
+    pkgs,
+    ...
+  }: {
+    home.packages = lib.optionals pkgs.stdenv.isLinux [pkgs.protonmail-bridge];
+    services.protonmail-bridge = lib.mkIf pkgs.stdenv.isLinux {
       enable = true;
     };
     programs.thunderbird = {

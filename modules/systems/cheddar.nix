@@ -4,9 +4,16 @@
     modules = [
       inputs.self.modules.darwin.darwinWm
       inputs.home-manager.darwinModules.home-manager
+      inputs.self.modules.darwin.users-brad
+      inputs.self.modules.darwin.homebrew
       {
         nixpkgs.overlays = [
           inputs.rust-overlay.overlays.default
+          (final: prev: {
+            mcp-nixos = prev.mcp-nixos.overridePythonAttrs (old: {
+              doCheck = false;
+            });
+          })
         ];
 
         nix.enable = false;
@@ -29,11 +36,10 @@
 
         system.primaryUser = "nicole";
 
-        home-manager.users.nicole = {
-          config,
-          lib,
-          ...
-        }: {
+        home-manager.useGlobalPkgs = true;
+        home-manager.backupFileExtension = "backup";
+
+        home-manager.users.nicole = {pkgs, ...}: {
           imports = [
             inputs.self.modules.homeManager.userCommon
             inputs.self.modules.homeManager.opencode

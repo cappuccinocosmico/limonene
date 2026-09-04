@@ -1,0 +1,42 @@
+{inputs, ...}: {
+  flake.modules.homeManager.opencode-brad = {
+    config,
+    lib,
+    ...
+  }: let
+    # Add new secret names here; sops.secrets is generated automatically.
+    # Reference them in opencode.json below via {file:...} so the key never
+    # enters the shell environment.
+    secretNames = [
+      "OPENCODE_ZEN_API_KEY"
+    ];
+  in {
+    imports = [inputs.sops-nix.homeManagerModules.sops];
+
+    sops.age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
+
+    # Generates the sops.secrets attrset from the list of names.
+    sops.secrets = lib.genAttrs secretNames (_: {
+      sopsFile = ../../secrets/brad-secrets.yaml;
+    });
+
+    # Since new OSS models are coming out so frequently I am going to switch over to a regular install for this.
+    home.sessionPath = [
+      "$HOME/.opencode/bin"
+    ];
+
+    # Trial-and-error opencode provider config.
+    # The API key is read directly from the sops-decrypted file at runtime,
+    # so it never appears in the environment.
+    xdg.configFile."opencode/opencode.json".text = builtins.toJSON {
+      "$schema" = "https://opencode.ai/config.json";
+      provider = {
+        go = {
+          options = {
+            apiKey = "{file:${config.sops.secrets.OPENCODE_ZEN_API_KEY.path}}";
+          };
+        };
+      };
+    };
+  };
+}
