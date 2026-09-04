@@ -1,12 +1,11 @@
 { inputs, ... }: {
   flake.modules.darwin.darwinWm = { pkgs, ... }: {
-    nixpkgs.overlays = [
-      inputs.spacebar.overlay.aarch64-darwin
-    ];
-
-    environment.systemPackages = with pkgs; [
-      spacebar
-      rustup
+    environment.systemPackages = [
+      # spacebar v1.4.0's overlay uses darwin.apple_sdk, removed in
+      # nixpkgs 26.05; use the flake's package (built against its own
+      # pinned nixpkgs) instead of the overlay.
+      inputs.spacebar.packages.aarch64-darwin.spacebar
+      pkgs.rustup
     ];
 
     services.yabai = {
@@ -143,7 +142,7 @@
 
     services.spacebar = {
       enable = true;
-      package = pkgs.spacebar;
+      package = inputs.spacebar.packages.aarch64-darwin.spacebar;
 
       config = {
         position = "top";

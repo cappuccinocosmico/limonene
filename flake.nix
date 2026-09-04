@@ -51,7 +51,8 @@
 
     spacebar = {
       url = "github:cmacrae/spacebar/v1.4.0";
-      inputs.nixpkgs.follows = "nixpkgs";
+      # No nixpkgs follows: spacebar v1.4.0 uses darwin.apple_sdk, which was
+      # removed in nixpkgs 26.05; its own pinned nixpkgs still provides it.
     };
 
     import-tree = {

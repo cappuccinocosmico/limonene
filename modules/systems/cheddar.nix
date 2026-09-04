@@ -9,6 +9,13 @@
       {
         nixpkgs.overlays = [
           inputs.rust-overlay.overlays.default
+          # Same unstable overlay as nixos-base: shared home-manager
+          # features (languages, cli-tools) reference pkgs.unstable.
+          (final: prev: {
+            unstable = import inputs.nixpkgs-unstable {
+              inherit (final) system config;
+            };
+          })
           (final: prev: {
             mcp-nixos = prev.mcp-nixos.overridePythonAttrs (old: {
               doCheck = false;
@@ -39,7 +46,11 @@
         home-manager.useGlobalPkgs = true;
         home-manager.backupFileExtension = "backup";
 
-        home-manager.users.nicole = {pkgs, ...}: {
+        home-manager.users.nicole = {
+          config,
+          lib,
+          ...
+        }: {
           imports = [
             inputs.self.modules.homeManager.userCommon
             inputs.self.modules.homeManager.opencode
