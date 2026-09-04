@@ -46,6 +46,8 @@
         NIXPKGS_ALLOW_UNFREE = "1";
         SHELL = "${pkgs.fish}/bin/fish";
         PNPM_HOME = "$HOME/.binaries/pnpm";
+        # sops does not look in ~/.config/sops/age on macOS by default.
+        SOPS_AGE_KEY_FILE = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
       };
 
       home.sessionPath = ["$HOME/.binaries/pnpm"];
