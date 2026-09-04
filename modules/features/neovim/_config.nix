@@ -10,11 +10,12 @@
   # Build sops.nvim plugin
   sops-nvim = pkgs.vimUtils.buildVimPlugin {
     name = "sops-nvim";
+    doCheck = false;
     src = pkgs.fetchFromGitHub {
       owner = "trixnz";
       repo = "sops.nvim";
-      rev = "main";
-      hash = "sha256-6BFgZSQwrh218genHjnldv1xnCjx4PIoXZcFYKVBlGo=";
+      rev = "4de0cb71746d7a6de6311c85bc39873e56bcefc7";
+      hash = "sha256-pMnAGm7tkgM5pxhNEs06Qdx69qztMd14uNpuRi4I4qE=";
     };
   };
 
@@ -74,11 +75,24 @@ in {
         format.enable = true;
       };
 
+      html = {
+        enable = true;
+        lsp.enable = true;
+        treesitter.enable = true;
+        format.enable = true;
+      };
+
+      jinja = {
+        enable = true;
+        lsp.enable = true;
+        treesitter.enable = true;
+      };
+
       rust = {
         enable = true;
         lsp = {
           enable = true;
-          package = ["rust-analyzer"];
+          # package = ["rust-analyzer"];
         };
         treesitter.enable = true;
         format.enable = true;
@@ -104,6 +118,13 @@ in {
       };
 
       typescript = {
+        enable = true;
+        lsp.enable = true;
+        treesitter.enable = true;
+        format.enable = true;
+      };
+
+      typst = {
         enable = true;
         lsp.enable = true;
         treesitter.enable = true;

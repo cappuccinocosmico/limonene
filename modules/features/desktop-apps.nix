@@ -1,21 +1,43 @@
 {...}: {
-  flake.modules.homeManager.desktopApps = {pkgs, ...}: {
+  flake.modules.homeManager.desktopApps = {lib, pkgs, ...}: let
+    bosl2 = pkgs.stdenv.mkDerivation {
+      pname = "openscad-bosl2";
+      version = "2.0.752";
+      src = pkgs.fetchzip {
+        url = "https://github.com/BelfrySCAD/BOSL2/archive/refs/tags/v2.0.752.tar.gz";
+        sha256 = "0raaj1i9lnnd9q7bci815pr96dsjridpwa1xkczlbcx128qn0yw0";
+      };
+      installPhase = ''
+        mkdir -p $out/BOSL2
+        cp -r $src/* $out/BOSL2/
+      '';
+    };
+  in {
     services.kdeconnect.enable = true;
 
+    # Expose BOSL2 to OpenSCAD via its user library path
+    # (OpenSCAD resolves ~/.local/share/OpenSCAD/libraries first).
+    xdg.dataFile."OpenSCAD/libraries/BOSL2" = {
+      source = "${bosl2}/BOSL2";
+    };
+
     home.packages = with pkgs; [
+      libreoffice
+      # E Readers
+      thorium-reader
+      # USB Bootstick Makers
       popsicle
       impression
       # 3d Printing & CAD
+      prusa-slicer
       orca-slicer
+      # pkgs.unstable.orca-slicer
       freecad
       openscad
       # Android debugger:
       android-tools
       # Star shit
       stellarium
-
-      # Local AI Stuff:
-      ollama-cpu
 
       # Acounting
       gnucash
@@ -39,6 +61,7 @@
       # Audio
       vlc
       easyeffects
+      mpv
       # Recording
       obs-studio
       audacity

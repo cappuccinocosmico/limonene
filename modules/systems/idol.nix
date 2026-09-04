@@ -1,5 +1,5 @@
 {inputs, ...}: {
-  flake.nixosConfigurations.vermissian = inputs.nixpkgs.lib.nixosSystem {
+  flake.nixosConfigurations.idol = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     modules = [
       inputs.self.modules.nixos.base
@@ -13,26 +13,31 @@
       inputs.self.modules.nixos.sway
       inputs.self.modules.nixos.gaming
       inputs.self.modules.nixos.display-greetd
-      inputs.self.modules.nixos.ollama
-      inputs.hardware.nixosModules.common-cpu-amd
-      inputs.hardware.nixosModules.common-cpu-amd-pstate
-      inputs.hardware.nixosModules.common-gpu-amd
-      inputs.hardware.nixosModules.common-pc-ssd
-      ../../hardware/vermissian.nix
+      inputs.hardware.nixosModules.framework-16-amd-ai-300-series
+      # inputs.hardware.nixosModules.common-cpu-amd
+      # inputs.hardware.nixosModules.common-cpu-amd-pstate
+      # inputs.hardware.nixosModules.common-gpu-amd
+      # inputs.hardware.nixosModules.common-pc-ssd
+      ../../hardware/idol.nix
       {
         limonene.machineType = "desktop";
-        limonene.machineBehaviors.disableSleep.enable = true;
-        limonene.machineBehaviors.turnOffDisplay.enable = true;
         limonene.autologinUser = "nicole";
         limonene.defaultSession = "sway";
 
         home-manager.users.nicole.imports = [inputs.self.modules.homeManager.nicole-desktop];
 
-        networking.hostName = "vermissian";
+        networking.hostName = "idol";
+
+        systemd.oomd = {
+          enableRootSlice = true;
+          enableUserSlices = true;
+        };
+        zramSwap.enable = true;
+        boot.kernel.sysctl."vm.swappiness" = 10;
 
         boot.loader.systemd-boot.enable = true;
         boot.loader.efi.canTouchEfiVariables = true;
-        boot.initrd.luks.devices."luks-1b5555a7-d2e4-4cf2-9654-f19eb0dfc349".device = "/dev/disk/by-uuid/1b5555a7-d2e4-4cf2-9654-f19eb0dfc349";
+        boot.initrd.luks.devices."luks-099e44df-0372-4808-bf9a-74f2dba56f71".device = "/dev/disk/by-uuid/099e44df-0372-4808-bf9a-74f2dba56f71";
 
         i18n.defaultLocale = "en_US.UTF-8";
         i18n.extraLocaleSettings = {

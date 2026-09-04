@@ -15,6 +15,8 @@
       gnome-mines
       gnome-sudoku
       prismlauncher
+
+      pkgs.unstable.xmage
     ];
   };
 }

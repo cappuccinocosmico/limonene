@@ -10,7 +10,11 @@
     lib,
     ...
   }: {
+    fonts.fontconfig.enable = true;
+
     nix.settings = {
+      keep-derivations = false;
+      auto-optimise-store = true;
       extra-substituters = [
         "https://devenv.cachix.org"
       ];
@@ -18,11 +22,24 @@
         "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
       ];
     };
+
+    nix.gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d";
+    };
+
+    nix.optimise.automatic = true;
     nixpkgs = {
       overlays = [
         inputs.rust-overlay.overlays.default
         inputs.nix-vscode-extensions.overlays.default
         inputs.nur.overlays.default
+        (final: prev: {
+          unstable = import inputs.nixpkgs-unstable {
+            inherit (final) system config;
+          };
+        })
         (_: prev: {
           openldap = prev.openldap.overrideAttrs {
             doCheck = !prev.stdenv.hostPlatform.isi686;
@@ -42,6 +59,7 @@
 
     environment.systemPackages = with pkgs; [
       (import ../../helpers/regular-linux-shell.nix {inherit pkgs;})
+      sshpass
       libclang
       pkg-config
       openssl
@@ -62,6 +80,7 @@
       gnome-disk-utility
       git
       gcc
+      glibc
       openssl_3
       msr-tools
       parted
@@ -85,6 +104,20 @@
       settings.PasswordAuthentication = false;
     };
 
+    networking.hosts."127.0.0.1" = [
+      "jellyfin.vmtest.local"
+      "auth.vmtest.local"
+      "cryptpad.vmtest.local"
+      "*.vmtest.local"
+    ];
+    programs.ssh.extraConfig = ''
+      Host testvm
+        Hostname 127.0.0.1
+        Port 2222
+        StrictHostKeyChecking no
+        UserKnownHostsFile /dev/null
+    '';
+
     services.atd.enable = true;
     services.fwupd.enable = true;
     # services.mainsail.enable = true;
@@ -105,11 +138,11 @@
 
     services.resolved = {
       enable = true;
-      settings.Resolve.DNS = [ "1.1.1.1" "1.0.0.1" ];
+      settings.Resolve.DNS = ["1.1.1.1" "1.0.0.1"];
     };
 
     hardware.enableAllFirmware = true;
-    boot.kernelPackages = pkgs.linuxPackages_latest;
+    boot.kernelPackages = pkgs.unstable.linuxPackages_latest;
 
     boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 80;
 
@@ -159,6 +192,7 @@
 
     nixpkgs.config.permittedInsecurePackages = [
       "libsoup-2.74.3"
+      "electron-38.8.4"
     ];
 
     nix = {

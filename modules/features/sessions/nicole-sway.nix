@@ -27,6 +27,19 @@
     clipboard-type = pkgs.writeShellScriptBin "clipboard-type" ''
       ${pkgs.wl-clipboard}/bin/wl-paste | ${pkgs.wtype}/bin/wtype -
     '';
+
+    # Under autologin (greetd initial_session) PAM never supplies a password, so
+    # the gnome-keyring login keyring would stay locked and Secret Service apps
+    # (e.g. protonmail-bridge) fail with "prompt timed out". We rely on LUKS FDE as
+    # the security boundary and instead seed the login keyring with an *empty*
+    # password, which gnome-keyring auto-unlocks on startup (see Arch wiki:
+    # "automatic unlocking with automatic login ... set a blank password").
+    # `--login` reads the password from stdin (empty here) to create/unlock the
+    # login keyring, exactly as pam_gnome_keyring does for normal logins.
+    keyring-init = pkgs.writeShellScriptBin "keyring-init" ''
+      ${pkgs.gnome-keyring}/bin/gnome-keyring-daemon --daemonize --login <<< ""
+      ${pkgs.gnome-keyring}/bin/gnome-keyring-daemon --start --components=secrets
+    '';
   in {
     imports = [inputs.self.modules.homeManager.sway];
 
@@ -63,11 +76,12 @@
           eDP-1 = {};
         };
         startup = [
-          {command = "daily-ritual --gate";}
+          {command = "ensure-wallust-colors";}
           {command = "${pkgs.wl-clipboard-x11}/bin/wl-clipboard-x11";}
           {command = "swaymsg 'workspace 1; exec kitty --single-instance'";}
           {command = "swaymsg 'workspace 5; exec firefox'";}
           {command = "swaymsg 'workspace 8; exec easyeffects'";}
+          {command = "swaymsg 'workspace 8; exec slack'";}
           {command = "swaymsg 'workspace 9; exec element-desktop'";}
           {command = "swaymsg 'workspace 9; exec thunderbird'";}
           {command = "swaymsg 'workspace 10; exec signal-desktop'";}
@@ -81,31 +95,34 @@
         bars = [];
         keybindings = let
           mod = config.wayland.windowManager.sway.config.modifier;
-        in
-          lib.mkOptionDefault {
-            "XF86AudioRaiseVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+ --limit 1.0";
-            "XF86AudioLowerVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-";
-            "${mod}+equal" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+ --limit 1.0";
-            "${mod}+minus" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-";
-            "XF86AudioMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
-            "XF86MonBrightnessDown" = "exec brightnessctl -n 1 set 5%-";
-            "XF86MonBrightnessUp" = "exec brightnessctl set 5%+";
-            "XF86AudioPlay" = "exec mpc toggle -q";
-            "XF86AudioNext" = "exec mpc -q seek +5% && mpc toggle -q && mpc toggle -q";
-            "XF86AudioPrev" = "exec mpc -q seek -5% && mpc toggle -q && mpc toggle -q";
-            "Print" = "exec grimshot savecopy area";
-            "Ctrl+Print" = "exec grimshot savecopy active";
-            "${mod}+q" = "kill";
-            "${mod}+Right" = "workspace next";
-            "${mod}+Left" = "workspace prev";
-            "${mod}+p" = "exec wlogout";
+          suspendBindings = lib.optionalAttrs (!config.limonene.machineBehaviors.disableSleep.enable) {
             "${mod}+Shift+p" = "exec systemctl suspend";
             "${mod}+Shift+h" = "exec systemctl hibernate";
-            "Ctrl+Shift+${mod}+v" = "exec clipboard-type";
-            # "${mod}+g" = "exec ${config.limonene.productivity.productivityBin}/bin/productivity goals toggle-interactive";
-            # "${mod}+Shift+g" = "exec kitty --class daily-goals-add -e ${config.limonene.productivity.productivityBin}/bin/productivity goals add-interactive";
-            # "${mod}+n" = "exec kitty --class pomodoro-panel -e ${config.limonene.productivity.productivityBin}/bin/productivity panel";
           };
+        in
+          lib.mkOptionDefault (suspendBindings
+            // {
+              "XF86AudioRaiseVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+ --limit 1.0";
+              "XF86AudioLowerVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-";
+              "${mod}+equal" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+ --limit 1.0";
+              "${mod}+minus" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-";
+              "XF86AudioMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+              "XF86MonBrightnessDown" = "exec brightnessctl -n 1 set 5%-";
+              "XF86MonBrightnessUp" = "exec brightnessctl set 5%+";
+              "XF86AudioPlay" = "exec mpc toggle -q";
+              "XF86AudioNext" = "exec mpc -q seek +5% && mpc toggle -q && mpc toggle -q";
+              "XF86AudioPrev" = "exec mpc -q seek -5% && mpc toggle -q && mpc toggle -q";
+              "Print" = "exec grimshot savecopy area";
+              "Ctrl+Print" = "exec grimshot savecopy active";
+              "${mod}+q" = "kill";
+              "${mod}+Right" = "workspace next";
+              "${mod}+Left" = "workspace prev";
+              "${mod}+p" = "exec wlogout";
+              "Ctrl+Shift+${mod}+v" = "exec clipboard-type";
+              # "${mod}+g" = "exec ${config.limonene.productivity.productivityBin}/bin/productivity goals toggle-interactive";
+              # "${mod}+Shift+g" = "exec kitty --class daily-goals-add -e ${config.limonene.productivity.productivityBin}/bin/productivity goals add-interactive";
+              # "${mod}+n" = "exec kitty --class pomodoro-panel -e ${config.limonene.productivity.productivityBin}/bin/productivity panel";
+            });
       };
       extraConfig = ''
         input "1267:13037:ELAN0130:00_04F3:32ED_Touchpad" {
@@ -118,11 +135,12 @@
         }
         seat seat0 xcursor_theme default 48
         output eDP-1 scale 1
+        output * background #1e1e2e solid_color
         for_window [app_id="daily-ritual"] fullscreen enable
         for_window [app_id="daily-goals-add"] floating enable, resize set 800 100
         for_window [app_id="pomodoro-panel"] floating enable, resize set 700 350
         exec ${pkgs.dbus}/bin/dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
-        exec ${pkgs.gnome-keyring}/bin/gnome-keyring-daemon --start --components=secrets
+        exec ${keyring-init}/bin/keyring-init
         exec mako
         exec random-wallpaper
 
@@ -148,11 +166,10 @@
         "margin-left" = 8;
         "modules-left" = ["tray" "sway/workspaces"];
         "modules-center" = ["clock" "custom/pomodoro" "custom/goals"];
-        "modules-right" = ["backlight" "pulseaudio" "network" "custom/caffeine" "battery"];
+        "modules-right" = ["backlight" "pulseaudio" "network" "custom/caffeine" "battery" "memory" "cpu" "disk"];
 
         "sway/workspaces" = {
           format = "{name} {windows}";
-          "disable-click" = true;
           "format-window-separator" = " ";
           "window-rewrite-default" = "";
           "window-rewrite" = {
@@ -204,6 +221,22 @@
           "format-icons" = ["" "" "" "" "" "" "" "" "" "" "" "" "" ""];
         };
 
+        memory = {
+          format = " {percentage}%";
+          interval = 5;
+        };
+
+        cpu = {
+          format = " {usage}%";
+          interval = 5;
+        };
+
+        disk = {
+          format = "󰋊 {percentage_used}%";
+          interval = 300;
+          path = "/";
+        };
+
         pulseaudio = {
           format = "{volume}% {icon}";
           "format-muted" = "🔇";
@@ -215,22 +248,6 @@
           format = "▶ : {album} - {title}";
           "format-paused" = "⏸ : {album} - {title}";
         };
-
-        # "custom/goals" = {
-        #   format = "{}";
-        #   exec = "${config.limonene.productivity.productivityBin}/bin/productivity goals waybar";
-        #   "on-click" = "${config.limonene.productivity.productivityBin}/bin/productivity goals toggle-interactive";
-        #   interval = 10;
-        #   "return-type" = "json";
-        # };
-
-        # "custom/pomodoro" = {
-        #   format = "{}";
-        #   exec = "${config.limonene.productivity.productivityBin}/bin/productivity pomodoro waybar";
-        #   "on-click" = "kitty --class pomodoro-panel -e ${config.limonene.productivity.productivityBin}/bin/productivity panel";
-        #   interval = 1;
-        #   "return-type" = "json";
-        # };
 
         "custom/caffeine" = {
           format = "{}";
@@ -261,7 +278,7 @@
 
         clock = {
           interval = 1;
-          format = "{:%H:%M:%S}  ";
+          format = "{:%H:%M:%S}";
           "tooltip-format" = "<tt><small>{calendar}</small></tt>";
           calendar = {
             mode = "year";
@@ -282,7 +299,7 @@
       }
     ];
 
-    services.swayidle.events = {
+    services.swayidle.events = lib.mkIf (!config.limonene.machineBehaviors.disableSleep.enable) {
       "after-resume" = "random-wallpaper; sleep 2;";
     };
   };

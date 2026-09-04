@@ -1,5 +1,5 @@
-{ inputs, lib, ... }: {
-  flake.nixosConfigurations.incarnadine = inputs.nixpkgs.lib.nixosSystem {
+{inputs, ...}: {
+  flake.nixosConfigurations.junkmage = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     modules = [
       inputs.self.modules.nixos.base
@@ -12,20 +12,22 @@
       inputs.self.modules.nixos.users-nicole
       inputs.self.modules.nixos.sway
       inputs.self.modules.nixos.display-greetd
-      inputs.self.modules.nixos.ollama
-      inputs.hardware.nixosModules.framework-amd-ai-300-series
-      ../../hardware/incarnadine.nix
+      inputs.hardware.nixosModules.framework-12th-gen-intel
+      ../../hardware/junkmage.nix
       {
         limonene.machineType = "desktop";
-        limonene.machineBehaviors.disableSleep.enable = true;
+        limonene.autologinUser = "nicole";
+        limonene.defaultSession = "sway";
 
-        home-manager.users.nicole.imports = [ inputs.self.modules.homeManager.nicole-desktop ];
+        home-manager.users.nicole.imports = [inputs.self.modules.homeManager.nicole-desktop];
 
-        networking.hostName = "incarnadine";
+        # Prevent overheating on framework
+        services.throttled.enable = true;
+        networking.hostName = "junkmage";
 
         boot.loader.systemd-boot.enable = true;
         boot.loader.efi.canTouchEfiVariables = true;
-        boot.initrd.luks.devices."luks-e4c4f4e3-e6c7-43f2-8a41-5bc7add2a577".device = "/dev/disk/by-uuid/e4c4f4e3-e6c7-43f2-8a41-5bc7add2a577";
+   
 
         i18n.defaultLocale = "en_US.UTF-8";
         i18n.extraLocaleSettings = {
@@ -40,24 +42,14 @@
           LC_TIME = "en_US.UTF-8";
         };
 
-        services.xserver.xkb = { layout = "us"; variant = ""; };
-
-        services.sunshine = {
-          enable = true;
-          autoStart = true;
-          capSysAdmin = true;
-          openFirewall = true;
+        services.xserver.xkb = {
+          layout = "us";
+          variant = "";
         };
-
-        environment.systemPackages = [ inputs.nixpkgs.legacyPackages.x86_64-linux.wlr-randr ];
-
-        hardware.graphics = { enable = true; enable32Bit = true; };
-
-        users.users.nicole.extraGroups = [ "video" "render" ];
 
         system.stateVersion = "25.05";
       }
     ];
-    specialArgs = { inherit inputs; };
+    specialArgs = {inherit inputs;};
   };
 }

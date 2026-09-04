@@ -12,15 +12,23 @@
       isNormalUser = true;
       description = "Nicole";
       extraGroups = ["networkmanager" "wheel" "docker" "dialout"];
-      shell = pkgs.fish;
+      shell = pkgs.nushell;
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINBfMZjr6H4oK3qSBTxjZrMZptWXdzYC6QV4bdS892Ls nicole@vermissian"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBn5Gt4Q5alB5tDJU9wW5m1+Cm6Z/8ErzuTkSIIHgdJE nicole@junkmage"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN1tyFv2UbkAJMx2U6bp8OwRx5wMpK7/DxSslcPS0sWY nicole@incarnadine"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDBQresTdgx3Se26QxvwD/S9SaCRCWL8dvZwZ6IM62b2 nicole@cheddar"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPtpDAeIfLOlZE5y/SaHQ8h60nqbPSWdStRsvux6ECbk nicole@vermissian"
       ];
     };
 
-    home-manager.users.nicole = {config, ...}: {
+    home-manager.users.nicole = {
+      config,
+      lib,
+      pkgs,
+      ...
+    }: {
+      limonene.defaultShell = pkgs.nushell;
       imports = [
         inputs.self.modules.homeManager.userCommon
         inputs.self.modules.homeManager.opencode
@@ -63,8 +71,6 @@
         nrs = "sudo nixos-rebuild switch --flake ${config.home.homeDirectory}/limonene";
         nrb = "nixos-rebuild build --verbose --flake ${config.home.homeDirectory}/limonene";
         nrd = "nix build --dry-run ${config.home.homeDirectory}/limonene#nixosConfigurations.$(hostname).config.system.build.toplevel";
-        nziina = ''eval "if set -q ZELLIJ; exit; else; eval (ssh-agent -c); /home/nicole/Documents/mycorrhizae/ziina/ziina -l 0.0.0.0:2222; end"'';
-        ziina-sshget = ''set -x XDG_RUNTIME_DIR /run/user/1000 && set -x WAYLAND_DISPLAY wayland-1 && echo "ssh -p 2222 $ZELLIJ_SESSION_NAME@apiarist" | tee /dev/tty | wl-copy'';
       };
 
       sops.defaultSopsFile = ./secrets/nicole-secrets.yaml;
@@ -72,8 +78,8 @@
       home.sessionVariables = {
         # OPENROUTER_API_KEY = config.sops.secrets.openrouter_api_key;
         NIXPKGS_ALLOW_UNFREE = "1";
-        SHELL = "${pkgs.fish}/bin/fish";
-        GTK_THEME = "Arc-Dark";
+        SHELL = lib.getExe config.limonene.defaultShell;
+        OPENCODE_ENABLE_EXA = "1";
         BROWSER = "firefox";
         PNPM_HOME = "$HOME/.binaries/pnpm";
       };

@@ -12,7 +12,8 @@
       dua # disk usage but actually useful
       xh # better curl
       hyperfine
-      devenv
+      # devenv
+      pkgs.unstable.devenv
 
       just
 
