@@ -1,6 +1,6 @@
 keys:
   - &nicole age1m2w4k4rgnzdynx0s9xqvx7k66dfa4jv5q20hgxp6dcjjwz09mdlqqzgves
-  - &brad age1kaqf5j6qvy8d2eakv0mwcrvqwvne684pp580u3ppfhcv7emkuewqhsc8ss
+  - &brad age1jrudgmztqp9n4th760e8t7nj3y7vyg3jn0j9khnxxe7g5lge945qrpd9uh
 
 creation_rules:
   - path_regex: secrets/.*\.yaml$
