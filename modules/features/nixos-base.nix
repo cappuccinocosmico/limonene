@@ -57,6 +57,10 @@
     ];
     environment.etc."nixos/limonene".source = ../..;
 
+    programs.appimage = {
+      enable = true;
+      binfmt = true;
+    };
     environment.systemPackages = with pkgs; [
       (import ../../helpers/regular-linux-shell.nix {inherit pkgs;})
       sshpass
@@ -87,6 +91,9 @@
       emissary
       nix-update
       nixpkgs-review
+      # cococoir "NixOS-in-OCI" spike tooling (arion + docker-compose).
+      arion
+      docker-compose
     ];
     services.i2pd = {
       enable = true;
@@ -127,8 +134,15 @@
       ACTION=="add", SUBSYSTEM=="serio", KERNEL=="serio0", ATTR{power/wakeup}="disabled"
     '';
 
-    # virtualisation.docker.enable = true;
-    # virtualisation.waydroid.enable = true;
+    # Container runtime for the cococoir "NixOS-in-OCI" spike (arion
+    # full-NixOS). Podman with the docker-compatible socket, since
+    # docker + cgroupsv2 can't run a full NixOS guest. waydroid stays
+    # off.
+    virtualisation.podman = {
+      enable = true;
+      dockerSocket.enable = true;
+      defaultNetwork.dnsname.enable = true;
+    };
     services.tailscale.enable = true;
 
     networking.networkmanager = {

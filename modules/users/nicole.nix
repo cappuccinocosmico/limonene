@@ -11,7 +11,7 @@
     users.users.nicole = {
       isNormalUser = true;
       description = "Nicole";
-      extraGroups = ["networkmanager" "wheel" "docker" "dialout"];
+      extraGroups = ["networkmanager" "wheel" "docker" "podman" "dialout"];
       shell = pkgs.nushell;
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINBfMZjr6H4oK3qSBTxjZrMZptWXdzYC6QV4bdS892Ls nicole@vermissian"

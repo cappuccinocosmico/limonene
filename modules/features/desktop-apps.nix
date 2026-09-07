@@ -1,5 +1,9 @@
 {...}: {
-  flake.modules.homeManager.desktopApps = {lib, pkgs, ...}: let
+  flake.modules.homeManager.desktopApps = {
+    lib,
+    pkgs,
+    ...
+  }: let
     bosl2 = pkgs.stdenv.mkDerivation {
       pname = "openscad-bosl2";
       version = "2.0.752";
@@ -68,6 +72,7 @@
       # Messaging
       signal-desktop
       slack
+      whatsapp-electron
       zoom-us
       fractal # matrix
       element-desktop # Even more matrix
