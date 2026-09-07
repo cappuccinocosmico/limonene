@@ -92,7 +92,7 @@
       nix-update
       nixpkgs-review
       # cococoir "NixOS-in-OCI" spike tooling (arion + docker-compose).
-      arion
+      unstable.arion
       docker-compose
     ];
     services.i2pd = {
