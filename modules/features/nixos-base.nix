@@ -141,7 +141,7 @@
     virtualisation.podman = {
       enable = true;
       dockerSocket.enable = true;
-      defaultNetwork.dnsname.enable = true;
+      defaultNetwork.settings.dns_enabled = true;
     };
     services.tailscale.enable = true;
 
