@@ -210,6 +210,15 @@
     ];
 
     nix = {
+      distributedBuilds = true;
+      buildMachines = [
+        {
+          hostName = "vermissian";
+          system = "x86_64-linux";
+          maxJobs = 16;
+          supportedFeatures = ["nixos-test" "benchmark" "big-parallel"];
+        }
+      ];
       settings.trusted-users = ["root"];
       extraOptions = ''
         experimental-features = nix-command flakes
