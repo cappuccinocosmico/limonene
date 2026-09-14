@@ -34,7 +34,7 @@
         settings = {
           pane_frames = false;
           show_startup_tips = false;
-          default_shell = lib.getName config.limonene.defaultShell;
+          default_shell = lib.getExe config.limonene.defaultShell;
         };
       };
 
