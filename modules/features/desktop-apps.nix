@@ -90,6 +90,8 @@
       gnome-terminal
       gnome-text-editor
       gimp
+
+      gtk4
     ];
   };
 }

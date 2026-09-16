@@ -71,7 +71,11 @@ in {
   #         )
   #   * For per-project nightly pinning, add a rust-toolchain.toml — it
   #     doesn't affect this global install.
-  flake.modules.homeManager.rustDev = {pkgs, ...}: {
+  flake.modules.homeManager.rustDev = {
+    lib,
+    pkgs,
+    ...
+  }: {
     home.packages = [
       (pkgs.rust-bin.stable."1.97.1".default.override {
         targets = ["wasm32-unknown-unknown"];
@@ -82,5 +86,29 @@ in {
     ];
 
     home.sessionVariables = rustEnv pkgs;
+
+    # Cargo-built binaries use the nix dynamic loader, so nix-ld doesn't
+    # apply to them; crates like winit dlopen() their native libs at
+    # runtime and fail (e.g. NoWaylandLib) without an explicit
+    # LD_LIBRARY_PATH. Set it in the nushell env hook. extraEnv is
+    # types.lines, so this merges with the hook in shells.nix.
+    programs.nushell.extraEnv = ''
+      let nixLibs = "/run/opengl-driver/lib:${
+        lib.makeLibraryPath (with pkgs; [
+          wayland
+          libxkbcommon
+          libGL
+          vulkan-loader
+          fontconfig
+          freetype
+          expat
+        ])
+      }"
+      $env.LD_LIBRARY_PATH = if ($env.LD_LIBRARY_PATH? | is-empty) {
+        $nixLibs
+      } else {
+        $"($nixLibs):($env.LD_LIBRARY_PATH)"
+      }
+    '';
   };
 }
