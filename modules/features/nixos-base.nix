@@ -126,7 +126,13 @@
     '';
 
     services.atd.enable = true;
-    services.fwupd.enable = true;
+    # Disabled: fwupd's firmware probe (GET_REPORT) against the Framework
+    # Audio Expansion Card times out and triggers the upstream UAC2 clock
+    # negotiation bug (see FrameworkComputer/SoftwareFirmwareIssueTracker
+    # #161/#203). If you're reading this a year+ later, try re-enabling it;
+    # the upstream fix is expected to land eventually.
+    # mkForce because the framework-16 hardware module enables it.
+    services.fwupd.enable = lib.mkForce false;
     # services.mainsail.enable = true;
     # services.moonraker.enable = true;
 
