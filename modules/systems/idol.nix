@@ -4,6 +4,7 @@
     modules = [
       inputs.self.modules.nixos.base
       inputs.self.modules.nixos.common
+      inputs.self.modules.nixos.general
       inputs.home-manager.nixosModules.home-manager
       {
         home-manager.useUserPackages = true;
@@ -34,7 +35,6 @@
         }));
       })
       {
-        limonene.machineType = "desktop";
         limonene.autologinUser = "nicole";
         limonene.defaultSession = "sway";
 
@@ -49,29 +49,7 @@
         zramSwap.enable = true;
         boot.kernel.sysctl."vm.swappiness" = 10;
 
-        boot.loader.systemd-boot.enable = true;
-        boot.loader.efi.canTouchEfiVariables = true;
         boot.initrd.luks.devices."luks-099e44df-0372-4808-bf9a-74f2dba56f71".device = "/dev/disk/by-uuid/099e44df-0372-4808-bf9a-74f2dba56f71";
-
-        i18n.defaultLocale = "en_US.UTF-8";
-        i18n.extraLocaleSettings = {
-          LC_ADDRESS = "en_US.UTF-8";
-          LC_IDENTIFICATION = "en_US.UTF-8";
-          LC_MEASUREMENT = "en_US.UTF-8";
-          LC_MONETARY = "en_US.UTF-8";
-          LC_NAME = "en_US.UTF-8";
-          LC_NUMERIC = "en_US.UTF-8";
-          LC_PAPER = "en_US.UTF-8";
-          LC_TELEPHONE = "en_US.UTF-8";
-          LC_TIME = "en_US.UTF-8";
-        };
-
-        services.xserver.xkb = {
-          layout = "us";
-          variant = "";
-        };
-
-        system.stateVersion = "25.05";
       }
     ];
     specialArgs = {inherit inputs;};

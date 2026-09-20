@@ -38,7 +38,6 @@
         nodejs-slim
         nodejs-slim.npm
         dconf
-        mesa
         libdrm
         otel-desktop-viewer
         otel-cli
