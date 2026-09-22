@@ -77,7 +77,7 @@ in {
     ...
   }: {
     home.packages = [
-      (pkgs.rust-bin.stable."1.97.1".default.override {
+      (pkgs.unstable.rust-bin.stable."1.98.1".default.override {
         targets = ["wasm32-unknown-unknown"];
         extensions = ["rust-src" "rust-analyzer" "clippy" "rustfmt"];
       })
