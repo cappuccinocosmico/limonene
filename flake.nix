@@ -74,5 +74,16 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # The cococoir ("fortress") home-server product, consumed as a
+    # module set (nixosModules.default) plus its pkgs factory
+    # (lib.mkPkgs). Deliberately does NOT follow limonene's nixpkgs:
+    # the product pins nixos-unstable for its service versions
+    # (e.g. Jellyfin 12), and lib.mkPkgs carries the jellarr/crane
+    # build wiring the modules require. Only the barebones amon-sul
+    # machine imports it; no other limonene module depends on it.
+    cococoir = {
+      url = "path:/home/nicole/cococoir";
+    };
   };
 }
