@@ -95,6 +95,26 @@ window#waybar {
   padding: 4px 14px;
 }
 
+#memory,
+#cpu,
+#disk {
+  background: @bg;
+  color: @fg;
+  border-radius: 0;
+  margin: 6px 0;
+  padding: 1px 14px;
+}
+
+#memory {
+  border-radius: 42px 0 0 42px;
+  margin-left: 2px;
+}
+
+#disk {
+  border-radius: 0 42px 42px 0;
+  margin-right: 4px;
+}
+
 /* ── Goals ────────────────────────────────────────────────────────── */
 
 #custom-goals {

@@ -1,7 +1,8 @@
-{ ... }: {
-  flake.modules.homeManager.fonts = { pkgs, ... }: {
+{...}: {
+  flake.modules.homeManager.fonts = {pkgs, ...}: {
     fonts.fontconfig.enable = true;
     home.packages = with pkgs; [
+      dancing-script
       fira-code
       nerd-fonts.droid-sans-mono
       nerd-fonts.monofur

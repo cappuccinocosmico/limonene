@@ -8,15 +8,16 @@
   isDarwin = pkgs.stdenv.isDarwin;
 
   # Build sops.nvim plugin
-  # sops-nvim = pkgs.vimUtils.buildVimPlugin {
-  #   name = "sops-nvim";
-  #   src = pkgs.fetchFromGitHub {
-  #     owner = "trixnz";
-  #     repo = "sops.nvim";
-  #     rev = "main";
-  #     hash = "sha256-6BFgZSQwrh218genHjnldv1xnCjx4PIoXZcFYKVBlGo=";
-  #   };
-  # };
+  sops-nvim = pkgs.vimUtils.buildVimPlugin {
+    name = "sops-nvim";
+    doCheck = false;
+    src = pkgs.fetchFromGitHub {
+      owner = "trixnz";
+      repo = "sops.nvim";
+      rev = "4de0cb71746d7a6de6311c85bc39873e56bcefc7";
+      hash = "sha256-pMnAGm7tkgM5pxhNEs06Qdx69qztMd14uNpuRi4I4qE=";
+    };
+  };
 
   # Build neopywal.nvim — reads wallust palette and applies it as the colorscheme
   neopywal-nvim = pkgs.vimUtils.buildVimPlugin {
@@ -74,11 +75,24 @@ in {
         format.enable = true;
       };
 
+      html = {
+        enable = true;
+        lsp.enable = true;
+        treesitter.enable = true;
+        format.enable = true;
+      };
+
+      jinja = {
+        enable = true;
+        lsp.enable = true;
+        treesitter.enable = true;
+      };
+
       rust = {
         enable = true;
         lsp = {
           enable = true;
-          package = ["rust-analyzer"];
+          # package = ["rust-analyzer"];
         };
         treesitter.enable = true;
         format.enable = true;
@@ -104,6 +118,13 @@ in {
       };
 
       typescript = {
+        enable = true;
+        lsp.enable = true;
+        treesitter.enable = true;
+        format.enable = true;
+      };
+
+      typst = {
         enable = true;
         lsp.enable = true;
         treesitter.enable = true;
@@ -240,9 +261,9 @@ in {
         '';
       };
 
-      # sops-nvim = {
-      #   package = sops-nvim;
-      # };
+      sops-nvim = {
+        package = sops-nvim;
+      };
 
       lean-nvim = {
         package = pkgs.vimPlugins.lean-nvim;

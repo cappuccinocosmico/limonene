@@ -4,9 +4,23 @@
     modules = [
       inputs.self.modules.darwin.darwinWm
       inputs.home-manager.darwinModules.home-manager
+      inputs.self.modules.darwin.users-brad
+      inputs.self.modules.darwin.homebrew
       {
         nixpkgs.overlays = [
           inputs.rust-overlay.overlays.default
+          # Same unstable overlay as nixos-base: shared home-manager
+          # features (languages, cli-tools) reference pkgs.unstable.
+          (final: prev: {
+            unstable = import inputs.nixpkgs-unstable {
+              inherit (final) system config;
+            };
+          })
+          (final: prev: {
+            mcp-nixos = prev.mcp-nixos.overridePythonAttrs (old: {
+              doCheck = false;
+            });
+          })
         ];
 
         nix.enable = false;
@@ -29,7 +43,14 @@
 
         system.primaryUser = "nicole";
 
-        home-manager.users.nicole = {pkgs, ...}: {
+        home-manager.useGlobalPkgs = true;
+        home-manager.backupFileExtension = "backup";
+
+        home-manager.users.nicole = {
+          config,
+          lib,
+          ...
+        }: {
           imports = [
             inputs.self.modules.homeManager.userCommon
             inputs.self.modules.homeManager.opencode
@@ -38,7 +59,7 @@
           home.sessionVariables = {
             NIXPKGS_ALLOW_UNFREE = "1";
             PNPM_HOME = "$HOME/.binaries/pnpm";
-            SHELL = "${pkgs.fish}/bin/fish";
+            SHELL = lib.getExe config.limonene.defaultShell;
           };
 
           home.sessionPath = [

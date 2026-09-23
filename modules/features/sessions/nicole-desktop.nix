@@ -6,6 +6,7 @@
       inputs.self.modules.homeManager.desktopApps
       inputs.self.modules.homeManager.gaming
       inputs.self.modules.homeManager.music
+      inputs.self.modules.homeManager.easyeffects
       inputs.self.modules.homeManager.vscode
       inputs.self.modules.homeManager.firefox
       inputs.self.modules.homeManager.productivity

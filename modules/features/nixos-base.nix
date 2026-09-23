@@ -10,7 +10,11 @@
     lib,
     ...
   }: {
+    fonts.fontconfig.enable = true;
+
     nix.settings = {
+      keep-derivations = false;
+      auto-optimise-store = true;
       extra-substituters = [
         "https://devenv.cachix.org"
       ];
@@ -18,11 +22,24 @@
         "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
       ];
     };
+
+    nix.gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d";
+    };
+
+    nix.optimise.automatic = true;
     nixpkgs = {
       overlays = [
         inputs.rust-overlay.overlays.default
         inputs.nix-vscode-extensions.overlays.default
         inputs.nur.overlays.default
+        (final: prev: {
+          unstable = import inputs.nixpkgs-unstable {
+            inherit (final) system config;
+          };
+        })
         (_: prev: {
           openldap = prev.openldap.overrideAttrs {
             doCheck = !prev.stdenv.hostPlatform.isi686;
@@ -40,8 +57,13 @@
     ];
     environment.etc."nixos/limonene".source = ../..;
 
+    programs.appimage = {
+      enable = true;
+      binfmt = true;
+    };
     environment.systemPackages = with pkgs; [
       (import ../../helpers/regular-linux-shell.nix {inherit pkgs;})
+      sshpass
       libclang
       pkg-config
       openssl
@@ -62,12 +84,16 @@
       gnome-disk-utility
       git
       gcc
+      glibc
       openssl_3
       msr-tools
       parted
       emissary
       nix-update
       nixpkgs-review
+      # cococoir "NixOS-in-OCI" spike tooling (arion + docker-compose).
+      unstable.arion
+      docker-compose
     ];
     services.i2pd = {
       enable = true;
@@ -85,8 +111,28 @@
       settings.PasswordAuthentication = false;
     };
 
+    networking.hosts."127.0.0.1" = [
+      "jellyfin.vmtest.local"
+      "auth.vmtest.local"
+      "cryptpad.vmtest.local"
+      "*.vmtest.local"
+    ];
+    programs.ssh.extraConfig = ''
+      Host testvm
+        Hostname 127.0.0.1
+        Port 2222
+        StrictHostKeyChecking no
+        UserKnownHostsFile /dev/null
+    '';
+
     services.atd.enable = true;
-    services.fwupd.enable = true;
+    # Disabled: fwupd's firmware probe (GET_REPORT) against the Framework
+    # Audio Expansion Card times out and triggers the upstream UAC2 clock
+    # negotiation bug (see FrameworkComputer/SoftwareFirmwareIssueTracker
+    # #161/#203). If you're reading this a year+ later, try re-enabling it;
+    # the upstream fix is expected to land eventually.
+    # mkForce because the framework-16 hardware module enables it.
+    services.fwupd.enable = lib.mkForce false;
     # services.mainsail.enable = true;
     # services.moonraker.enable = true;
 
@@ -94,8 +140,15 @@
       ACTION=="add", SUBSYSTEM=="serio", KERNEL=="serio0", ATTR{power/wakeup}="disabled"
     '';
 
-    # virtualisation.docker.enable = true;
-    # virtualisation.waydroid.enable = true;
+    # Container runtime for the cococoir "NixOS-in-OCI" spike (arion
+    # full-NixOS). Podman with the docker-compatible socket, since
+    # docker + cgroupsv2 can't run a full NixOS guest. waydroid stays
+    # off.
+    virtualisation.podman = {
+      enable = true;
+      dockerSocket.enable = true;
+      defaultNetwork.settings.dns_enabled = true;
+    };
     services.tailscale.enable = true;
 
     networking.networkmanager = {
@@ -105,11 +158,11 @@
 
     services.resolved = {
       enable = true;
-      settings.Resolve.DNS = [ "1.1.1.1" "1.0.0.1" ];
+      settings.Resolve.DNS = ["1.1.1.1" "1.0.0.1"];
     };
 
     hardware.enableAllFirmware = true;
-    boot.kernelPackages = pkgs.linuxPackages_latest;
+    boot.kernelPackages = pkgs.unstable.linuxPackages_latest;
 
     boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 80;
 
@@ -164,6 +217,15 @@
     ];
 
     nix = {
+      distributedBuilds = true;
+      buildMachines = [
+        {
+          hostName = "vermissian";
+          system = "x86_64-linux";
+          maxJobs = 16;
+          supportedFeatures = ["nixos-test" "benchmark" "big-parallel"];
+        }
+      ];
       settings.trusted-users = ["root"];
       extraOptions = ''
         experimental-features = nix-command flakes

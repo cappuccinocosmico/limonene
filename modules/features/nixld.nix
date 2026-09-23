@@ -1,5 +1,10 @@
 {inputs, ...}: {
   flake.modules.nixos.nixld = {pkgs, ...}: {
+    # NOTE: do NOT add the nix-ld lib dir to the global LD_LIBRARY_PATH.
+    # nix-ld ships an older nss, and LD_LIBRARY_PATH outranks apps' own
+    # runpaths, so it breaks firefox (NSS_3.113 not found) and similar.
+    # See ../features/olympus.nix for the scoped fix.
+
     programs.nix-ld = {
       enable = true;
       libraries = with pkgs; [
@@ -21,6 +26,9 @@
         libxshmfence
         libxxf86vm
         libelf
+
+        # Olympus needed this:
+        icu
 
         # Required
         glib

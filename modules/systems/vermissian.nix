@@ -4,6 +4,7 @@
     modules = [
       inputs.self.modules.nixos.base
       inputs.self.modules.nixos.common
+      inputs.self.modules.nixos.general
       inputs.home-manager.nixosModules.home-manager
       {
         home-manager.useUserPackages = true;
@@ -11,43 +12,25 @@
       }
       inputs.self.modules.nixos.users-nicole
       inputs.self.modules.nixos.sway
+      inputs.self.modules.nixos.gaming
       inputs.self.modules.nixos.display-greetd
-      inputs.hardware.nixosModules.framework-12th-gen-intel
+      inputs.self.modules.nixos.ollama
+      inputs.hardware.nixosModules.common-cpu-amd
+      inputs.hardware.nixosModules.common-cpu-amd-pstate
+      inputs.hardware.nixosModules.common-gpu-amd
+      inputs.hardware.nixosModules.common-pc-ssd
       ../../hardware/vermissian.nix
       {
-        limonene.machineType = "desktop";
+        limonene.machineBehaviors.disableSleep.enable = true;
+        limonene.machineBehaviors.turnOffDisplay.enable = true;
         limonene.autologinUser = "nicole";
         limonene.defaultSession = "sway";
 
         home-manager.users.nicole.imports = [inputs.self.modules.homeManager.nicole-desktop];
 
-        # Prevent overheating on framework
-        services.throttled.enable = true;
         networking.hostName = "vermissian";
 
-        boot.loader.systemd-boot.enable = true;
-        boot.loader.efi.canTouchEfiVariables = true;
-        boot.initrd.luks.devices."luks-ff4e0550-7152-4404-8b86-f76ad713b49e".device = "/dev/disk/by-uuid/ff4e0550-7152-4404-8b86-f76ad713b49e";
-
-        i18n.defaultLocale = "en_US.UTF-8";
-        i18n.extraLocaleSettings = {
-          LC_ADDRESS = "en_US.UTF-8";
-          LC_IDENTIFICATION = "en_US.UTF-8";
-          LC_MEASUREMENT = "en_US.UTF-8";
-          LC_MONETARY = "en_US.UTF-8";
-          LC_NAME = "en_US.UTF-8";
-          LC_NUMERIC = "en_US.UTF-8";
-          LC_PAPER = "en_US.UTF-8";
-          LC_TELEPHONE = "en_US.UTF-8";
-          LC_TIME = "en_US.UTF-8";
-        };
-
-        services.xserver.xkb = {
-          layout = "us";
-          variant = "";
-        };
-
-        system.stateVersion = "25.05";
+        boot.initrd.luks.devices."luks-1b5555a7-d2e4-4cf2-9654-f19eb0dfc349".device = "/dev/disk/by-uuid/1b5555a7-d2e4-4cf2-9654-f19eb0dfc349";
       }
     ];
     specialArgs = {inherit inputs;};

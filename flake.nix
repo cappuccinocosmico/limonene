@@ -12,7 +12,10 @@
       url = "github:nixos/nixpkgs/nixos-unstable";
     };
 
-    flake-parts.url = "github:hercules-ci/flake-parts";
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
@@ -20,7 +23,7 @@
     };
 
     nix-darwin = {
-      url = "github:nix-darwin/nix-darwin";
+      url = "github:nix-darwin/nix-darwin/nix-darwin-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -28,7 +31,7 @@
 
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     nix-vscode-extensions = {
@@ -46,9 +49,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    spacebar.url = "github:cmacrae/spacebar/v1.4.0";
+    spacebar = {
+      url = "github:cmacrae/spacebar/v1.4.0";
+      # No nixpkgs follows: spacebar v1.4.0 uses darwin.apple_sdk, which was
+      # removed in nixpkgs 26.05; its own pinned nixpkgs still provides it.
+    };
 
-    import-tree.url = "github:vic/import-tree";
+    import-tree = {
+      url = "github:vic/import-tree";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nur = {
       url = "github:nix-community/nur";

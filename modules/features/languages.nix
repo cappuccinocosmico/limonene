@@ -1,6 +1,8 @@
 {...}: {
   flake.modules.homeManager.languages = {pkgs, ...}: {
     home.packages = with pkgs; [
+      pkgs.unstable.whisperx
+      ffmpeg
       # nix language development stuff:
       mcp-nixos
 
