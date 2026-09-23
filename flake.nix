@@ -83,7 +83,7 @@
     # build wiring the modules require. Only the barebones amon-sul
     # machine imports it; no other limonene module depends on it.
     cococoir = {
-      url = "path:/home/nicole/cococoir";
+      url = "github:ElementalPlaneofAir/cococoir";
     };
   };
 }

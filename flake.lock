@@ -6,20 +6,24 @@
         "flake-parts": "flake-parts",
         "import-tree": "import-tree",
         "jellarr": "jellarr",
+        "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs",
         "rust-overlay": "rust-overlay",
         "sops-nix": "sops-nix",
         "system-manager": "system-manager"
       },
       "locked": {
-        "lastModified": 1790193381,
-        "narHash": "sha256-nS/dljpjnpuCuXtxbn1uNT4SgiVNJmhN//e/0A1XtZU=",
-        "path": "/home/nicole/cococoir",
-        "type": "path"
+        "lastModified": 1790198865,
+        "narHash": "sha256-lf+6pfT32w26CAVS4ofIJiigGbXfPtadVqAwi+T2dgI=",
+        "owner": "ElementalPlaneofAir",
+        "repo": "cococoir",
+        "rev": "15a3fc7c946f1ca3f3535822189da5fffea0f4be",
+        "type": "github"
       },
       "original": {
-        "path": "/home/nicole/cococoir",
-        "type": "path"
+        "owner": "ElementalPlaneofAir",
+        "repo": "cococoir",
+        "type": "github"
       }
     },
     "crane": {
@@ -286,16 +290,17 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1786759225,
-        "narHash": "sha256-hSwb4Jg0JGkrQeEck7spTPBtvIfiIPMkIgBPO0dgqJs=",
+        "lastModified": 1789163032,
+        "narHash": "sha256-LGLH3EsgUgqkqaPAJpy1gC7empCPE7mRrque4aU/VTs=",
         "owner": "venkyr77",
         "repo": "jellarr",
-        "rev": "de530bc0117eb4018598a67245e748623a6ce6dc",
+        "rev": "317f7be9d4a758f25b8180feb41fae12530a53a1",
         "type": "github"
       },
       "original": {
         "owner": "venkyr77",
         "repo": "jellarr",
+        "rev": "317f7be9d4a758f25b8180feb41fae12530a53a1",
         "type": "github"
       }
     },
@@ -336,6 +341,27 @@
       }
     },
     "nix-index-database": {
+      "inputs": {
+        "nixpkgs": [
+          "cococoir",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1789892076,
+        "narHash": "sha256-Dkg4VKPmDPqTwaiw2WH5br73tXoL1qrOO0xJnR4TlcA=",
+        "owner": "nix-community",
+        "repo": "nix-index-database",
+        "rev": "9ad722673ab3b3f91f02135e53775825b240b869",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nix-index-database",
+        "type": "github"
+      }
+    },
+    "nix-index-database_2": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs"
@@ -594,7 +620,7 @@
         "home-manager": "home-manager",
         "import-tree": "import-tree_2",
         "nix-darwin": "nix-darwin",
-        "nix-index-database": "nix-index-database",
+        "nix-index-database": "nix-index-database_2",
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixpkgs": "nixpkgs_4",
         "nixpkgs-unstable": "nixpkgs-unstable",
