@@ -45,7 +45,6 @@
         zed-editor
         gnucash
         octaveFull
-        libreoffice-qt
       ];
 
       programs.git = {

@@ -214,6 +214,7 @@
       "libsoup-2.74.3"
       "electron-38.8.4"
       "electron-39.8.10"
+      "electron-41.9.1"
     ];
 
     nix = {

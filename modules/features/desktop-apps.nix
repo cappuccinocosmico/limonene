@@ -26,7 +26,7 @@
     };
 
     home.packages = with pkgs; [
-      libreoffice
+      libreoffice-qt
       # E Readers
       thorium-reader
       # USB Bootstick Makers
