@@ -8,16 +8,15 @@
         "jellarr": "jellarr",
         "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs",
-        "rust-overlay": "rust-overlay",
         "sops-nix": "sops-nix",
         "system-manager": "system-manager"
       },
       "locked": {
-        "lastModified": 1790198865,
-        "narHash": "sha256-lf+6pfT32w26CAVS4ofIJiigGbXfPtadVqAwi+T2dgI=",
+        "lastModified": 1790686011,
+        "narHash": "sha256-LdUsgN7R1Wfz+DN5II36OYG6ED58ISvS9NvhqinEknY=",
         "owner": "ElementalPlaneofAir",
         "repo": "cococoir",
-        "rev": "15a3fc7c946f1ca3f3535822189da5fffea0f4be",
+        "rev": "a9e36caf7ea2203222bc91d6e6783f193743d268",
         "type": "github"
       },
       "original": {
@@ -626,34 +625,13 @@
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nur": "nur",
         "nvf": "nvf",
-        "rust-overlay": "rust-overlay_2",
+        "rust-overlay": "rust-overlay",
         "sops-nix": "sops-nix_2",
         "spacebar": "spacebar",
         "vpn-confinement": "vpn-confinement"
       }
     },
     "rust-overlay": {
-      "inputs": {
-        "nixpkgs": [
-          "cococoir",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1789802016,
-        "narHash": "sha256-QVFfArbYaQMGK4dFV+5RUL72Ci+hNHVhaF/R9qJfDhs=",
-        "owner": "oxalica",
-        "repo": "rust-overlay",
-        "rev": "26a71e661c47bd21a05d06fec749f3f7c75e9d12",
-        "type": "github"
-      },
-      "original": {
-        "owner": "oxalica",
-        "repo": "rust-overlay",
-        "type": "github"
-      }
-    },
-    "rust-overlay_2": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs-unstable"
