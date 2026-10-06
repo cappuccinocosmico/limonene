@@ -11,6 +11,7 @@
       inputs.self.modules.homeManager.firefox
       inputs.self.modules.homeManager.productivity
       inputs.self.modules.homeManager.githubNotifications
+      inputs.self.modules.homeManager.olympus
     ];
 
     home.sessionVariables.TERMINAL = "kitty";
