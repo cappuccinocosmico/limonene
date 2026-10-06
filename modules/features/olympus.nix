@@ -1,5 +1,5 @@
-{pkgs, ...}: {
-  flake.modules.homeManager.olympus = let
+{...}: {
+  flake.modules.homeManager.olympus = {pkgs, ...}: let
     olympusInstall = "/home/nicole/Downloads/linux.main";
   in {
     # Olympus' bundled .NET (Olympus.Sharp) needs libicu. The icu in
@@ -13,7 +13,7 @@
     # These vars travel down love -> Olympus.Sharp.
     # NOTE: don't fix this via the global LD_LIBRARY_PATH (nixld.nix) --
     # nix-ld's older nss breaks firefox then.
-    packages = let
+    home.packages = let
       olympus = pkgs.writeShellScriptBin "olympus" ''
         exec env \
           DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1 \
