@@ -1,67 +1,58 @@
-# amon-sul cutover — deploy runbook (2026-10-06)
+# amon-sul cutover — deploy runbook
 
-Split per ADR-037. `README.md` describes what the old config was; this is
-the exact procedure to cut the box over. It is **unverified live** — the
-applier has never run on real hardware, only on `smtest`.
+Split per ADR-037. `README.md` describes what the old config was. The
+applier is proven on `smtest` (2026-10-07 — Caddy active, Dex proxied on the
+LAN plane, survives re-apply + reboot) but not yet on real hardware.
 
-> **Pin caveat (2026-10-07).** The Caddy-on-applier fix lives in cococoir
-> *after* `a3c5fad`. `flake.nix`/`flake.lock` here pin `a3c5fad`, so as-is
-> the applier still dies on `caddy.service: status=217/USER`. Before
-> running: commit + push cococoir, then re-pin this folder to that commit
-> (`nix flake update cococoir` in `limonene`, and the `cococoir.url` in
-> `archive/amon-sul/flake.nix`). Caddy was proven on `smtest` 2026-10-07.
+> **Pin invariant.** The machine flake (`limonene/flake.lock`) and the
+> folder seed (`archive/amon-sul/flake.nix`) pin cococoir *independently*
+> and MUST name the same rev. Commit `2f5436d` bumped only the machine one,
+> so the applier kept building the old `a3c5fad` and died on
+> `caddy.service: status=217/USER`. Both now pin `6fcf25b` (Caddy under the
+> applier).
 
-The applier (`nixosModules.applier`) is committed and pushed to cococoir
-`main` at `a3c5fad`, and `flake.lock` now pins it, so the machine flake
-builds with no override. All files here are committed to limonene `main` on
-vermissian; the box needs them pulled (it has no GitHub access).
+## Already cut over? Re-apply the app layer
 
-## Get the changes onto the box
-
-The box cannot reach GitHub, so pull from vermissian. Its `limonene` has
-diverged with a local commit `3dc72c2 "amon-sul config stuff"` — it carries
-the new `amon-sul.nix` (identical to vermissian's) and a stray
-`amon-sul.nix.prebak`, but **not** the `flake.lock` pin, so a rebuild would
-fail on `nixosModules.applier`. Vermissian's `main` is canonical; reset the
-box's checkout to it — the local commit is redundant:
+The OS is already switched, so only the app layer (the magic folder) needs
+the new pin. The folder is a **git repo**, and nix builds it from the
+committed tree — an uncommitted edit is invisible, so the change must be
+committed:
 
 ```bash
-# from the bundle the assistant copied to the box (no auth needed):
-git -C /home/nicole/limonene fetch /home/nicole/limonene.bundle main
-git -C /home/nicole/limonene reset --hard FETCH_HEAD
-
-# alternative, over the tailnet (needs the box's key allowed on vermissian):
-git -C /home/nicole/limonene fetch nicole@100.64.20.107:/home/nicole/limonene main
-git -C /home/nicole/limonene reset --hard FETCH_HEAD
+sudo sed -i \
+  's|/a3c5fad179d219eee48c30b992a99772b7605e2f|/6fcf25bb64c1ae7b44b151262eb9b18cc0e319d6|' \
+  /etc/fortress/config/flake.nix
+sudo rm -f /etc/fortress/config/flake.lock
+sudo git -C /etc/fortress/config -c user.email=fortress@localhost -c user.name=fortress \
+  commit -qam "re-pin cococoir to 6fcf25b (caddy under the applier)"
+sudo fortress-apply            # rebuilds + restarts fortress.target; no nixos-rebuild
 ```
 
-This drops `3dc72c2` and the `amon-sul.nix.prebak` file; the old config is
-preserved as `archive/amon-sul/amon-sul.nix`. Everything below is then at
-`/home/nicole/limonene/archive/amon-sul/`.
+`6fcf25b` is already in the box's store (the machine flake fetched it), so
+this needs no network. Verify with Part C. (`sudo nixos-rebuild switch
+--flake .` in `~/limonene` also re-runs `fortress-apply` on boot — but it
+re-applies the *same* folder, so fixing the folder is what matters.)
 
 ## Prerequisites (found 2026-10-06)
 
-1. **The box has no working DNS.** `/etc/resolv.conf` is tailscale's
-   MagicDNS (`100.100.100.100`), which does not resolve public names here:
-   `getent hosts github.com` fails, `curl https://cache.nixos.org` fails.
-   Every Nix fetch breaks, so the applier's boot-time build cannot work.
-   Live fix is step 1 below; the durable fix
+1. **The box's DNS was broken.** `/etc/resolv.conf` was tailscale's MagicDNS
+   (`100.100.100.100`), which does not resolve public names:
+   `getent hosts github.com` failed. The durable fix
    (`services.tailscale.extraSetFlags = [ "--accept-dns=false" ]`) is in the
-   new machine flake.
-2. **No passwordless sudo** — the root steps below must be run by a human.
+   machine flake; the live fix is step 1 of Part B.
+2. **No passwordless sudo** — the root steps must be run by a human.
 
-## Part A — already in the repo (`archive/amon-sul/`)
+## Part A — repo layout (`archive/amon-sul/`)
 
 - `amon-sul.nix` — the old all-in-one config (archive).
 - `README.md` — what the box ran.
 - `config.nix` — the app-config target (each block marked applier-ready /
   blocked).
-- `flake.nix` — the magic-folder flake, pinning cococoir `a3c5fad`.
-- `fortress-bootstrap.sh` — the folder generator (the box's own cococoir
-  checkout is stale and lacks it).
-- The new hardware-only machine flake is `modules/systems/amon-sul.nix`.
+- `flake.nix` — the magic-folder flake, pinning cococoir `6fcf25b`.
+- `fortress-bootstrap.sh` — the folder generator.
+- The hardware-only machine flake is `limonene/modules/systems/amon-sul.nix`.
 
-## Part B — root, on the box
+## Part B — first-time cutover (already done on amon-sul)
 
 ```bash
 A=/home/nicole/limonene/archive/amon-sul
@@ -90,24 +81,25 @@ sudo nixos-rebuild switch --flake /home/nicole/limonene#amon-sul
 sudo reboot
 ```
 
-## Part C — verify after reboot
+## Part C — verify
 
 ```bash
-systemctl status fortress-apply.service fortress-bootstrap.service
-systemctl status dex.service fortress-dns.service caddy.service   # caddy only if a service is public
-curl -sf http://127.0.0.1:5556/dex/.well-known/openid-configuration | head -c 120
+systemctl status fortress-apply.service caddy.service dex.service fortress-dns.service
+curl -sf http://127.0.0.1:5556/dex/.well-known/openid-configuration | head -c 120   # dex direct
+curl -sf http://192.168.0.7/dex/.well-known/openid-configuration | head -c 120     # through Caddy (LAN plane)
 getent hosts github.com            # DNS must still work (machine flake's extraSetFlags)
 tailscale status | head -2         # still on the tailnet
 ```
 
-Expected end state: **dex on loopback only** — no public vhosts, no ACME,
-no tunnel, no media stack. That is the accepted window until services are
-graduated into the applier and re-added to `/etc/fortress/config/config.nix`.
+Expected end state: **Dex fronted by Caddy on the LAN plane** (`192.168.0.7`),
+no ACME (Caddy's auto-HTTPS on the clearnet hostname has no network yet), no
+tunnel, no media stack. That is the accepted window until the remaining
+services are graduated into the applier and re-added to
+`/etc/fortress/config/config.nix`.
 
 ## Rollback
 
-`nixos-rebuild switch` is atomic and `systemd-boot` keeps prior
-generations. If the new generation misbehaves:
+`nixos-rebuild switch` is atomic and `systemd-boot` keeps prior generations:
 
 ```bash
 sudo nixos-rebuild switch --rollback && sudo reboot
@@ -125,5 +117,6 @@ uses `plain-dirs`.
   `tailscale set` at boot; if it races tailscaled the box reverts to broken
   DNS on reboot. The tailnet-console fix (add a global nameserver) is the
   more robust alternative.
-- Bootstrap's `nix flake lock` needs GitHub reachable; if DNS regresses
-  mid-run, step 4 fails cleanly and nothing is cut over.
+- With `fortress.tls.mode = "off"`, Caddy still auto-promotes the clearnet
+  hostname to HTTPS (ACME) and will fail without network; the LAN plane
+  (`http://<lan>/dex`) is the plain-HTTP path the e2e uses.
