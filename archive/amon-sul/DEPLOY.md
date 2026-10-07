@@ -4,6 +4,13 @@ Split per ADR-037. `README.md` describes what the old config was; this is
 the exact procedure to cut the box over. It is **unverified live** — the
 applier has never run on real hardware, only on `smtest`.
 
+> **Pin caveat (2026-10-07).** The Caddy-on-applier fix lives in cococoir
+> *after* `a3c5fad`. `flake.nix`/`flake.lock` here pin `a3c5fad`, so as-is
+> the applier still dies on `caddy.service: status=217/USER`. Before
+> running: commit + push cococoir, then re-pin this folder to that commit
+> (`nix flake update cococoir` in `limonene`, and the `cococoir.url` in
+> `archive/amon-sul/flake.nix`). Caddy was proven on `smtest` 2026-10-07.
+
 The applier (`nixosModules.applier`) is committed and pushed to cococoir
 `main` at `a3c5fad`, and `flake.lock` now pins it, so the machine flake
 builds with no override. All files here are committed to limonene `main` on

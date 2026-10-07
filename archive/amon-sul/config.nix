@@ -5,13 +5,14 @@
 # (ADR-037). See README.md beside this file for the full picture.
 #
 # ============================================================================
-# NOT DEPLOYABLE AS-IS. The applier is a dex+caddy vertical slice today:
+# The dex + caddy slice is now deployable: Caddy runs under the applier
+# (2026-10-07). What still blocks a *full* migration:
 #
 #   * `jellyfin`, `jellarr`, `radarr`, `sonarr`, `qbittorrent`, `seerr` are
 #     stubs in nix/system-manager/host-shim.nix and hard-fail if enabled.
 #   * The applier installs only `systemd/system` from the closure
 #     (nix/system-manager/apply.sh), so `environment.etc` files are never
-#     written and `tmpfiles.d` is never applied.
+#     written and `tmpfiles.d` is never applied — blocks the tunnel client.
 #
 # Each block is marked [applier-ready] or [blocked: <reason>].
 # ============================================================================
