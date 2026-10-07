@@ -11,18 +11,26 @@ vermissian; the box needs them pulled (it has no GitHub access).
 
 ## Get the changes onto the box
 
-The box's `limonene` is at `15791b2`, an ancestor of vermissian's `main`, so
-this is a fast-forward. It cannot reach GitHub, so pull from vermissian:
+The box cannot reach GitHub, so pull from vermissian. Its `limonene` has
+diverged with a local commit `3dc72c2 "amon-sul config stuff"` — it carries
+the new `amon-sul.nix` (identical to vermissian's) and a stray
+`amon-sul.nix.prebak`, but **not** the `flake.lock` pin, so a rebuild would
+fail on `nixosModules.applier`. Vermissian's `main` is canonical; reset the
+box's checkout to it — the local commit is redundant:
 
 ```bash
-# Option A — from a bundle the assistant copied to the box (no auth needed):
-git -C /home/nicole/limonene pull /home/nicole/limonene.bundle main
+# from the bundle the assistant copied to the box (no auth needed):
+git -C /home/nicole/limonene fetch /home/nicole/limonene.bundle main
+git -C /home/nicole/limonene reset --hard FETCH_HEAD
 
-# Option B — over the tailnet (needs the box's key allowed on vermissian):
-git -C /home/nicole/limonene pull nicole@100.64.20.107:/home/nicole/limonene main
+# alternative, over the tailnet (needs the box's key allowed on vermissian):
+git -C /home/nicole/limonene fetch nicole@100.64.20.107:/home/nicole/limonene main
+git -C /home/nicole/limonene reset --hard FETCH_HEAD
 ```
 
-After pulling, everything below is at `/home/nicole/limonene/archive/amon-sul/`.
+This drops `3dc72c2` and the `amon-sul.nix.prebak` file; the old config is
+preserved as `archive/amon-sul/amon-sul.nix`. Everything below is then at
+`/home/nicole/limonene/archive/amon-sul/`.
 
 ## Prerequisites (found 2026-10-06)
 
