@@ -21,7 +21,7 @@
 }: {
   # ── Exposure ────────────────────────────────────────────────────────
   # [applier-ready]
-  fortress.baseDomain = "fractal.interdim.net";
+  fortress.baseDomain = "amon-sul.proleteriat.tech";
   fortress.tls.mode = "acme";
   fortress.network.lanAddress = "192.168.0.7";
 
@@ -86,8 +86,8 @@
   #     edge_allowed_ips = "10.10.0.0/24";
   #   };
   #   forwards = [
-  #     { listen_addr = "10.10.0.3:80"; proto = "tcp"; dest_addr = "127.0.0.1:80"; }
-  #     { listen_addr = "10.10.0.3:443"; proto = "tcp"; dest_addr = "127.0.0.1:443"; }
+  #     { listen_addr = "10.10.0.3:8080"; proto = "tcp"; dest_addr = "127.0.0.1:80"; }
+  #     { listen_addr = "10.10.0.3:8443"; proto = "tcp"; dest_addr = "127.0.0.1:443"; }
   #   ];
   # };
   # # One-time copy of the legacy wg identity; without it the client
