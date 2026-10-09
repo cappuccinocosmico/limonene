@@ -14,7 +14,7 @@
 # `fortress.secrets.sopsFile` below is now required, not optional).
 {
   description = "Fortress configuration (amon-sul)";
-  inputs.cococoir.url = "github:ElementalPlaneOfAir/cococoir/478567801029ae169bcae8b6d44a3b44ee3553dc";
+  inputs.cococoir.url = "github:ElementalPlaneOfAir/cococoir/edcadb9b4a05ad217308cf47596fc8830f4b0769";
   outputs = {cococoir, ...}: {
     systemConfigs.fortress = cococoir.lib.mkFortressSystemConfig ({...}: {
       imports = [ ./config.nix ];
