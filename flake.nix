@@ -75,6 +75,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # MeshCore LoRa client; nix-package branch adds a Linux package output
+    # (flutter.buildFlutterApplication) consumed by modules/features/meshcore.nix.
+    # No nixpkgs follows: the app's code needs a Flutter newer than 26.05's
+    # flutter341 (ReorderableListView.onReorderItem), so it builds against its
+    # own pinned nixpkgs-unstable (flutter 3.47.4).
+    meshcore-open = {
+      url = "github:cappuccinocosmico/meshcore-open/nix-package";
+    };
+
     # The cococoir ("fortress") home-server product, consumed as a
     # module set (nixosModules.default) plus its pkgs factory
     # (lib.mkPkgs). Deliberately does NOT follow limonene's nixpkgs:

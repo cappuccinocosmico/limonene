@@ -12,6 +12,7 @@
       inputs.self.modules.homeManager.productivity
       inputs.self.modules.homeManager.githubNotifications
       inputs.self.modules.homeManager.olympus
+      inputs.self.modules.homeManager.meshcore
     ];
 
     home.sessionVariables.TERMINAL = "kitty";
