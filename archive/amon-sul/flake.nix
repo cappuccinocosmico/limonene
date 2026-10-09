@@ -8,11 +8,13 @@
 # `cococoir` is pinned to the exact rev the machine flake uses (see
 # limonene's flake.lock) so machine and app build the same cococoir.
 # Bootstrap generates a `main`-tracking flake; this replaces it.
-# 2026-10-07: bumped 6fcf25b -> d46a656 (Caddy binds the wildcard;
-# the tunnel ingress moved to :8080/:8443).
+# 2026-10-08: bumped d46a656 -> 8aedf1b (HTTPS scoped to the clearnet
+# domain; the LAN plane is a :80 plain-HTTP catch-all).
+# 2026-10-09: bumped 8aedf1b -> 92dc01b (secrets sealed in the store;
+# `fortress.secrets.sopsFile` below is now required, not optional).
 {
   description = "Fortress configuration (amon-sul)";
-  inputs.cococoir.url = "github:ElementalPlaneOfAir/cococoir/d46a656ffaef4cf231844b404b39a7bec55b1c5b";
+  inputs.cococoir.url = "github:ElementalPlaneOfAir/cococoir/92dc01bd96cf67f19944c41b287f16740429054b";
   outputs = {cococoir, ...}: {
     systemConfigs.fortress = cococoir.lib.mkFortressSystemConfig ({...}: {
       imports = [ ./config.nix ];

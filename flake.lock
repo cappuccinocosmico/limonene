@@ -12,11 +12,11 @@
         "system-manager": "system-manager"
       },
       "locked": {
-        "lastModified": 1791467902,
-        "narHash": "sha256-txr6mp2OiT8giLeZofIZYSsMZWoyLRRmm2jQXzY82o0=",
+        "lastModified": 1791541479,
+        "narHash": "sha256-b61xc/CIcbSzEAeiaS9856z/eIYQpNYCRAh/CwfDE4s=",
         "owner": "ElementalPlaneofAir",
         "repo": "cococoir",
-        "rev": "8aedf1b89b9eb251f2441c4af77e1c63a09302ef",
+        "rev": "92dc01bd96cf67f19944c41b287f16740429054b",
         "type": "github"
       },
       "original": {

@@ -74,10 +74,12 @@
   ];
 
   # ── Tunnel client (ADR-025) ─────────────────────────────────────────
-  # [blocked: the applier does not install environment.etc, so the
-  #  client's /etc/fortress-client.json would never be written]
+  # [applier-ready] The client reads its config from a store path now
+  # (services.fortress-client.settings), never /etc — that was the 502.
+  # Its admin credential is the sops template sops-wire renders from
+  # fortress-admin-password-hash; no *File option to set.
   # services.fortress-client.enable = true;
-  # environment.etc."fortress-client.json".text = builtins.toJSON {
+  # services.fortress-client.settings = {
   #   tunnel = {
   #     ip = "10.10.0.3";
   #     prefix = 24;
