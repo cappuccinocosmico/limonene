@@ -85,7 +85,6 @@
       git
       gcc
       glibc
-      openssl_3
       msr-tools
       parted
       emissary
