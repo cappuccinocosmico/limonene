@@ -82,7 +82,7 @@
     # own pinned nixpkgs-unstable (flutter 3.47.4).
     mesh-client = {
       url = "github:Colorado-Mesh/mesh-client";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # The cococoir ("fortress") home-server product, consumed as a
