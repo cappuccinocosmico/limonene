@@ -20,20 +20,6 @@
       # inputs.hardware.nixosModules.common-gpu-amd
       # inputs.hardware.nixosModules.common-pc-ssd
       ../../hardware/idol.nix
-      ({
-        lib,
-        pkgs,
-        ...
-      }: {
-        boot.kernelPackages = lib.mkForce (pkgs.unstable.linuxPackagesFor (pkgs.unstable.linux_latest.override {
-          kernelPatches = [
-            {
-              name = "framework16-min-brightness";
-              patch = ./framework16-min-brightness.patch;
-            }
-          ];
-        }));
-      })
       {
         limonene.autologinUser = "nicole";
         limonene.defaultSession = "sway";
