@@ -23,7 +23,10 @@
       ../../hardware/vermissian.nix
       {
         limonene.machineBehaviors.disableSleep.enable = true;
-        limonene.machineBehaviors.turnOffDisplay.enable = true;
+        # vermissian is a remote-only box: its session is a headless sway
+        # with a virtual output for Sunshine/Moonlight (see gamestream
+        # module) — there is no physical display to power off.
+        limonene.gamestream.headless.enable = true;
         limonene.autologinUser = "nicole";
         limonene.defaultSession = "sway";
 
