@@ -17,8 +17,6 @@
 
       just
 
-      tmate # Backup remote terminal viewer
-
       kompose # docker compose to Kubernetes converter
       kubernetes-helm
       frp # Fast Reverse Proxy
