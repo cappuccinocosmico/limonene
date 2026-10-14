@@ -221,7 +221,15 @@
       distributedBuilds = true;
       buildMachines = [
         {
+          # Log in as the unprivileged `nicole` user rather than root; the
+          # nix-daemon (root) authenticates with a dedicated, builder-only key.
           hostName = "vermissian";
+          protocol = "ssh-ng";
+          sshUser = "nicole";
+          sshKey = "/home/nicole/.ssh/id_ed25519_nix_builder";
+          # base64 of vermissian's ed25519 host key, so root's known_hosts
+          # isn't required on every building machine.
+          publicHostKey = "dmVybWlzc2lhbiBzc2gtZWQyNTUxOSBBQUFBQzNOemFDMWxaREkxTlRFNUFBQUFJRzRKU2tnSk5JNnRsdDA3NDlBT2c2NUdsOWJ3WVl1MFRqd3JXOVpKa0M1cQo=";
           system = "x86_64-linux";
           maxJobs = 16;
           supportedFeatures = ["nixos-test" "benchmark" "big-parallel"];

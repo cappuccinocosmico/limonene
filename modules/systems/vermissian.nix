@@ -31,6 +31,13 @@
 
         networking.hostName = "vermissian";
 
+        # Dedicated builder-only key: lets other machines' nix-daemons (root)
+        # use this box as a remote builder by SSHing in as `nicole`, without
+        # granting root login anywhere.
+        users.users.nicole.openssh.authorizedKeys.keys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFi9Jf4Md8NnzczjN/yk1FEluXTvWEMeJda6rsgx9n0i nix-builder@idol"
+        ];
+
         boot.initrd.luks.devices."luks-1b5555a7-d2e4-4cf2-9654-f19eb0dfc349".device = "/dev/disk/by-uuid/1b5555a7-d2e4-4cf2-9654-f19eb0dfc349";
       }
     ];

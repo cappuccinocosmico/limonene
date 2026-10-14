@@ -80,6 +80,10 @@
     # No nixpkgs follows: the app's code needs a Flutter newer than 26.05's
     # flutter341 (ReorderableListView.onReorderItem), so it builds against its
     # own pinned nixpkgs-unstable (flutter 3.47.4).
+    mesh-client = {
+      url = "github:Colorado-Mesh/mesh-client";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # The cococoir ("fortress") home-server product, consumed as a
     # module set (nixosModules.default) plus its pkgs factory
