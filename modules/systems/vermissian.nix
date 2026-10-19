@@ -23,10 +23,14 @@
       ../../hardware/vermissian.nix
       {
         limonene.machineBehaviors.disableSleep.enable = true;
-        # vermissian is a remote-only box: its session is a headless sway
-        # with a virtual output for Sunshine/Moonlight (see gamestream
-        # module) — there is no physical display to power off.
-        limonene.gamestream.headless.enable = true;
+        limonene.machineBehaviors.turnOffDisplay.enable = true;
+        # vermissian has a physical display (HDMI-A-2 on the dGPU) that is used
+        # as a normal desktop, so the headless streaming compositor is DISABLED:
+        # when on, it forces WLR_BACKENDS=headless and kills the DRM backend that
+        # drives that monitor. Streaming-at-custom-res is being redesigned (see
+        # gamestream module) to use a virtual output on the normal session
+        # instead of replacing it.
+        limonene.gamestream.headless.enable = false;
         limonene.autologinUser = "nicole";
         limonene.defaultSession = "sway";
 
