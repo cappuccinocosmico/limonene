@@ -14,6 +14,7 @@
       inputs.self.modules.nixos.sway
       inputs.self.modules.nixos.gaming
       inputs.self.modules.nixos.gamestream
+      inputs.self.modules.nixos.display-greetd
       inputs.self.modules.nixos.ollama
       inputs.hardware.nixosModules.common-cpu-amd
       inputs.hardware.nixosModules.common-cpu-amd-pstate
@@ -22,13 +23,12 @@
       ../../hardware/vermissian.nix
       {
         limonene.machineBehaviors.disableSleep.enable = true;
-        # vermissian is a remote-only box. Its streaming session is a dedicated
-        # headless sway compositor (a lingering systemd user service, see the
-        # gamestream module) with a virtual HEADLESS-1 output for Sunshine /
-        # Moonlight — there is no physical display and no greetd/login manager.
-        # The resolution below is what Sunshine captures and streams.
+        # vermissian is a remote-only box: its session is a headless sway
+        # with a virtual output for Sunshine/Moonlight (see gamestream
+        # module) — there is no physical display to power off.
         limonene.gamestream.headless.enable = true;
-        limonene.gamestream.headless.mode = "2560x1600@165Hz";
+        limonene.autologinUser = "nicole";
+        limonene.defaultSession = "sway";
 
         home-manager.users.nicole.imports = [inputs.self.modules.homeManager.nicole-desktop];
 
