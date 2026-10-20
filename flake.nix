@@ -7,6 +7,7 @@
     nixpkgs = {
       url = "github:nixos/nixpkgs/nixos-26.05";
     };
+    nixpkgs-ollama.url = "github:NixOS/nixpkgs/2e42b2892d964b175c84c125e3ace59644ea88a1"; # ollama 0.40.6
 
     nixpkgs-unstable = {
       url = "github:nixos/nixpkgs/nixos-unstable";

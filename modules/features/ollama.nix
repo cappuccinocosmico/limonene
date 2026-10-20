@@ -2,7 +2,9 @@
   flake.modules.nixos.ollama = {pkgs, ...}: {
     services.ollama = {
       enable = true;
-      package = pkgs.unstable.ollama-rocm;
+      # package = pkgs.unstable.ollama-rocm;
+      package =
+        inputs.nixpkgs-ollama.legacyPackages.${pkgs.system}.ollama-rocm;
     };
 
     # services.ollama.rocmOverrideGfx can be set per-machine if ROCm doesn't
