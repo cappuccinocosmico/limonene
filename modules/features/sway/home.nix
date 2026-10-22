@@ -1,5 +1,22 @@
 { inputs, ... }: {
-  flake.modules.homeManager.sway = { lib, pkgs, config, ... }: {
+  flake.modules.homeManager.sway = { lib, pkgs, config, ... }: let
+    # Wraps a swayidle action so it is skipped while a game streaming session
+    # is active. Steam Remote Play and Moonlight/Sunshine stream the
+    # *composited* output, and sway stops compositing while an output is
+    # powered down — XWayland games then stall on present and throttle to
+    # ~1fps, turning the stream into a slideshow or a black screen. Steam
+    # creates the `steam-streaming-playback` null sink for the duration of a
+    # Remote Play session and sunshine creates `sink-sunshine-stereo`, so a
+    # matching sink means someone is watching right now.
+    unlessStreaming = name: script:
+      pkgs.writeShellScript name ''
+        if ${pkgs.pulseaudio}/bin/pactl list short sinks 2>/dev/null \
+            | ${pkgs.gnugrep}/bin/grep -qE 'steam-streaming-playback|sink-sunshine'; then
+          exit 0
+        fi
+        ${script}
+      '';
+  in {
     config = {
       home.packages = with pkgs; [
         wlogout
@@ -87,14 +104,18 @@
           (lib.optionals config.limonene.machineBehaviors.turnOffDisplay.enable [
             {
               timeout = 300;
-              command = "${pkgs.sway}/bin/swaymsg 'output * dpms off'";
+              command = "${unlessStreaming "swayidle-dpms-off" ''
+                exec ${pkgs.sway}/bin/swaymsg 'output * dpms off'
+              ''}";
               resumeCommand = "${pkgs.sway}/bin/swaymsg 'output * dpms on'";
             }
           ])
           ++ (lib.optionals (!config.limonene.machineBehaviors.disableSleep.enable) [
             {
               timeout = 600;
-              command = "${pkgs.systemd}/bin/systemctl suspend";
+              command = "${unlessStreaming "swayidle-suspend" ''
+                exec ${pkgs.systemd}/bin/systemctl suspend
+              ''}";
             }
           ]);
       };
