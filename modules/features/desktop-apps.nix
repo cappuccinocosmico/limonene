@@ -33,8 +33,7 @@
       popsicle
       impression
       # 3d Printing & CAD
-      prusa-slicer
-      orca-slicer
+      unstable.orca-slicer
       # pkgs.unstable.orca-slicer
       freecad
       openscad
