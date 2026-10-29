@@ -1,5 +1,10 @@
 {...}: {
   flake.modules.nixos.general = {pkgs, ...}: {
+    hardware.bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+    };
+
     hardware.graphics = {
       enable = true;
       enable32Bit = true;
