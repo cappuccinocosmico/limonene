@@ -9,6 +9,7 @@
       # JavaScript/TypeScript
       tailwindcss
       pnpm
+      bun
 
       # Julia
       julia

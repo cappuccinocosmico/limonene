@@ -2,6 +2,7 @@
   flake.modules.nixos.ollama = {pkgs, ...}: {
     services.ollama = {
       enable = true;
+      host = "0.0.0.0";
       # package = pkgs.unstable.ollama-rocm;
       package =
         inputs.nixpkgs-ollama.legacyPackages.${pkgs.system}.ollama-rocm;
