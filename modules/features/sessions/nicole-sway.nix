@@ -75,6 +75,12 @@
         output = {
           eDP-1 = {};
         };
+        # TODO: remove once the touchpad is replaced. Or keep it idc - nic
+        input = {
+          "type:touchpad" = {
+            tap = "enabled";
+          };
+        };
         startup = [
           {command = "ensure-wallust-colors";}
           {command = "${pkgs.wl-clipboard-x11}/bin/wl-clipboard-x11";}
