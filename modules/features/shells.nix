@@ -34,6 +34,10 @@
         settings = {
           pane_frames = false;
           show_startup_tips = false;
+          # Necessary to get copying in neovim to work reliably over ssh
+          # a bit less scary then it otherwise would be since kitty
+          # is the last line of defense - nic
+          dangerously_enable_paste_buffer_read = true;
           default_shell = lib.getExe config.limonene.defaultShell;
         };
       };

@@ -1,3 +1,21 @@
+-- shit I dont understand to get copy and paste working over ssh, uses some escape sequence stuff I don't really care to learn atm, will fix if it breaks - nic
+if vim.env.SSH_TTY or vim.env.SSH_CONNECTION or vim.env.SSH_CLIENT then
+  local osc52 = require("vim.ui.clipboard.osc52")
+  vim.g.clipboard = {
+    name = "OSC 52",
+    copy = {
+      ["+"] = osc52.copy("+"),
+      ["*"] = osc52.copy("*"),
+    },
+    paste = {
+      ["+"] = osc52.paste("+"),
+      ["*"] = osc52.paste("*"),
+    },
+  }
+end
+
+
+-- YAY autosaving - nic
 -- Autosave active buffer every 5 minutes
 -- Only saves if:
 -- 1. Buffer is modifiable and has a file name
